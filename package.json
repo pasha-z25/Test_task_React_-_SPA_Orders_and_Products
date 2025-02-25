@@ -1,0 +1,20 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "lerna run dev --parallel",
+    "start": "lerna run start --parallel",
+    "build": "lerna run build --parallel",
+    "pretty": "npx prettier . --write",
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint . --fix",
+    "check": "npm run pretty && npm run lint:fix",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "lerna": "^8.2.0"    
+  },
+  "devDependencies": {}
+}
