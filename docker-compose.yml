@@ -1,0 +1,38 @@
+services:
+  web:
+    build: ./web
+    image: next_js
+    ports:
+      - '3000:3000'
+    depends_on:
+      - server
+
+  server:
+    build: ./server
+    image: express_js
+    ports:
+      - '8888:8888'
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=admin
+      - DB_NAME=test_db
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: test_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
