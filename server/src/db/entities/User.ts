@@ -6,13 +6,13 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: 'varchar' })
   email!: string;
 
-  @Column()
+  @Column('varchar')
   password!: string;
 
-  @Column()
+  @Column('varchar')
   name!: string;
 
   @OneToMany(() => Order, (order) => order.user)

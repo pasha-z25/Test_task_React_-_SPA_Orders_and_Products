@@ -9,19 +9,19 @@ export class Product {
   @Column('int')
   serialNumber!: number;
 
-  @Column()
+  @Column('bool')
   isNew!: boolean;
 
-  @Column()
+  @Column('varchar')
   photo!: string;
 
-  @Column()
+  @Column('varchar')
   title!: string;
 
-  @Column()
+  @Column('varchar')
   type!: string;
 
-  @Column()
+  @Column('varchar')
   specification!: string;
 
   @Column({ type: 'json' })

@@ -7,13 +7,13 @@ export class Order {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column('varchar')
   title!: string;
 
   @Column({ type: 'timestamp' })
   date!: Date;
 
-  @Column()
+  @Column('varchar')
   description!: string;
 
   @ManyToOne(() => User, (user) => user.orders)

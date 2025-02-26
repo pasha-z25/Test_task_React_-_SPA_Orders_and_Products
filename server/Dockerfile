@@ -12,5 +12,5 @@ COPY . .
 
 EXPOSE 8888
 
-# CMD ["npm", "run", "dev"]
-CMD ["npx", "tsx", "src/index.ts"]
+CMD ["npm", "run", "docker"]
+# CMD ["npx", "tsx", "src/index.ts"]

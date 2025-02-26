@@ -23,8 +23,6 @@ app.use('/api/orders', ordersRoutes);
 
 app.use('/api/auth', authRoutes);
 
-app.listen(PORT, () => serverListenerLogger(PORT));
-
 AppDataSource.initialize()
   .then(() => {
     logger.log({
@@ -33,12 +31,9 @@ AppDataSource.initialize()
       message: 'Database connected successfully',
     });
     console.log('📦 Database connected successfully');
-    app.listen(PORT, () => {
-      serverListenerLogger(PORT);
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
+    app.listen(PORT, () => serverListenerLogger(PORT));
   })
-  .catch((error) => {
+  .catch((error: unknown) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'db:initialize',

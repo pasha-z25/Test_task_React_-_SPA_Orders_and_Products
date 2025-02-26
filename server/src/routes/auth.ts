@@ -1,12 +1,33 @@
 import express, { Request, Response } from 'express';
 import { login, register } from '../controllers';
+import { getUsers } from '../services';
 import { LOG_LEVEL, logger } from '../utils/logger';
 
 const router = express.Router();
 
-router.post('/login', async (_req: Request, res: Response) => {
+router.get('/users', async (_req: Request, res: Response) => {
   try {
-    const user = await login();
+    const users = await getUsers();
+    if (!users) {
+      res.status(404).send({ status: 'error', message: 'Users not found' });
+      return;
+    }
+    res.status(200).send({ status: 'success', users });
+  } catch (error) {
+    logger.log({
+      level: LOG_LEVEL.ERROR,
+      scope: 'route:auth',
+      message: `Users not found`,
+      error,
+    });
+    res.status(204).send({ status: 'error', error });
+  }
+});
+
+router.post('/login', async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  try {
+    const user = await login({ email, password });
 
     if (!user) {
       logger.log({
@@ -35,11 +56,13 @@ router.post('/login', async (_req: Request, res: Response) => {
   }
 });
 
-router.post('/register', async (_req: Request, res: Response) => {
-  try {
-    const user = await register();
+router.post('/register', async (req: Request, res: Response) => {
+  const user = req.body;
 
-    if (!user) {
+  try {
+    const newUser = await register(user);
+
+    if (!newUser) {
       logger.log({
         level: LOG_LEVEL.ERROR,
         scope: 'route:auth',
@@ -52,9 +75,9 @@ router.post('/register', async (_req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'route:orders',
       message: 'User created successfully',
-      user,
+      newUser,
     });
-    res.status(200).send({ status: 'success', user });
+    res.status(200).send({ status: 'success', user: newUser });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
