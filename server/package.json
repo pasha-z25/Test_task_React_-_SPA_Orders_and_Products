@@ -8,14 +8,21 @@
     "dev": "nodemon --watch src/**/*.ts --exec tsx src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "seed": "tsx src/db/seed.ts",
+    "docker-dev": "tsx src/index.ts",
+    "docker": "npm run seed && npm run docker-dev",
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "pg": "^8.13.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
     "winston": "^3.17.0"
   },
   "devDependencies": {
