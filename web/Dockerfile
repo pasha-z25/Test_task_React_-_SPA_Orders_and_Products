@@ -1,6 +1,6 @@
 FROM node:20
 
-WORKDIR /server
+WORKDIR /web
 
 COPY package*.json ./
 
@@ -10,7 +10,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 8888
+EXPOSE 3000
 
-# CMD ["npm", "run", "dev"]
-CMD ["npx", "tsx", "src/index.ts"]
+CMD ["npm", "run", "dev"]

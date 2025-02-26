@@ -1,16 +1,22 @@
 services:
+  web:
+    build: ./web
+    image: next_js
+    ports:
+      - '3000:3000'
+    depends_on:
+      - server
+
   server:
     build: ./server
-    image: test_server
+    image: express_js
     ports:
       - '8888:8888'
-    volumes:
-      - ./server:/app
     depends_on:
       - db
     environment:
       - NODE_ENV=development
-      - DB_HOST=db
+      - DB_HOST=localhost
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=admin
