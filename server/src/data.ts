@@ -1,26 +1,12 @@
-export interface Product {
-  id: number;
-  serialNumber: number;
-  isNew: boolean;
-  photo: string;
-  title: string;
-  type: string;
-  specification: string;
-  guarantee: {
-    start: string;
-    end: string;
-  };
-  price: { value: number; symbol: string; isDefault: boolean }[];
-  date: string;
-}
+import { Order, Product, User } from './utils/types';
 
-export interface Order {
-  id: number;
-  title: string;
-  date: string;
-  description: string;
-  products: number[];
-}
+const user: User = {
+  id: 1,
+  email: 'test@mail.com',
+  password: '123abc',
+  name: 'Test User',
+  orders: [],
+};
 
 const products: Product[] = [
   {
@@ -68,6 +54,7 @@ const orders: Order[] = [
     date: '2017-06-29 12:09:33',
     description: 'desc',
     products: [1],
+    user,
   },
   {
     id: 2,
@@ -75,6 +62,7 @@ const orders: Order[] = [
     date: '2017-06-29 12:09:33',
     description: 'desc',
     products: [2],
+    user,
   },
   {
     id: 3,
@@ -82,7 +70,8 @@ const orders: Order[] = [
     date: '2017-06-29 12:09:33',
     description: 'desc',
     products: [1, 2],
+    user,
   },
 ];
 
-export { orders, products };
+export { orders, products, user };

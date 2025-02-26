@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import { authRoutes, ordersRoutes, productsRoutes } from './routes';
 import { serverListenerLogger } from './utils/helpers';
 
+dotenv.config();
+
 const app = express();
-const PORT = 8888;
+const PORT = process.env.PORT || 8888;
 
 app.use(express.json());
 
