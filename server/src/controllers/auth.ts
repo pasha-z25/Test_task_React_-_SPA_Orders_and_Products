@@ -1,64 +1,123 @@
-import { addUser, getUser } from '../services';
+import { Request, Response } from 'express';
+import { addUser, getUser, getUsers } from '../services';
 import { LOG_LEVEL, logger } from '../utils/logger';
 import { User } from '../utils/types';
 
-export const login = async ({ email, password }: Partial<User>) => {
+export const users = async (_req: Request, res: Response) => {
   try {
-    if (!email || !password) {
+    const users = await getUsers();
+
+    if (!users) {
       logger.log({
         level: LOG_LEVEL.ERROR,
-        scope: 'controllers:auth',
-        message: 'Email or password is empty',
+        scope: 'controller:auth',
+        message: 'Users not found',
       });
-      return null;
-    }
-    const currentUser = await getUser(email, password);
-    if (!currentUser) {
-      logger.log({
-        level: LOG_LEVEL.ERROR,
-        scope: 'controllers:auth',
-        message: 'User not found',
-      });
-      return null;
+
+      res.status(404).send({ status: 'error', message: 'Users not found' });
+      return;
     }
 
     logger.log({
       level: LOG_LEVEL.INFO,
-      scope: 'controllers:auth',
-      message: 'User created successfully',
-      currentUser,
+      scope: 'controller:auth',
+      message: 'Users found successfully',
     });
 
-    return currentUser;
+    res.status(200).send({ status: 'success', users });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
-      scope: 'controllers:auth',
+      scope: 'controller:auth',
       message: 'Something went wrong!',
       error,
     });
+
+    res.status(204).send({ status: 'error', error });
   }
-  return 'Login successful';
 };
 
-export const register = async (user: User) => {
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    logger.log({
+      level: LOG_LEVEL.ERROR,
+      scope: 'controller:auth',
+      message: 'Email or password is empty',
+    });
+
+    res.status(400).send({ status: 'error', message: 'Email or password is empty' });
+    return;
+  }
+
   try {
-    const newUser = await addUser(user);
+    const user = await getUser(email, password);
+
+    if (!user) {
+      logger.log({
+        level: LOG_LEVEL.ERROR,
+        scope: 'controller:auth',
+        message: 'User not found',
+      });
+
+      res.status(404).send({ status: 'error', message: 'User not found' });
+      return;
+    }
 
     logger.log({
       level: LOG_LEVEL.INFO,
-      scope: 'controllers:auth',
+      scope: 'controller:auth',
+      message: 'User found successfully',
+      user,
+    });
+
+    res.status(200).send({ status: 'success', user });
+  } catch (error) {
+    logger.log({
+      level: LOG_LEVEL.ERROR,
+      scope: 'controller:auth',
+      message: 'Something went wrong!',
+      error,
+    });
+
+    res.status(204).send({ status: 'error', error });
+  }
+};
+
+export const register = async (req: Request, res: Response) => {
+  const user: User = req.body;
+
+  try {
+    const newUser = await addUser(user);
+
+    if (!newUser) {
+      logger.log({
+        level: LOG_LEVEL.ERROR,
+        scope: 'controller:auth',
+        message: 'Something went wrong!',
+      });
+
+      res.status(404).send({ status: 'error', message: 'Something went wrong!' });
+      return;
+    }
+
+    logger.log({
+      level: LOG_LEVEL.INFO,
+      scope: 'controller:auth',
       message: 'User created successfully',
       newUser,
     });
 
-    return newUser;
+    res.status(200).send({ status: 'success', user: newUser });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
-      scope: 'controllers:auth',
+      scope: 'controller:auth',
       message: 'Something went wrong!',
       error,
     });
+
+    res.status(204).send({ status: 'error', error });
   }
 };

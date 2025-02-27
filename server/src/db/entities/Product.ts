@@ -26,8 +26,8 @@ export class Product {
 
   @Column({ type: 'json' })
   guarantee!: {
-    start: string;
-    end: string;
+    start: Date;
+    end: Date;
   };
 
   @Column({ type: 'json' })

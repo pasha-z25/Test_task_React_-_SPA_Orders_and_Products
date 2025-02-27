@@ -7,17 +7,17 @@ export interface Product {
   type: string;
   specification: string;
   guarantee: {
-    start: string;
-    end: string;
+    start: Date;
+    end: Date;
   };
   price: { value: number; symbol: string; isDefault: boolean }[];
-  date: string;
+  date: Date;
 }
 
 export interface Order {
   id: number;
   title: string;
-  date: string;
+  date: Date;
   description: string;
   products: number[];
   user: User;
