@@ -28,17 +28,15 @@ AppDataSource.initialize()
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'db:initialize',
-      message: 'Database connected successfully',
+      message: '📦 Database connected successfully',
     });
-    console.log('📦 Database connected successfully');
     app.listen(PORT, () => serverListenerLogger(PORT));
   })
   .catch((error: unknown) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'db:initialize',
-      message: 'Database connection failed',
+      message: '❌ Database connection failed',
       error,
     });
-    console.error('❌ Database connection failed', error);
   });

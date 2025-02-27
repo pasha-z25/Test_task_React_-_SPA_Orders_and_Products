@@ -15,9 +15,9 @@ export const getOrders = async (_req: Request, res: Response) => {
 
     if (!orders) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
-        message: 'Orders not found',
+        message: '⚠️ Orders not found',
       });
 
       res.status(404).send({ status: 'error', message: 'Orders not found' });
@@ -27,7 +27,7 @@ export const getOrders = async (_req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
-      message: 'Orders found successfully',
+      message: 'ℹ️ Orders found successfully',
       orders,
     });
 
@@ -36,7 +36,7 @@ export const getOrders = async (_req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -52,9 +52,9 @@ export const getOrderById = async (req: Request, res: Response) => {
 
     if (!order) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
-        message: `Order with ID ${orderId} not found`,
+        message: `⚠️ Order with ID ${orderId} not found`,
       });
 
       res.status(404).send({ status: 'error', message: 'Order not found' });
@@ -64,7 +64,7 @@ export const getOrderById = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
-      message: 'Order found successfully',
+      message: 'ℹ️ Order found successfully',
       order,
     });
 
@@ -73,7 +73,7 @@ export const getOrderById = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -89,9 +89,9 @@ export const addOrder = async (req: Request, res: Response) => {
 
     if (!newOrder) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
-        message: 'New order was not created',
+        message: '⚠️ New order was not created',
       });
 
       res.status(404).send({ status: 'error', message: 'New order was not created' });
@@ -101,7 +101,7 @@ export const addOrder = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
-      message: 'New order was created',
+      message: 'ℹ️ New order was created',
       order: newOrder,
     });
 
@@ -110,7 +110,7 @@ export const addOrder = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -127,9 +127,9 @@ export const updateOrder = async (req: Request, res: Response) => {
 
     if (!updatedOrder) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
-        message: 'Order was not updated',
+        message: '⚠️ Order was not updated',
       });
 
       res.status(404).send({ status: 'error', message: 'Order was not updated' });
@@ -139,7 +139,7 @@ export const updateOrder = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
-      message: 'Order was updated',
+      message: 'ℹ️ Order was updated',
       order: updatedOrder,
     });
 
@@ -148,7 +148,7 @@ export const updateOrder = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -164,19 +164,19 @@ export const deleteOrder = async (req: Request, res: Response) => {
 
     if (!result) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
-        message: `Order with ID ${orderId} not found`,
+        message: `⚠️ Order with ID ${orderId} not deleted`,
       });
 
-      res.status(404).send({ status: 'error', message: 'Order not found' });
+      res.status(404).send({ status: 'error', message: 'Order not deleted' });
       return;
     }
 
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
-      message: 'Order found successfully',
+      message: 'ℹ️ Order deleted successfully',
       result,
     });
 
@@ -185,7 +185,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 

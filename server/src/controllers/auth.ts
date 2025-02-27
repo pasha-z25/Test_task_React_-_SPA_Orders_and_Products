@@ -9,9 +9,9 @@ export const users = async (_req: Request, res: Response) => {
 
     if (!users) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:auth',
-        message: 'Users not found',
+        message: '⚠️ Users not found',
       });
 
       res.status(404).send({ status: 'error', message: 'Users not found' });
@@ -21,7 +21,7 @@ export const users = async (_req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:auth',
-      message: 'Users found successfully',
+      message: 'ℹ️ Users found successfully',
     });
 
     res.status(200).send({ status: 'success', users });
@@ -29,7 +29,7 @@ export const users = async (_req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:auth',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -42,9 +42,9 @@ export const login = async (req: Request, res: Response) => {
 
   if (!email || !password) {
     logger.log({
-      level: LOG_LEVEL.ERROR,
+      level: LOG_LEVEL.WARN,
       scope: 'controller:auth',
-      message: 'Email or password is empty',
+      message: '⚠️ Email or password is empty',
     });
 
     res.status(400).send({ status: 'error', message: 'Email or password is empty' });
@@ -56,9 +56,9 @@ export const login = async (req: Request, res: Response) => {
 
     if (!user) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:auth',
-        message: 'User not found',
+        message: '⚠️ User not found',
       });
 
       res.status(404).send({ status: 'error', message: 'User not found' });
@@ -68,7 +68,7 @@ export const login = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:auth',
-      message: 'User found successfully',
+      message: 'ℹ️ User found successfully',
       user,
     });
 
@@ -77,7 +77,7 @@ export const login = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:auth',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -93,19 +93,19 @@ export const register = async (req: Request, res: Response) => {
 
     if (!newUser) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:auth',
-        message: 'Something went wrong!',
+        message: '⚠️ New user was not created',
       });
 
-      res.status(404).send({ status: 'error', message: 'Something went wrong!' });
+      res.status(404).send({ status: 'error', message: 'New user was not created' });
       return;
     }
 
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:auth',
-      message: 'User created successfully',
+      message: 'ℹ️ User created successfully',
       newUser,
     });
 
@@ -114,7 +114,7 @@ export const register = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:auth',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 

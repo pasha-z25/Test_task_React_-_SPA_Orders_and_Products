@@ -10,6 +10,6 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD || 'admin',
   database: process.env.DB_NAME || 'test_db',
   synchronize: process.env.NODE_ENV !== 'production',
-  logging: true,
+  logging: process.env.NODE_ENV === 'testing',
   entities: [User, Order, Product],
 });
