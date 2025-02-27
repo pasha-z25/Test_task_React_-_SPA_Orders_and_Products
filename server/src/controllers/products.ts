@@ -15,9 +15,9 @@ export const getProducts = async (_req: Request, res: Response) => {
 
     if (!products) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:products',
-        message: 'Products not found',
+        message: '⚠️ Products not found',
       });
 
       res.status(404).send({ status: 'error', message: 'Products not found' });
@@ -27,7 +27,7 @@ export const getProducts = async (_req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:products',
-      message: 'Products found successfully',
+      message: 'ℹ️ Products found successfully',
       products,
     });
 
@@ -36,7 +36,7 @@ export const getProducts = async (_req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:products',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -52,9 +52,9 @@ export const getProductById = async (req: Request, res: Response) => {
 
     if (!product) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:products',
-        message: `Product with ID ${productId} not found`,
+        message: `⚠️ Product with ID ${productId} not found`,
       });
       res.status(404).send({ status: 'error', message: 'Product not found' });
       return;
@@ -63,7 +63,7 @@ export const getProductById = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:products',
-      message: 'Product found successfully',
+      message: 'ℹ️ Product found successfully',
       product,
     });
 
@@ -72,7 +72,7 @@ export const getProductById = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:products',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -88,9 +88,9 @@ export const addProduct = async (req: Request, res: Response) => {
 
     if (!newProduct) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:products',
-        message: 'New product was not created',
+        message: '⚠️ New product was not created',
       });
 
       res.status(404).send({ status: 'error', message: 'New product was not created' });
@@ -100,7 +100,7 @@ export const addProduct = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:products',
-      message: 'New product was created',
+      message: 'ℹ️ New product was created',
       product: newProduct,
     });
 
@@ -109,7 +109,7 @@ export const addProduct = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:products',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -126,9 +126,9 @@ export const updateProduct = async (req: Request, res: Response) => {
 
     if (!updatedProduct) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:products',
-        message: 'Product was not updated',
+        message: '⚠️ Product was not updated',
       });
 
       res.status(404).send({ status: 'error', message: 'Product was not updated' });
@@ -138,7 +138,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:products',
-      message: 'Product was updated',
+      message: 'ℹ️ Product was updated',
       product: updatedProduct,
     });
 
@@ -147,7 +147,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:products',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 
@@ -163,9 +163,9 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
     if (!result) {
       logger.log({
-        level: LOG_LEVEL.ERROR,
+        level: LOG_LEVEL.WARN,
         scope: 'controller:products',
-        message: `Product with ID ${productId} not found`,
+        message: `⚠️ Product with ID ${productId} not found`,
       });
 
       res.status(404).send({ status: 'error', message: 'Product not found' });
@@ -175,7 +175,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'controller:products',
-      message: 'Product found successfully',
+      message: 'ℹ️ Product found successfully',
       result,
     });
 
@@ -184,7 +184,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
       scope: 'controller:products',
-      message: 'Something went wrong!',
+      message: '❌ Something went wrong!',
       error,
     });
 

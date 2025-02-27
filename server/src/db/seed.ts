@@ -46,9 +46,15 @@ const seedDatabase = async () => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'seed:users',
-      message: 'Users created successfully',
+      message: '✅ Users created successfully',
       usersLength: savedUsers.length,
       savedUsers,
+    });
+  } else {
+    logger.log({
+      level: LOG_LEVEL.INFO,
+      scope: 'seed:users',
+      message: '💡 Users data already exist',
     });
   }
 
@@ -77,9 +83,15 @@ const seedDatabase = async () => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'seed:products',
-      message: 'Products created successfully',
+      message: '✅ Products created successfully',
       productsLength: savedProducts.length,
       savedProducts,
+    });
+  } else {
+    logger.log({
+      level: LOG_LEVEL.INFO,
+      scope: 'seed:products',
+      message: '💡 Products data already exist',
     });
   }
 
@@ -101,9 +113,15 @@ const seedDatabase = async () => {
     logger.log({
       level: LOG_LEVEL.INFO,
       scope: 'seed:orders',
-      message: 'Orders created successfully',
+      message: '✅ Orders created successfully',
       ordersLength: savedOrders.length,
       savedOrders,
+    });
+  } else {
+    logger.log({
+      level: LOG_LEVEL.INFO,
+      scope: 'seed:orders',
+      message: '💡 Orders data already exist',
     });
   }
 
