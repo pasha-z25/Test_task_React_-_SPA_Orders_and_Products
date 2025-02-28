@@ -1,5 +1,6 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
-import express, { Request, Response } from 'express';
+import express from 'express';
 import 'reflect-metadata';
 import { AppDataSource } from './db';
 import { authRoutes, ordersRoutes, productsRoutes, usersRoutes } from './routes';
@@ -8,14 +9,18 @@ import { LOG_LEVEL, logger } from './utils/logger';
 
 dotenv.config();
 
-const app = express();
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://frontend_web:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
 const PORT = process.env.PORT || 8888;
+const app = express();
 
 app.use(express.json());
-
-app.get('/meta', (_req: Request, res: Response) => {
-  res.send('Hello World!');
-});
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use('/api/products', productsRoutes);
 

@@ -1,8 +1,12 @@
-import { API_URL } from './constants';
+import { BROWSER_API_URL, DOCKER_API_URL } from './constants';
 import { ApiOptionsType } from './types';
 
+export const getApiUrl = () => {
+  return typeof window === 'undefined' ? DOCKER_API_URL : BROWSER_API_URL;
+};
+
 export const client = async (path: string, options?: ApiOptionsType) => {
-  const REQUEST_URL = `${API_URL}${path}`;
+  const REQUEST_URL = `${getApiUrl()}${path}`;
 
   const headers = {
     'Content-Type': 'application/json',
@@ -16,10 +20,6 @@ export const client = async (path: string, options?: ApiOptionsType) => {
       ...(options?.headers || {}),
     },
   };
-
-  if (options?.body) {
-    config.body = JSON.stringify(options.body);
-  }
 
   try {
     const response = await fetch(REQUEST_URL, config);

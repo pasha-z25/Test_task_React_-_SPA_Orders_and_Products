@@ -4,11 +4,11 @@ export type AnyObj = {
 };
 
 export interface IPageProps {
-  params: {
+  params: Promise<{
     lng: Lang;
     id?: string;
-  };
-  searchParams: AnyObj;
+  }>;
+  searchParams: Promise<AnyObj>;
 }
 
 export enum Lang {

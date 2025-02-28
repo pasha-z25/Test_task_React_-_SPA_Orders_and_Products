@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 
 export interface ILayoutProps {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     lng: Lang;
-  };
+  }>;
 }
 
 export default async function RootLayout({ children, params }: Readonly<ILayoutProps>) {
