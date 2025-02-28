@@ -1,3 +1,8 @@
+export enum ResponseStatus {
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
+
 export enum UserGender {
   MALE = 'male',
   FEMALE = 'female',

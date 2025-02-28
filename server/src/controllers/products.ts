@@ -8,6 +8,7 @@ import {
   updateProduct as updateProductHelper,
 } from '../services';
 import { LOG_LEVEL, logger } from '../utils/logger';
+import { ResponseStatus } from '../utils/types';
 
 export const getProducts = async (_req: Request, res: Response) => {
   try {
@@ -20,7 +21,9 @@ export const getProducts = async (_req: Request, res: Response) => {
         message: '⚠️ Products not found',
       });
 
-      res.status(404).send({ status: 'error', message: 'Products not found' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'Products not found' } });
       return;
     }
 
@@ -31,7 +34,7 @@ export const getProducts = async (_req: Request, res: Response) => {
       products,
     });
 
-    res.status(200).send({ status: 'success', data: products });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: products });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -40,7 +43,7 @@ export const getProducts = async (_req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -56,7 +59,9 @@ export const getProductById = async (req: Request, res: Response) => {
         scope: 'controller:products',
         message: `⚠️ Product with ID ${productId} not found`,
       });
-      res.status(404).send({ status: 'error', message: 'Product not found' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'Product not found' } });
       return;
     }
 
@@ -67,7 +72,7 @@ export const getProductById = async (req: Request, res: Response) => {
       product,
     });
 
-    res.status(200).send({ status: 'success', data: product });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: product });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -76,7 +81,7 @@ export const getProductById = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -93,7 +98,9 @@ export const addProduct = async (req: Request, res: Response) => {
         message: '⚠️ New product was not created',
       });
 
-      res.status(404).send({ status: 'error', message: 'New product was not created' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'New product was not created' } });
       return;
     }
 
@@ -104,7 +111,7 @@ export const addProduct = async (req: Request, res: Response) => {
       product: newProduct,
     });
 
-    res.status(200).send({ status: 'success', data: newProduct });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: newProduct });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -113,7 +120,7 @@ export const addProduct = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -131,7 +138,9 @@ export const updateProduct = async (req: Request, res: Response) => {
         message: '⚠️ Product was not updated',
       });
 
-      res.status(404).send({ status: 'error', message: 'Product was not updated' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'Product was not updated' } });
       return;
     }
 
@@ -142,7 +151,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       product: updatedProduct,
     });
 
-    res.status(200).send({ status: 'success', data: updatedProduct });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: updatedProduct });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -151,7 +160,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -168,7 +177,9 @@ export const deleteProduct = async (req: Request, res: Response) => {
         message: `⚠️ Product with ID ${productId} not found`,
       });
 
-      res.status(404).send({ status: 'error', message: 'Product not found' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'Product not found' } });
       return;
     }
 
@@ -179,7 +190,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
       result,
     });
 
-    res.status(200).send({ status: 'success', ...result });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: result });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -188,6 +199,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };

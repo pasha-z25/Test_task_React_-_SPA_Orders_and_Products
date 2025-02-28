@@ -7,6 +7,7 @@ import {
   updateUser as updateUserHelper,
 } from '../services';
 import { LOG_LEVEL, logger } from '../utils/logger';
+import { ResponseStatus } from '../utils/types';
 
 export const getUsers = async (_req: Request, res: Response) => {
   try {
@@ -19,7 +20,7 @@ export const getUsers = async (_req: Request, res: Response) => {
         message: '⚠️ Users not found',
       });
 
-      res.status(404).send({ status: 'error', message: 'Users not found' });
+      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'Users not found' } });
       return;
     }
 
@@ -30,7 +31,7 @@ export const getUsers = async (_req: Request, res: Response) => {
       users,
     });
 
-    res.status(200).send({ status: 'success', data: users });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: users });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -39,7 +40,7 @@ export const getUsers = async (_req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -56,7 +57,7 @@ export const getUserById = async (req: Request, res: Response) => {
         message: '⚠️ User not found',
       });
 
-      res.status(404).send({ status: 'error', message: 'User not found' });
+      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'User not found' } });
       return;
     }
 
@@ -67,7 +68,7 @@ export const getUserById = async (req: Request, res: Response) => {
       user,
     });
 
-    res.status(200).send({ status: 'success', data: user });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: user });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -76,7 +77,7 @@ export const getUserById = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -93,7 +94,9 @@ export const addUser = async (req: Request, res: Response) => {
         message: '⚠️ New user was not created',
       });
 
-      res.status(404).send({ status: 'error', message: 'New user was not created' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'New user was not created' } });
       return;
     }
 
@@ -104,7 +107,7 @@ export const addUser = async (req: Request, res: Response) => {
       user: newUser,
     });
 
-    res.status(200).send({ status: 'success', data: newUser });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: newUser });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -113,7 +116,7 @@ export const addUser = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -131,7 +134,9 @@ export const updateUser = async (req: Request, res: Response) => {
         message: '⚠️ User was not updated',
       });
 
-      res.status(404).send({ status: 'error', message: 'User was not updated' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'User was not updated' } });
       return;
     }
 
@@ -142,7 +147,7 @@ export const updateUser = async (req: Request, res: Response) => {
       user: updatedUser,
     });
 
-    res.status(200).send({ status: 'success', data: updatedUser });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: updatedUser });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -151,6 +156,6 @@ export const updateUser = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };

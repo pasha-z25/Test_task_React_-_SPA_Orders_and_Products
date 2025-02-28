@@ -8,6 +8,7 @@ import {
   updateOrder as updateOrderHelper,
 } from '../services';
 import { LOG_LEVEL, logger } from '../utils/logger';
+import { ResponseStatus } from '../utils/types';
 
 export const getOrders = async (_req: Request, res: Response) => {
   try {
@@ -20,7 +21,9 @@ export const getOrders = async (_req: Request, res: Response) => {
         message: '⚠️ Orders not found',
       });
 
-      res.status(404).send({ status: 'error', message: 'Orders not found' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'Orders not found' } });
       return;
     }
 
@@ -31,7 +34,7 @@ export const getOrders = async (_req: Request, res: Response) => {
       orders,
     });
 
-    res.status(200).send({ status: 'success', data: orders });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: orders });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -40,7 +43,7 @@ export const getOrders = async (_req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -57,7 +60,7 @@ export const getOrderById = async (req: Request, res: Response) => {
         message: `⚠️ Order with ID ${orderId} not found`,
       });
 
-      res.status(404).send({ status: 'error', message: 'Order not found' });
+      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'Order not found' } });
       return;
     }
 
@@ -68,7 +71,7 @@ export const getOrderById = async (req: Request, res: Response) => {
       order,
     });
 
-    res.status(200).send({ status: 'success', data: order });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: order });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -77,7 +80,7 @@ export const getOrderById = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -94,7 +97,9 @@ export const addOrder = async (req: Request, res: Response) => {
         message: '⚠️ New order was not created',
       });
 
-      res.status(404).send({ status: 'error', message: 'New order was not created' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'New order was not created' } });
       return;
     }
 
@@ -105,7 +110,7 @@ export const addOrder = async (req: Request, res: Response) => {
       order: newOrder,
     });
 
-    res.status(200).send({ status: 'success', data: newOrder });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: newOrder });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -114,7 +119,7 @@ export const addOrder = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -132,7 +137,9 @@ export const updateOrder = async (req: Request, res: Response) => {
         message: '⚠️ Order was not updated',
       });
 
-      res.status(404).send({ status: 'error', message: 'Order was not updated' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'Order was not updated' } });
       return;
     }
 
@@ -143,7 +150,7 @@ export const updateOrder = async (req: Request, res: Response) => {
       order: updatedOrder,
     });
 
-    res.status(200).send({ status: 'success', data: updatedOrder });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: updatedOrder });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -152,7 +159,7 @@ export const updateOrder = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -169,7 +176,9 @@ export const deleteOrder = async (req: Request, res: Response) => {
         message: `⚠️ Order with ID ${orderId} not deleted`,
       });
 
-      res.status(404).send({ status: 'error', message: 'Order not deleted' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'Order not deleted' } });
       return;
     }
 
@@ -180,7 +189,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
       result,
     });
 
-    res.status(200).send({ status: 'success', ...result });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: result });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -189,6 +198,6 @@ export const deleteOrder = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };

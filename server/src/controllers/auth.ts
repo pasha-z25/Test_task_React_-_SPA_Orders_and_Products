@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { User } from '../db/entities';
 import { addUser, login as loginHelper } from '../services';
 import { LOG_LEVEL, logger } from '../utils/logger';
+import { ResponseStatus } from '../utils/types';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -13,7 +14,9 @@ export const login = async (req: Request, res: Response) => {
       message: '⚠️ Email or password is empty',
     });
 
-    res.status(400).send({ status: 'error', message: 'Email or password is empty' });
+    res
+      .status(400)
+      .send({ status: ResponseStatus.ERROR, error: { message: 'Email or password is empty' } });
     return;
   }
 
@@ -27,7 +30,7 @@ export const login = async (req: Request, res: Response) => {
         message: '⚠️ User not found',
       });
 
-      res.status(404).send({ status: 'error', message: 'User not found' });
+      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'User not found' } });
       return;
     }
 
@@ -38,7 +41,7 @@ export const login = async (req: Request, res: Response) => {
       user,
     });
 
-    res.status(200).send({ status: 'success', data: user });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: user });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -47,7 +50,7 @@ export const login = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -64,7 +67,9 @@ export const register = async (req: Request, res: Response) => {
         message: '⚠️ New user was not created',
       });
 
-      res.status(404).send({ status: 'error', message: 'New user was not created' });
+      res
+        .status(404)
+        .send({ status: ResponseStatus.ERROR, error: { message: 'New user was not created' } });
       return;
     }
 
@@ -75,7 +80,7 @@ export const register = async (req: Request, res: Response) => {
       newUser,
     });
 
-    res.status(200).send({ status: 'success', data: newUser });
+    res.status(200).send({ status: ResponseStatus.SUCCESS, data: newUser });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -84,6 +89,6 @@ export const register = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: 'error', error });
+    res.status(204).send({ status: ResponseStatus.ERROR, error });
   }
 };
