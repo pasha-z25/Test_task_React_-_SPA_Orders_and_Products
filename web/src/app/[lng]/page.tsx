@@ -1,9 +1,17 @@
+import { useTranslation } from '@/i18n/server';
+import { fallbackLng } from '@/i18n/utils';
+import type { IPageProps } from '@/utils/types';
 import Image from 'next/image';
 
-export default async function Home() {
+export default async function Home({ params }: IPageProps) {
+  const { lng = fallbackLng } = await params;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = await useTranslation(lng);
+
   return (
     <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
       <main className="row-start-2 flex flex-col items-center gap-8 sm:items-start">
+        <p>{t('button.readMore')}</p>
         <Image
           className="dark:invert"
           src="/next.svg"

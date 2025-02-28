@@ -1,0 +1,15 @@
+{
+  "common": {
+    "search": "Search",
+    "email": "E-mail"
+  },
+  "menu": {
+    "main": "Main"
+  },
+  "button": {
+    "readMore": "Read more",
+    "more": "More",
+    "view": "View"
+  },
+  "SEO": {}
+}

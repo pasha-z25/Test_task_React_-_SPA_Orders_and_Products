@@ -4,12 +4,17 @@ export type AnyObj = {
 };
 
 export interface IPageProps {
-  // params: {
-  //   lng: Lang;
-  //   id: string;
-  // };
-  params: AnyObj;
+  params: {
+    lng: Lang;
+    id?: string;
+  };
   searchParams: AnyObj;
+}
+
+export enum Lang {
+  EN = 'en',
+  UA = 'ua',
+  RU = 'ru',
 }
 
 export type ApiOptionsType = {
