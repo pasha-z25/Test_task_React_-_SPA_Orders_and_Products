@@ -11,7 +11,7 @@ export class Order {
   title!: string;
 
   @Column({ type: 'timestamp' })
-  date!: Date;
+  date!: string;
 
   @Column('varchar')
   description!: string;

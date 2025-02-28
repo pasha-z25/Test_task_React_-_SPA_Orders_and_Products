@@ -1,3 +1,23 @@
+export type AnyObj = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+};
+
+export interface IPageProps {
+  // params: {
+  //   lng: Lang;
+  //   id: string;
+  // };
+  params: AnyObj;
+  searchParams: AnyObj;
+}
+
+export type ApiOptionsType = {
+  method?: string;
+  headers?: HeadersInit;
+  body?: BodyInit;
+};
+
 export enum UserGender {
   MALE = 'male',
   FEMALE = 'female',

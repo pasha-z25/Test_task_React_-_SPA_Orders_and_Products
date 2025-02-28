@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import 'reflect-metadata';
 import { AppDataSource } from './db';
-import { authRoutes, ordersRoutes, productsRoutes } from './routes';
+import { authRoutes, ordersRoutes, productsRoutes, usersRoutes } from './routes';
 import { serverListenerLogger } from './utils/helpers';
 import { LOG_LEVEL, logger } from './utils/logger';
 
@@ -20,6 +20,8 @@ app.get('/meta', (_req: Request, res: Response) => {
 app.use('/api/products', productsRoutes);
 
 app.use('/api/orders', ordersRoutes);
+
+app.use('/api/users', usersRoutes);
 
 app.use('/api/auth', authRoutes);
 

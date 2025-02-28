@@ -26,15 +26,15 @@ export class Product {
 
   @Column({ type: 'json' })
   guarantee!: {
-    start: Date;
-    end: Date;
+    start: string;
+    end: string;
   };
 
   @Column({ type: 'json' })
   price!: { value: number; symbol: string; isDefault: boolean }[];
 
   @Column({ type: 'timestamp' })
-  date!: Date;
+  date!: string;
 
   @ManyToOne(() => Order, (order) => order.products, { nullable: true })
   order?: Order;

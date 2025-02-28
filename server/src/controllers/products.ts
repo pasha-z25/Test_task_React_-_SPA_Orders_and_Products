@@ -31,7 +31,7 @@ export const getProducts = async (_req: Request, res: Response) => {
       products,
     });
 
-    res.status(200).send({ status: 'success', products });
+    res.status(200).send({ status: 'success', data: products });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -67,7 +67,7 @@ export const getProductById = async (req: Request, res: Response) => {
       product,
     });
 
-    res.status(200).send({ status: 'success', product });
+    res.status(200).send({ status: 'success', data: product });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -104,7 +104,7 @@ export const addProduct = async (req: Request, res: Response) => {
       product: newProduct,
     });
 
-    res.status(200).send({ status: 'success', product: newProduct });
+    res.status(200).send({ status: 'success', data: newProduct });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -142,7 +142,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       product: updatedProduct,
     });
 
-    res.status(200).send({ status: 'success', product: updatedProduct });
+    res.status(200).send({ status: 'success', data: updatedProduct });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,

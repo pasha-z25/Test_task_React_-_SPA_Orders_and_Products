@@ -2,14 +2,33 @@ services:
   web:
     build: ./web
     image: next_js
+    container_name: frontend_web
     ports:
       - '3000:3000'
     depends_on:
       - server
+    networks:
+      - app_network
+    volumes:
+      - ./web:/app
+    command: npm run dev
+    environment:
+      - NODE_ENV=development
+    # develop:
+    #   watch:
+    #     - action: sync
+    #       path: ./web
+    #       target: /app
+    #       ignore:
+    #         - node_modules/
+    #     - action: rebuild
+    #       path: package.json
+    #       target: /app/package.json
 
   server:
     build: ./server
     image: express_js
+    container_name: backend_server
     ports:
       - '8888:8888'
     depends_on:
@@ -21,6 +40,22 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=admin
       - DB_NAME=test_db
+    networks:
+      - app_network
+    volumes:
+      - ./server:/app
+    command: npm run docker
+    # working_dir: /app
+    # develop:
+    #   watch:
+    #     - action: sync
+    #       path: ./server
+    #       target: /app
+    #       ignore:
+    #         - node_modules/
+    #     - action: rebuild
+    #       path: package.json
+    #       target: /app/package.json
 
   db:
     image: postgres:15
@@ -33,6 +68,11 @@ services:
       - '5432:5432'
     volumes:
       - pg_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+networks:
+  app_network:
 
 volumes:
   pg_data:
