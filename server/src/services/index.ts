@@ -1,6 +1,7 @@
+import { login } from './auth';
 import { addOrder, deleteOrder, getOrder, getOrders, updateOrder } from './orders';
 import { addProduct, deleteProduct, getProduct, getProducts, updateProduct } from './products';
-import { addUser, getUser, getUsers } from './users';
+import { addUser, getUser, getUsers, updateUser } from './users';
 
 export {
   addOrder,
@@ -14,6 +15,8 @@ export {
   getProducts,
   getUser,
   getUsers,
+  login,
   updateOrder,
   updateProduct,
+  updateUser,
 };

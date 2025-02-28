@@ -15,6 +15,24 @@ export class User {
   @Column('varchar')
   name!: string;
 
+  @Column('varchar')
+  gender!: 'male' | 'female';
+
+  @Column('varchar')
+  avatar!: string;
+
+  @Column({ nullable: true, type: 'varchar' })
+  phone?: string;
+
+  @Column({ nullable: true, type: 'varchar' })
+  address?: string;
+
   @OneToMany(() => Order, (order) => order.user)
   orders!: Order[];
+
+  @Column('timestamp')
+  registered!: string;
+
+  @Column('bool')
+  active!: boolean;
 }

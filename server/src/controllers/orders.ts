@@ -31,7 +31,7 @@ export const getOrders = async (_req: Request, res: Response) => {
       orders,
     });
 
-    res.status(200).send({ status: 'success', orders });
+    res.status(200).send({ status: 'success', data: orders });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -68,7 +68,7 @@ export const getOrderById = async (req: Request, res: Response) => {
       order,
     });
 
-    res.status(200).send({ status: 'success', order });
+    res.status(200).send({ status: 'success', data: order });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -105,7 +105,7 @@ export const addOrder = async (req: Request, res: Response) => {
       order: newOrder,
     });
 
-    res.status(200).send({ status: 'success', order: newOrder });
+    res.status(200).send({ status: 'success', data: newOrder });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -143,7 +143,7 @@ export const updateOrder = async (req: Request, res: Response) => {
       order: updatedOrder,
     });
 
-    res.status(200).send({ status: 'success', order: updatedOrder });
+    res.status(200).send({ status: 'success', data: updatedOrder });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,

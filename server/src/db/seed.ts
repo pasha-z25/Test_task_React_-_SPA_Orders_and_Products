@@ -1,9 +1,17 @@
 import bcrypt from 'bcryptjs';
-import { BCRYPT_SALT_ROUNDS } from '../utils/constants';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import {
+  BCRYPT_SALT_ROUNDS,
+  CUSTOM_DATE_TIME_FORMAT,
+  USER_AVATAR_SOURCE,
+} from '../utils/constants';
 import { getRandomInt } from '../utils/helpers';
 import { LOG_LEVEL, logger } from '../utils/logger';
 import { Order, Product, User } from './entities';
 import { AppDataSource } from './index';
+
+dayjs.extend(customParseFormat);
 
 const ONE_YEAR_IN_MS = 31536000000;
 
@@ -29,17 +37,37 @@ const seedDatabase = async () => {
       userRepository.create({
         email: 'user1@example.com',
         password: await bcrypt.hash('password1', BCRYPT_SALT_ROUNDS),
-        name: 'User One',
+        name: 'John Doe',
+        gender: 'male',
+        avatar: `${USER_AVATAR_SOURCE}&seed=JohnDoe`,
+        phone: '555-555-5555',
+        registered: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
+          CUSTOM_DATE_TIME_FORMAT
+        ),
+        active: true,
       }),
       userRepository.create({
         email: 'user2@example.com',
         password: await bcrypt.hash('password2', BCRYPT_SALT_ROUNDS),
-        name: 'User Two',
+        name: 'Esmeralda Jackson',
+        gender: 'female',
+        avatar: `${USER_AVATAR_SOURCE}&seed=EsmeraldaJackson`,
+        registered: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
+          CUSTOM_DATE_TIME_FORMAT
+        ),
+        active: true,
       }),
       userRepository.create({
         email: 'user3@example.com',
         password: await bcrypt.hash('password3', BCRYPT_SALT_ROUNDS),
-        name: 'User Three',
+        name: 'Chris Williams',
+        gender: 'male',
+        avatar: `${USER_AVATAR_SOURCE}&seed=ChrisWilliams`,
+        address: '70 Washington Square South, New York, NY 10012, United States',
+        registered: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
+          CUSTOM_DATE_TIME_FORMAT
+        ),
+        active: false,
       }),
     ];
     const savedUsers = await userRepository.save(users);
@@ -69,14 +97,18 @@ const seedDatabase = async () => {
         type: `Type ${getRandomInt(1, 5)}`,
         specification: `Specification ${getRandomInt(1, 5)}`,
         guarantee: {
-          start: new Date(getRandomInt(startTime, currentTime)).toLocaleString(),
-          end: new Date(getRandomInt(startTime, currentTime)).toLocaleString(),
+          start: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
+            CUSTOM_DATE_TIME_FORMAT
+          ),
+          end: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
+            CUSTOM_DATE_TIME_FORMAT
+          ),
         },
         price: [
           { value: getRandomInt(100, 1000), symbol: 'USD', isDefault: true },
           { value: getRandomInt(100, 1000), symbol: 'UAH', isDefault: false },
         ],
-        date: new Date(getRandomInt(startTime, currentTime)).toLocaleString(),
+        date: dayjs(new Date(getRandomInt(startTime, currentTime))).format(CUSTOM_DATE_TIME_FORMAT),
       })
     );
     const savedProducts = await productRepository.save(products);
@@ -103,7 +135,7 @@ const seedDatabase = async () => {
     const orders = Array.from({ length: 5 }).map((_, i) =>
       orderRepository.create({
         title: `Order ${i + 1}`,
-        date: new Date(getRandomInt(startTime, currentTime)).toLocaleString(),
+        date: dayjs(new Date(getRandomInt(startTime, currentTime))).format(CUSTOM_DATE_TIME_FORMAT),
         description: 'description',
         products: [savedProducts[i], savedProducts[(i + 1) % savedProducts.length]],
         user: savedUsers[i % savedUsers.length],
