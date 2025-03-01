@@ -34,3 +34,23 @@ export const client = async (path: string, options?: ApiOptionsType) => {
     return Promise.reject(error.message);
   }
 };
+
+client.get = function (endpoint: string, config = {}) {
+  return client(endpoint, config);
+};
+
+client.post = function (endpoint: string, body: BodyInit, config = {}) {
+  return client(endpoint, { ...config, body });
+};
+
+client.delete = function (endpoint: string, config = {}) {
+  return client(endpoint, { ...config, method: 'DELETE' });
+};
+
+client.put = function (endpoint: string, body: BodyInit, config = {}) {
+  return client(endpoint, { ...config, body, method: 'PUT' });
+};
+
+client.patch = function (endpoint: string, body: BodyInit, config = {}) {
+  return client(endpoint, { ...config, body, method: 'PATCH' });
+};

@@ -11,7 +11,7 @@ dotenv.config();
 
 const corsOptions = {
   origin: ['http://localhost:3000', 'http://frontend_web:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 

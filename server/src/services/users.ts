@@ -11,11 +11,17 @@ dayjs.extend(customParseFormat);
 const userRepository: Repository<User> = AppDataSource.getRepository(User);
 
 export const getUser = async (userId: number) => {
-  return await userRepository.findOne({ where: { id: userId } });
+  const user = await userRepository.findOne({ where: { id: userId } });
+  if (!user) return null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, ...safeUser } = user;
+  return safeUser;
 };
 
 export const getUsers = async () => {
-  return await userRepository.find();
+  const users = await userRepository.find();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  return users.map(({ password, ...safeUser }) => safeUser);
 };
 
 export const addUser = async ({

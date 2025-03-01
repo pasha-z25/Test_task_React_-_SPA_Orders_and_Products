@@ -56,7 +56,7 @@ export interface Order {
 export interface User {
   id: number;
   email: string;
-  password: string;
+  password?: string;
   name: string;
   gender: UserGender;
   avatar: string;

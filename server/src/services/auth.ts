@@ -16,11 +16,11 @@ app.use(bodyParser.json());
 
 const userRepository: Repository<User> = AppDataSource.getRepository(User);
 
-export const login = async (email: string, password: string) => {
+export const login = async (email: string, userPassword: string) => {
   const user = await userRepository.findOneBy({ email });
   if (!user) return Promise.reject({ message: 'User not found' });
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(userPassword, user.password);
   if (!isPasswordValid) return Promise.reject({ message: 'Invalid password' });
 
   const payload = {
@@ -28,7 +28,10 @@ export const login = async (email: string, password: string) => {
     email: user.email,
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, ...safeUser } = user;
+
   const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: '1h' });
 
-  return { accessToken: token };
+  return { user: safeUser, accessToken: token };
 };

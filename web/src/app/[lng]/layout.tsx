@@ -1,3 +1,4 @@
+import StoreProvider from '@/store/StoreProvider';
 import type { Lang } from '@/utils/types';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -36,12 +37,14 @@ export default async function RootLayout({ children, params }: Readonly<ILayoutP
   return (
     <html lang={lng}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Header />
-        <div className="wrapper grid grid-cols-[250px_auto]">
-          <Aside />
-          <Main>{children}</Main>
-        </div>
-        <Footer lang={lng} />
+        <StoreProvider>
+          <Header />
+          <div className="wrapper grid grid-cols-[250px_auto]">
+            <Aside />
+            <Main>{children}</Main>
+          </div>
+          <Footer lang={lng} />
+        </StoreProvider>
       </body>
     </html>
   );

@@ -1,29 +1,23 @@
 'use client';
 
-import { getApiUrl } from '@/utils/helpers';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { login } from '@/store/slices/authSlice';
+import { useEffect, useState } from 'react';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const dispatch = useAppDispatch();
+  const state = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    console.log('!!! useEffect', state);
+  }, [state]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const submitHandler = (event: any) => {
     event.preventDefault();
-
-    const config = {
-      method: 'POST',
-      mode: 'cors' as RequestMode,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    };
-
-    fetch(`${getApiUrl()}/auth/login`, config)
-      .then((data) => data.json())
-      .then((response) => console.log(response))
-      .catch(console.log);
+    dispatch(login({ email, password }));
   };
 
   return (
