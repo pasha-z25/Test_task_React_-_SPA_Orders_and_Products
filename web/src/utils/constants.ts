@@ -4,6 +4,10 @@ export const BROWSER_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localh
 
 export const API_URL = typeof window === 'undefined' ? DOCKER_API_URL : BROWSER_API_URL;
 
+export const authRoutes = ['login', 'register'];
+
 export const apiEndpoints = {
   authLogin: '/auth/login',
 };
+
+export const HEADER_DATE_FORMAT = 'DD MMM, YYYY 🕒 HH:mm';

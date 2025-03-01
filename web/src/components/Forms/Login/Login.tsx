@@ -1,18 +1,14 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/store';
+import { useAppDispatch } from '@/store';
 import { login } from '@/store/slices/authSlice';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.auth);
-
-  useEffect(() => {
-    console.log('!!! useEffect', state);
-  }, [state]);
+  // const state = useAppSelector((state) => state.auth);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const submitHandler = (event: any) => {

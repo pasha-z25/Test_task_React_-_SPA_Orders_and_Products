@@ -1,5 +1,29 @@
+import dayjs from 'dayjs';
+import en from 'dayjs/locale/en';
+import ru from 'dayjs/locale/ru';
+import ua from 'dayjs/locale/uk';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { BROWSER_API_URL, DOCKER_API_URL } from './constants';
-import { ApiOptionsType } from './types';
+import { ApiOptionsType, Lang } from './types';
+
+dayjs.extend(customParseFormat);
+
+export const getFormattedDateAndTime = (lang: Lang, format: string, date?: Date) => {
+  const currentLanguage = {
+    [Lang.EN]: en,
+    [Lang.UA]: ua,
+    [Lang.RU]: ru,
+  };
+
+  return typeof dayjs().format === 'function'
+    ? dayjs(date ? date : new Date())
+        .locale(currentLanguage[lang])
+        .format(format)
+    : dayjs(date ? date : new Date()).toString();
+};
+
+export const capitalizeFirstLetter = (string: string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
 
 export const getApiUrl = () => {
   return typeof window === 'undefined' ? DOCKER_API_URL : BROWSER_API_URL;

@@ -15,7 +15,7 @@ export const login = createAsyncThunk(
   }
 );
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
   token: string | null;
   error: string | undefined | null;
@@ -64,3 +64,5 @@ const authSlice = createSlice({
 export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
+
+export const getAuthorizedUser = (state: { auth: AuthState }) => state.auth.user;

@@ -4,7 +4,11 @@
     "email": "E-mail"
   },
   "menu": {
-    "main": "Main"
+    "orders": "Orders",
+    "groups": "Groups",
+    "products": "Products",
+    "users": "Users",
+    "settings": "Settings"
   },
   "button": {
     "readMore": "Read more",

@@ -4,7 +4,11 @@
     "email": "E-mail"
   },
   "menu": {
-    "main": "Главная"
+    "orders": "Заказы",
+    "groups": "Групы",
+    "products": "Продукты",
+    "users": "Пользователи",
+    "settings": "Настройки"
   },
   "button": {
     "readMore": "Читать больше",
