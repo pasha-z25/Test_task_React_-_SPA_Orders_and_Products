@@ -47,9 +47,13 @@ export default function Navigation() {
     return (
       <li
         key={index}
-        className={classNames('border-b-4 border-transparent hover:border-green-700', {
-          ['active !border-green-700']: pathname.includes(item.path) && item.path !== homePath,
-        })}
+        className={classNames(
+          'border-b-4 border-transparent hover:border-green-700',
+          {
+            ['active !border-green-700']:
+              pathname.includes(item.path) && item.path !== homePath,
+          }
+        )}
       >
         <Link className="nav-link" href={item.path}>
           {item.title}

@@ -40,7 +40,9 @@ export default function Language({ lang }: ILanguageProps) {
               >
                 {language}
               </Link>
-              {index < self.length - 1 && <span className="delimiter mx-2 inline-block">/</span>}
+              {index < self.length - 1 && (
+                <span className="delimiter mx-2 inline-block">/</span>
+              )}
             </li>
           );
         })}

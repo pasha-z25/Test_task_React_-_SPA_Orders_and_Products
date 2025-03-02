@@ -23,9 +23,10 @@ export const getProducts = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'Products not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Products not found' },
+      });
       return;
     }
 
@@ -63,9 +64,10 @@ export const getProductById = async (req: Request, res: Response) => {
         message: `⚠️ Product with ID ${productId} not found`,
         requestInfo: getRequestInfo(req),
       });
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'Product not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Product not found' },
+      });
       return;
     }
 
@@ -104,9 +106,10 @@ export const addProduct = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'New product was not created' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'New product was not created' },
+      });
       return;
     }
 
@@ -146,9 +149,10 @@ export const updateProduct = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'Product was not updated' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Product was not updated' },
+      });
       return;
     }
 
@@ -159,7 +163,9 @@ export const updateProduct = async (req: Request, res: Response) => {
       requestInfo: getRequestInfo(req),
     });
 
-    res.status(200).send({ status: ResponseStatus.SUCCESS, data: updatedProduct });
+    res
+      .status(200)
+      .send({ status: ResponseStatus.SUCCESS, data: updatedProduct });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -187,9 +193,10 @@ export const deleteProduct = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'Product not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Product not found' },
+      });
       return;
     }
 

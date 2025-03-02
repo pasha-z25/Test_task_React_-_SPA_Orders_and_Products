@@ -3,7 +3,12 @@ import dotenv from 'dotenv';
 import express from 'express';
 import 'reflect-metadata';
 import { AppDataSource } from './db';
-import { authRoutes, ordersRoutes, productsRoutes, usersRoutes } from './routes';
+import {
+  authRoutes,
+  ordersRoutes,
+  productsRoutes,
+  usersRoutes,
+} from './routes';
 import { serverListenerLogger } from './utils/helpers';
 import { LOG_LEVEL, logger } from './utils/logger';
 

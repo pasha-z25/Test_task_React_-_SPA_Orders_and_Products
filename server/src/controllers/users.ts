@@ -22,7 +22,10 @@ export const getUsers = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'Users not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Users not found' },
+      });
       return;
     }
 
@@ -61,7 +64,10 @@ export const getUserById = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'User not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'User not found' },
+      });
       return;
     }
 
@@ -100,9 +106,10 @@ export const addUser = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'New user was not created' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'New user was not created' },
+      });
       return;
     }
 
@@ -142,9 +149,10 @@ export const updateUser = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'User was not updated' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'User was not updated' },
+      });
       return;
     }
 

@@ -11,7 +11,11 @@ export default function Main({ children }: { children: React.ReactNode }) {
   const isAuthRoute = !!authRoutes.find((route) => pathname.includes(route));
 
   return (
-    <div className={classNames('wrapper grid', { 'grid-cols-[350px_auto]': !isAuthRoute })}>
+    <div
+      className={classNames('wrapper grid', {
+        'grid-cols-[350px_auto]': !isAuthRoute,
+      })}
+    >
       {!isAuthRoute && <Aside />}
       <main className="bg-slate-100">{children}</main>
     </div>

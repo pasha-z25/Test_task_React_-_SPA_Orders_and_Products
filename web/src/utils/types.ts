@@ -26,9 +26,17 @@ export interface ApiOptionsType extends RequestInit {
 export interface ApiClient {
   (path: string, options?: ApiOptionsType): Promise<any>;
   get: (endpoint: string, config?: ApiOptionsType) => Promise<any>;
-  post: (endpoint: string, body: BodyInit, config?: ApiOptionsType) => Promise<any>;
+  post: (
+    endpoint: string,
+    body: BodyInit,
+    config?: ApiOptionsType
+  ) => Promise<any>;
   delete: (endpoint: string, config?: ApiOptionsType) => Promise<any>;
-  patch: (endpoint: string, body: BodyInit, config?: ApiOptionsType) => Promise<any>;
+  patch: (
+    endpoint: string,
+    body: BodyInit,
+    config?: ApiOptionsType
+  ) => Promise<any>;
 }
 
 export interface ApiEndpoints {

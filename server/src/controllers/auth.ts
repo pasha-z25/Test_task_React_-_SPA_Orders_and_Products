@@ -16,9 +16,10 @@ export const login = async (req: Request, res: Response) => {
       requestInfo: getRequestInfo(req),
     });
 
-    res
-      .status(400)
-      .send({ status: ResponseStatus.ERROR, error: { message: 'Email or password is empty' } });
+    res.status(400).send({
+      status: ResponseStatus.ERROR,
+      error: { message: 'Email or password is empty' },
+    });
     return;
   }
 
@@ -33,7 +34,10 @@ export const login = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'User not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'User not found' },
+      });
       return;
     }
 
@@ -72,9 +76,10 @@ export const register = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'New user was not created' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'New user was not created' },
+      });
       return;
     }
 

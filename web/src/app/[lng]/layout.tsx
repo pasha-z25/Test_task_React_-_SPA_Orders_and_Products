@@ -31,11 +31,16 @@ export interface ILayoutProps {
   }>;
 }
 
-export default async function RootLayout({ children, params }: Readonly<ILayoutProps>) {
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<ILayoutProps>) {
   const { lng } = await params;
   return (
     <html lang={lng}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <StoreProvider>
           <div className="body-wrapper">
             <Header />

@@ -41,9 +41,9 @@ const seedDatabase = async () => {
         gender: 'male',
         avatar: `${USER_AVATAR_SOURCE}&seed=JohnDoe`,
         phone: '555-555-5555',
-        registered: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
-          CUSTOM_DATE_TIME_FORMAT
-        ),
+        registered: dayjs(
+          new Date(getRandomInt(startTime, currentTime))
+        ).format(CUSTOM_DATE_TIME_FORMAT),
         active: true,
       }),
       userRepository.create({
@@ -52,9 +52,9 @@ const seedDatabase = async () => {
         name: 'Esmeralda Jackson',
         gender: 'female',
         avatar: `${USER_AVATAR_SOURCE}&seed=EsmeraldaJackson`,
-        registered: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
-          CUSTOM_DATE_TIME_FORMAT
-        ),
+        registered: dayjs(
+          new Date(getRandomInt(startTime, currentTime))
+        ).format(CUSTOM_DATE_TIME_FORMAT),
         active: true,
       }),
       userRepository.create({
@@ -63,10 +63,11 @@ const seedDatabase = async () => {
         name: 'Chris Williams',
         gender: 'male',
         avatar: `${USER_AVATAR_SOURCE}&seed=ChrisWilliams`,
-        address: '70 Washington Square South, New York, NY 10012, United States',
-        registered: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
-          CUSTOM_DATE_TIME_FORMAT
-        ),
+        address:
+          '70 Washington Square South, New York, NY 10012, United States',
+        registered: dayjs(
+          new Date(getRandomInt(startTime, currentTime))
+        ).format(CUSTOM_DATE_TIME_FORMAT),
         active: false,
       }),
     ];
@@ -108,7 +109,9 @@ const seedDatabase = async () => {
           { value: getRandomInt(100, 1000), symbol: 'USD', isDefault: true },
           { value: getRandomInt(100, 1000), symbol: 'UAH', isDefault: false },
         ],
-        date: dayjs(new Date(getRandomInt(startTime, currentTime))).format(CUSTOM_DATE_TIME_FORMAT),
+        date: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
+          CUSTOM_DATE_TIME_FORMAT
+        ),
       })
     );
     const savedProducts = await productRepository.save(products);
@@ -135,9 +138,14 @@ const seedDatabase = async () => {
     const orders = Array.from({ length: 5 }).map((_, i) =>
       orderRepository.create({
         title: `Order ${i + 1}`,
-        date: dayjs(new Date(getRandomInt(startTime, currentTime))).format(CUSTOM_DATE_TIME_FORMAT),
+        date: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
+          CUSTOM_DATE_TIME_FORMAT
+        ),
         description: 'description',
-        products: [savedProducts[i], savedProducts[(i + 1) % savedProducts.length]],
+        products: [
+          savedProducts[i],
+          savedProducts[(i + 1) % savedProducts.length],
+        ],
         user: savedUsers[i % savedUsers.length],
       })
     );

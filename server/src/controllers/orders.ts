@@ -23,9 +23,10 @@ export const getOrders = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'Orders not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Orders not found' },
+      });
       return;
     }
 
@@ -64,7 +65,10 @@ export const getOrderById = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'Order not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Order not found' },
+      });
       return;
     }
 
@@ -103,9 +107,10 @@ export const addOrder = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'New order was not created' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'New order was not created' },
+      });
       return;
     }
 
@@ -145,9 +150,10 @@ export const updateOrder = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'Order was not updated' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Order was not updated' },
+      });
       return;
     }
 
@@ -158,7 +164,9 @@ export const updateOrder = async (req: Request, res: Response) => {
       requestInfo: getRequestInfo(req),
     });
 
-    res.status(200).send({ status: ResponseStatus.SUCCESS, data: updatedOrder });
+    res
+      .status(200)
+      .send({ status: ResponseStatus.SUCCESS, data: updatedOrder });
   } catch (error) {
     logger.log({
       level: LOG_LEVEL.ERROR,
@@ -186,9 +194,10 @@ export const deleteOrder = async (req: Request, res: Response) => {
         requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'Order not deleted' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Order not deleted' },
+      });
       return;
     }
 

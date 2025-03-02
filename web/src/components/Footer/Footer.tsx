@@ -12,7 +12,9 @@ export default async function Footer({ lang = fallbackLng }: IFooterProps) {
     <footer className="border-t py-4">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <p>{getFormattedDateAndTime(lang, 'YYYY')} © All right are reserved</p>
+          <p>
+            {getFormattedDateAndTime(lang, 'YYYY')} © All right are reserved
+          </p>
           <Language lang={lang} />
         </div>
       </div>

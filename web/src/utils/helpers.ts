@@ -9,14 +9,19 @@ import { ApiClient, ApiOptionsType, Lang } from './types';
 
 dayjs.extend(customParseFormat);
 
-export const getFormattedDateAndTime = (lang: Lang, format: string, date?: Date) => {
+export const getFormattedDateAndTime = (
+  lang: Lang,
+  format: string,
+  date?: Date
+) => {
   const currentLanguage = {
     [Lang.EN]: en,
     [Lang.UA]: ua,
     [Lang.RU]: ru,
   };
 
-  return typeof dayjs().locale(currentLanguage[fallbackLng]).format === 'function'
+  return typeof dayjs().locale(currentLanguage[fallbackLng]).format ===
+    'function'
     ? dayjs(date ? date : new Date())
         .locale(currentLanguage[lang] || currentLanguage[fallbackLng])
         .format(format)

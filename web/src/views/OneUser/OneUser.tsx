@@ -6,7 +6,11 @@ import { fallbackLng } from '@/i18n/utils';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getAuthorizedUser, logout } from '@/store/slices/authSlice';
 import { getLang } from '@/store/slices/langSlice';
-import { getSelectedUser, getUser, getUsersStatus } from '@/store/slices/usersSlice';
+import {
+  getSelectedUser,
+  getUser,
+  getUsersStatus,
+} from '@/store/slices/usersSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -75,7 +79,9 @@ export default function OneUser({ userId }: { userId: string }) {
             unoptimized={true}
           />
           <p>
-            <Link href={`mailto:${selectedUser.email}`}>{selectedUser.email}</Link>
+            <Link href={`mailto:${selectedUser.email}`}>
+              {selectedUser.email}
+            </Link>
           </p>
         </div>
       </div>

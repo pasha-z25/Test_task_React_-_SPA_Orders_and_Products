@@ -6,7 +6,10 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { initReactI18next, useTranslation as useTranslationOrg } from 'react-i18next';
+import {
+  initReactI18next,
+  useTranslation as useTranslationOrg,
+} from 'react-i18next';
 import { cookieName, defaultNS, getOptions, languages } from './utils';
 
 const runsOnServerSide = typeof window === 'undefined';
@@ -16,7 +19,8 @@ i18next
   .use(LanguageDetector)
   .use(
     resourcesToBackend(
-      (language: Lang, namespace: string) => import(`./locales/${language}/${namespace}.json`)
+      (language: Lang, namespace: string) =>
+        import(`./locales/${language}/${namespace}.json`)
     )
   )
   .init({
@@ -28,12 +32,18 @@ i18next
     preload: runsOnServerSide ? languages : [],
   });
 
-export function useTranslation(lng: Lang, ns = defaultNS, options: AnyObj = {}) {
+export function useTranslation(
+  lng: Lang,
+  ns = defaultNS,
+  options: AnyObj = {}
+) {
   const [cookies, setCookie] = useCookies([cookieName]);
   const ret = useTranslationOrg(ns, options);
   const { i18n } = ret;
 
-  const [activeLng, setActiveLng] = useState<string | undefined>(i18n.resolvedLanguage);
+  const [activeLng, setActiveLng] = useState<string | undefined>(
+    i18n.resolvedLanguage
+  );
 
   useEffect(() => {
     if (!runsOnServerSide && activeLng !== i18n.resolvedLanguage) {

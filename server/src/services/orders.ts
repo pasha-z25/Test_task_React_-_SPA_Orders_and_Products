@@ -5,7 +5,10 @@ import { Order } from '../db/entities';
 const orderRepository: Repository<Order> = AppDataSource.getRepository(Order);
 
 export const getOrder = async (orderId: number) => {
-  return await orderRepository.findOne({ where: { id: orderId }, relations: ['user', 'products'] });
+  return await orderRepository.findOne({
+    where: { id: orderId },
+    relations: ['user', 'products'],
+  });
 };
 
 export const getOrders = async () => {
@@ -17,7 +20,10 @@ export const addOrder = async (orderData: Partial<Order>) => {
   return await orderRepository.save(order);
 };
 
-export const updateOrder = async (orderId: number, orderData: Partial<Order>) => {
+export const updateOrder = async (
+  orderId: number,
+  orderData: Partial<Order>
+) => {
   await orderRepository.update(orderId, orderData);
   return await getOrder(orderId);
 };

@@ -35,9 +35,14 @@ export function getLocalIP(): string | null {
 export function serverListenerLogger(PORT: string | number): void {
   const localURL = `http://localhost:${PORT}`;
   const networkIP = getLocalIP();
-  const networkURL = networkIP ? `http://${networkIP}:${PORT}` : 'Not available';
+  const networkURL = networkIP
+    ? `http://${networkIP}:${PORT}`
+    : 'Not available';
 
-  console.log('\x1b[36m%s\x1b[0m', '   Express.js 🚀 Server running successfully');
+  console.log(
+    '\x1b[36m%s\x1b[0m',
+    '   Express.js 🚀 Server running successfully'
+  );
   console.log(`   - Local:        ${localURL}`);
   console.log(`   - Network:      ${networkURL}`);
   console.log('   ');

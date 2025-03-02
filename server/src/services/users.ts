@@ -4,7 +4,10 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../db';
 import { User } from '../db/entities';
-import { BCRYPT_SALT_ROUNDS, CUSTOM_DATE_TIME_FORMAT } from '../utils/constants';
+import {
+  BCRYPT_SALT_ROUNDS,
+  CUSTOM_DATE_TIME_FORMAT,
+} from '../utils/constants';
 
 dayjs.extend(customParseFormat);
 
@@ -50,7 +53,10 @@ export const addUser = async ({
   return await userRepository.save(newUser);
 };
 
-export const updateUser = async (userId: number, updatedData: Partial<User>) => {
+export const updateUser = async (
+  userId: number,
+  updatedData: Partial<User>
+) => {
   await userRepository.update(userId, updatedData);
   return await getUser(userId);
 };
