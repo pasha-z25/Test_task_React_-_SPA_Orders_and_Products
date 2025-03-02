@@ -14,6 +14,7 @@ services:
     command: npm run dev
     environment:
       - NODE_ENV=development
+      - WATCHPACK_POLLING=true
     # develop:
     #   watch:
     #     - action: sync
