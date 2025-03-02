@@ -1,25 +1,14 @@
 'use client';
 
-import { fallbackLng } from '@/i18n/utils';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { getAuthState, login } from '@/store/slices/authSlice';
-import { getLang } from '@/store/slices/langSlice';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useAppDispatch } from '@/store';
+import { login } from '@/store/slices/authSlice';
+import { useState } from 'react';
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const dispatch = useAppDispatch();
-  const lang = useAppSelector(getLang) || fallbackLng;
-  const { user, token } = useAppSelector(getAuthState);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!!user && !!token) {
-      router.push(`/${lang}`);
-    }
-  }, [user, token]);
+  // const state = useAppSelector((state) => state.auth);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const submitHandler = (event: any) => {

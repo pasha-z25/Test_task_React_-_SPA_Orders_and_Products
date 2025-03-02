@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type AnyObj = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
@@ -17,11 +17,29 @@ export enum Lang {
   RU = 'ru',
 }
 
-export type ApiOptionsType = {
+export interface ApiOptionsType extends RequestInit {
   method?: string;
   headers?: HeadersInit;
   body?: BodyInit;
-};
+}
+
+export interface ApiClient {
+  (path: string, options?: ApiOptionsType): Promise<any>;
+  get: (endpoint: string, config?: ApiOptionsType) => Promise<any>;
+  post: (endpoint: string, body: BodyInit, config?: ApiOptionsType) => Promise<any>;
+  delete: (endpoint: string, config?: ApiOptionsType) => Promise<any>;
+  patch: (endpoint: string, body: BodyInit, config?: ApiOptionsType) => Promise<any>;
+}
+
+export interface ApiEndpoints {
+  authLogin: string;
+  allUsers: string;
+  oneUser: (id: string | number) => string;
+  allOrders: string;
+  oneOrder: (id: string | number) => string;
+  allProducts: string;
+  oneProduct: (id: string | number) => string;
+}
 
 export enum UserGender {
   MALE = 'male',

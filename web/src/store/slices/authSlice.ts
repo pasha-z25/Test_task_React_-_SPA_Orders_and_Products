@@ -66,3 +66,5 @@ export const { logout } = authSlice.actions;
 export default authSlice.reducer;
 
 export const getAuthorizedUser = (state: { auth: AuthState }) => state.auth.user;
+
+export const getAuthState = (state: { auth: AuthState }) => state.auth;

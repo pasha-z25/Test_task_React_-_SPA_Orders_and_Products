@@ -1,6 +1,7 @@
 {
   "common": {
     "search": "Search",
+    "disabled": "Disabled",
     "email": "E-mail"
   },
   "menu": {
@@ -11,6 +12,7 @@
     "settings": "Settings"
   },
   "button": {
+    "logout": "Logout",
     "readMore": "Read more",
     "more": "More",
     "view": "View"

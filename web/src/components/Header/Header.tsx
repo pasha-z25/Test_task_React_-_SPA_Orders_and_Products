@@ -24,7 +24,7 @@ export default function Header() {
 
   return (
     <header className="py-4 shadow-lg">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <RiShieldUserFill size={70} color="green" />

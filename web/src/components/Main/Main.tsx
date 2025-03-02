@@ -13,7 +13,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
   return (
     <div className={classNames('wrapper grid', { 'grid-cols-[350px_auto]': !isAuthRoute })}>
       {!isAuthRoute && <Aside />}
-      <main>{children}</main>
+      <main className="bg-slate-100">{children}</main>
     </div>
   );
 }

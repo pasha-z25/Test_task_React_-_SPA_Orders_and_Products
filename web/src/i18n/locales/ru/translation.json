@@ -1,6 +1,7 @@
 {
   "common": {
     "search": "Поиск",
+    "disabled": "Отключеный",
     "email": "E-mail"
   },
   "menu": {
@@ -11,6 +12,7 @@
     "settings": "Настройки"
   },
   "button": {
+    "logout": "Выйти",
     "readMore": "Читать больше",
     "more": "Детальнее",
     "view": "Смотреть"

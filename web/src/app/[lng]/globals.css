@@ -29,3 +29,7 @@ body {
 * {
   transition: all 0.3s linear;
 }
+
+main {
+  position: relative;
+}

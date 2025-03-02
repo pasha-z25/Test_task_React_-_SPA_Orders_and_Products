@@ -1,10 +1,11 @@
+import { fallbackLng } from '@/i18n/utils';
 import dayjs from 'dayjs';
 import en from 'dayjs/locale/en';
 import ru from 'dayjs/locale/ru';
 import ua from 'dayjs/locale/uk';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { BROWSER_API_URL, DOCKER_API_URL } from './constants';
-import { ApiOptionsType, Lang } from './types';
+import { ApiClient, ApiOptionsType, Lang } from './types';
 
 dayjs.extend(customParseFormat);
 
@@ -15,11 +16,11 @@ export const getFormattedDateAndTime = (lang: Lang, format: string, date?: Date)
     [Lang.RU]: ru,
   };
 
-  return typeof dayjs().format === 'function'
+  return typeof dayjs().locale(currentLanguage[fallbackLng]).format === 'function'
     ? dayjs(date ? date : new Date())
-        .locale(currentLanguage[lang])
+        .locale(currentLanguage[lang] || currentLanguage[fallbackLng])
         .format(format)
-    : dayjs(date ? date : new Date()).toString();
+    : dayjs(date ? date : new Date()).toISOString();
 };
 
 export const capitalizeFirstLetter = (string: string) =>
@@ -29,14 +30,14 @@ export const getApiUrl = () => {
   return typeof window === 'undefined' ? DOCKER_API_URL : BROWSER_API_URL;
 };
 
-export const client = async (path: string, options?: ApiOptionsType) => {
+export const client: ApiClient = async (path, options) => {
   const REQUEST_URL = `${getApiUrl()}${path}`;
 
-  const headers = {
+  const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
 
-  const config = {
+  const config: ApiOptionsType = {
     method: options?.body ? 'POST' : 'GET',
     ...options,
     headers: {
@@ -69,10 +70,6 @@ client.post = function (endpoint: string, body: BodyInit, config = {}) {
 
 client.delete = function (endpoint: string, config = {}) {
   return client(endpoint, { ...config, method: 'DELETE' });
-};
-
-client.put = function (endpoint: string, body: BodyInit, config = {}) {
-  return client(endpoint, { ...config, body, method: 'PUT' });
 };
 
 client.patch = function (endpoint: string, body: BodyInit, config = {}) {

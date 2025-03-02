@@ -7,10 +7,11 @@ import {
   getOrders as getOrdersHelper,
   updateOrder as updateOrderHelper,
 } from '../services';
+import { getRequestInfo } from '../utils/helpers';
 import { LOG_LEVEL, logger } from '../utils/logger';
 import { ResponseStatus } from '../utils/types';
 
-export const getOrders = async (_req: Request, res: Response) => {
+export const getOrders = async (req: Request, res: Response) => {
   try {
     const orders = await getOrdersHelper();
 
@@ -19,6 +20,7 @@ export const getOrders = async (_req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
         message: '⚠️ Orders not found',
+        requestInfo: getRequestInfo(req),
       });
 
       res
@@ -31,7 +33,7 @@ export const getOrders = async (_req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
       message: 'ℹ️ Orders found successfully',
-      orders,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: orders });
@@ -40,6 +42,7 @@ export const getOrders = async (_req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 
@@ -58,6 +61,7 @@ export const getOrderById = async (req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
         message: `⚠️ Order with ID ${orderId} not found`,
+        requestInfo: getRequestInfo(req),
       });
 
       res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'Order not found' } });
@@ -68,7 +72,7 @@ export const getOrderById = async (req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
       message: 'ℹ️ Order found successfully',
-      order,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: order });
@@ -77,6 +81,7 @@ export const getOrderById = async (req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 
@@ -95,6 +100,7 @@ export const addOrder = async (req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
         message: '⚠️ New order was not created',
+        requestInfo: getRequestInfo(req),
       });
 
       res
@@ -107,7 +113,7 @@ export const addOrder = async (req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
       message: 'ℹ️ New order was created',
-      order: newOrder,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: newOrder });
@@ -116,6 +122,7 @@ export const addOrder = async (req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 
@@ -135,6 +142,7 @@ export const updateOrder = async (req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
         message: '⚠️ Order was not updated',
+        requestInfo: getRequestInfo(req),
       });
 
       res
@@ -147,7 +155,7 @@ export const updateOrder = async (req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
       message: 'ℹ️ Order was updated',
-      order: updatedOrder,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: updatedOrder });
@@ -156,6 +164,7 @@ export const updateOrder = async (req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 
@@ -174,6 +183,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:orders',
         message: `⚠️ Order with ID ${orderId} not deleted`,
+        requestInfo: getRequestInfo(req),
       });
 
       res
@@ -186,7 +196,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:orders',
       message: 'ℹ️ Order deleted successfully',
-      result,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: result });
@@ -195,6 +205,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:orders',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 

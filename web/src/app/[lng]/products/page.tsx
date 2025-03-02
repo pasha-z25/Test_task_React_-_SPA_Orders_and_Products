@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Products() {
-  const products: Product[] = await client('/products');
+  const products: Product[] = await client.get('/products');
 
   return (
     <section>

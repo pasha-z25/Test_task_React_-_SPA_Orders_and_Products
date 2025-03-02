@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import os from 'os';
 
 export function getRandomInt(min: number, max: number) {
@@ -5,6 +6,19 @@ export function getRandomInt(min: number, max: number) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export const getRequestInfo = (req: Request) => ({
+  method: req.method,
+  url: req.originalUrl,
+  baseUrl: req.baseUrl,
+  referer: req.get('Referer'),
+  origin: req.get('Origin'),
+  userAgent: req.get('User-Agent'),
+  secure: req.secure,
+  query: req.query,
+  headers: req.headers,
+  body: req.body,
+});
 
 export function getLocalIP(): string | null {
   const interfaces = os.networkInterfaces();

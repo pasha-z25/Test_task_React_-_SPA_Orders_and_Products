@@ -18,10 +18,12 @@ export default function Navigation() {
   const { t } = useTranslation(lang);
   const pathname = usePathname();
 
+  const homePath = `/${lang}`;
+
   const navList: NavItem[] = [
     {
       title: t('menu.orders'),
-      path: `/${lang}/orders`,
+      path: `/${lang}`,
     },
     {
       title: t('menu.groups'),
@@ -46,7 +48,7 @@ export default function Navigation() {
       <li
         key={index}
         className={classNames('border-b-4 border-transparent hover:border-green-700', {
-          ['active !border-green-700']: pathname.includes(item.path),
+          ['active !border-green-700']: pathname.includes(item.path) && item.path !== homePath,
         })}
       >
         <Link className="nav-link" href={item.path}>
