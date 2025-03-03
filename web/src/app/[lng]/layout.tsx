@@ -3,7 +3,6 @@ import type { Lang } from '@/utils/types';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
-import Aside from '@/components/Aside';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Main from '@/components/Main';
@@ -32,18 +31,22 @@ export interface ILayoutProps {
   }>;
 }
 
-export default async function RootLayout({ children, params }: Readonly<ILayoutProps>) {
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<ILayoutProps>) {
   const { lng } = await params;
   return (
     <html lang={lng}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <StoreProvider>
-          <Header />
-          <div className="wrapper grid grid-cols-[250px_auto]">
-            <Aside />
+          <div className="body-wrapper">
+            <Header />
             <Main>{children}</Main>
+            <Footer lang={lng} />
           </div>
-          <Footer lang={lng} />
         </StoreProvider>
       </body>
     </html>

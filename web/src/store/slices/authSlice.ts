@@ -9,13 +9,16 @@ interface LoginPayload {
 
 export const login = createAsyncThunk(
   'auth/login',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async (payload: LoginPayload, { extra: { client, apiEndpoints } }: { extra: any }) => {
+  async (
+    payload: LoginPayload,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { extra: { client, apiEndpoints } }: { extra: any }
+  ) => {
     return await client.post(apiEndpoints.authLogin, JSON.stringify(payload));
   }
 );
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
   token: string | null;
   error: string | undefined | null;
@@ -64,3 +67,8 @@ const authSlice = createSlice({
 export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
+
+export const getAuthorizedUser = (state: { auth: AuthState }) =>
+  state.auth.user;
+
+export const getAuthState = (state: { auth: AuthState }) => state.auth;

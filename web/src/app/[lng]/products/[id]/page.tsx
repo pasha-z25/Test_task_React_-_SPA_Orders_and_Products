@@ -3,7 +3,7 @@ import type { IPageProps, Product } from '@/utils/types';
 
 export default async function Product({ params }: IPageProps) {
   const { id } = await params;
-  const product: Product = await client(`/products/${id}`);
+  const product: Product = await client.get(`/products/${id}`);
 
   return (
     <section>

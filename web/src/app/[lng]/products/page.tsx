@@ -1,28 +1,9 @@
-import { client } from '@/utils/helpers';
-import type { Product } from '@/utils/types';
-import Image from 'next/image';
-import Link from 'next/link';
+import { fallbackLng } from '@/i18n/utils';
+import type { IPageProps } from '@/utils/types';
+import { AllProducts } from '@/views';
 
-export default async function Products() {
-  const products: Product[] = await client('/products');
+export default async function Products({ params }: IPageProps) {
+  const { lng = fallbackLng } = await params;
 
-  return (
-    <section>
-      <ul>
-        {!!products.length &&
-          products.map((product: Product) => (
-            <li key={product.id}>
-              <Image
-                src={product.photo}
-                alt={product.title}
-                width="250"
-                height="250"
-                unoptimized={true}
-              />
-              <Link href={`/products/${product.id}`}>{product.title}</Link>
-            </li>
-          ))}
-      </ul>
-    </section>
-  );
+  return <AllProducts lang={lng} />;
 }

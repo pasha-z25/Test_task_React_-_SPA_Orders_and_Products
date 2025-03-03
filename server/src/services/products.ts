@@ -2,14 +2,18 @@ import { Repository } from 'typeorm';
 import { AppDataSource } from '../db';
 import { Product } from '../db/entities';
 
-const productRepository: Repository<Product> = AppDataSource.getRepository(Product);
+const productRepository: Repository<Product> =
+  AppDataSource.getRepository(Product);
 
 export const getProducts = async () => {
-  return await productRepository.find();
+  return await productRepository.find({ relations: ['order'] });
 };
 
 export const getProduct = async (productId: number) => {
-  return await productRepository.findOne({ where: { id: productId } });
+  return await productRepository.findOne({
+    where: { id: productId },
+    relations: ['order'],
+  });
 };
 
 export const addProduct = async (product: Partial<Product>) => {
@@ -17,7 +21,10 @@ export const addProduct = async (product: Partial<Product>) => {
   return await productRepository.save(newProduct);
 };
 
-export const updateProduct = async (productId: number, updatedData: Partial<Product>) => {
+export const updateProduct = async (
+  productId: number,
+  updatedData: Partial<Product>
+) => {
   await productRepository.update(productId, updatedData);
   return await getProduct(productId);
 };

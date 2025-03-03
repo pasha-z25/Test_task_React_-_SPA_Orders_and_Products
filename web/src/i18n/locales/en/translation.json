@@ -1,12 +1,18 @@
 {
   "common": {
     "search": "Search",
+    "disabled": "Disabled",
     "email": "E-mail"
   },
   "menu": {
-    "main": "Main"
+    "orders": "Orders",
+    "groups": "Groups",
+    "products": "Products",
+    "users": "Users",
+    "settings": "Settings"
   },
   "button": {
+    "logout": "Logout",
     "readMore": "Read more",
     "more": "More",
     "view": "View"

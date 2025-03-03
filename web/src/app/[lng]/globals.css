@@ -5,6 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --header-height: 102px;
+  --footer-height: 102px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,4 +20,26 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.body-wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+}
+
+* {
+  transition: all 0.3s linear;
+}
+
+main {
+  position: relative;
+  max-height: calc(100dvh - var(--header-height) - var(--footer-height));
+  overflow-y: auto;
+}
+
+.crop-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

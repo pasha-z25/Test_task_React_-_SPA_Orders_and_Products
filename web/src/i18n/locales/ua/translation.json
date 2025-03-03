@@ -1,12 +1,18 @@
 {
   "common": {
     "search": "Пошук",
+    "disabled": "Відключений",
     "email": "E-mail"
   },
   "menu": {
-    "main": "Головна"
+    "orders": "Замовлення",
+    "groups": "Групи",
+    "products": "Продукти",
+    "users": "Користувачі",
+    "settings": "Налаштування"
   },
   "button": {
+    "logout": "Вийти",
     "readMore": "Читати більше",
     "more": "Детальніше",
     "view": "Дивитись"

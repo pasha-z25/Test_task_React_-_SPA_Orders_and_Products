@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { authRoutes } from './utils/constants';
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('token');
@@ -21,20 +22,12 @@ export function middleware(req: NextRequest) {
   const segments = pathname.split('/').filter(Boolean);
   const locale = segments[0];
 
-  const authRoutes = ['login', 'register'];
-
   const isAuthRoute = segments.length > 1 && authRoutes.includes(segments[1]);
   const isProtectedRoute = !isAuthRoute;
 
-  console.log('!!! middleware', {
-    token,
-    locale,
-    isProtectedRoute,
-  });
-
-  // if (isProtectedRoute && !token) {
-  //   return NextResponse.redirect(new URL(`/${locale}/login`, req.url));
-  // }
+  if (isProtectedRoute && !token) {
+    return NextResponse.redirect(new URL(`/${locale}/login`, req.url));
+  }
 
   return NextResponse.next();
 }

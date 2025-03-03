@@ -22,12 +22,12 @@ export class User {
   avatar!: string;
 
   @Column({ nullable: true, type: 'varchar' })
-  phone?: string;
+  phone?: string | null;
 
   @Column({ nullable: true, type: 'varchar' })
-  address?: string;
+  address?: string | null;
 
-  @OneToMany(() => Order, (order) => order.user)
+  @OneToMany(() => Order, (order) => order.user, { cascade: true })
   orders!: Order[];
 
   @Column('timestamp')

@@ -1,14 +1,10 @@
-import { client } from '@/utils/helpers';
-import type { IPageProps, User } from '@/utils/types';
+import type { IPageProps } from '@/utils/types';
+import { OneUser } from '@/views';
 
 export default async function User({ params }: IPageProps) {
   const { id } = await params;
-  const user: User = await client(`/users/${id}`);
 
-  return (
-    <section>
-      User page
-      <p>{user.name}</p>
-    </section>
-  );
+  if (!id) return null;
+
+  return <OneUser userId={id} />;
 }
