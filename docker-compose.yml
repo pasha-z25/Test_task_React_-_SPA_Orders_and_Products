@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   web:
     build: ./web
@@ -6,7 +8,8 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - server
+      server:
+        condition: service_started
     networks:
       - app_network
     volumes:
@@ -32,8 +35,14 @@ services:
     container_name: backend_server
     ports:
       - '8888:8888'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8888']
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - NODE_ENV=development
       - DB_HOST=db
@@ -62,6 +71,12 @@ services:
     image: postgres:15
     container_name: postgres_db_server
     restart: always
+    stop_grace_period: 30s
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
@@ -75,6 +90,7 @@ services:
 
 networks:
   app_network:
+    driver: bridge
 
 volumes:
   pg_data:

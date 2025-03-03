@@ -12,7 +12,7 @@ dayjs.extend(customParseFormat);
 export const getFormattedDateAndTime = (
   lang: Lang,
   format: string,
-  date?: Date
+  date?: Date | string
 ) => {
   const currentLanguage = {
     [Lang.EN]: en,

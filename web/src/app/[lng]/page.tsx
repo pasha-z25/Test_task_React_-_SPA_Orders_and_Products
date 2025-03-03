@@ -6,6 +6,8 @@ import type { IPageProps, Order } from '@/utils/types';
 import Link from 'next/link';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
+// import { AllOrders } from '@/views';
+
 export default async function Home({ params }: IPageProps) {
   const { lng = fallbackLng } = await params;
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -27,7 +29,7 @@ export default async function Home({ params }: IPageProps) {
               orders.map((order: Order) => (
                 <li key={order.id}>
                   <Link href={`/${lng}/orders/${order.id}`}>
-                    <Card>
+                    <Card hasHover={true}>
                       <h3>{order.title}</h3>
                       <p>{order.description}</p>
                     </Card>

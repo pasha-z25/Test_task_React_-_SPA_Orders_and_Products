@@ -15,15 +15,9 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import authReducer, { AuthState } from './slices/authSlice';
-import langReducer, { LangState } from './slices/langSlice';
-import usersReducer, { UsersState } from './slices/usersSlice';
-
-export interface IState {
-  auth: AuthState;
-  lang: LangState;
-  users: UsersState;
-}
+import authReducer from './slices/authSlice';
+import langReducer from './slices/langSlice';
+import usersReducer from './slices/usersSlice';
 
 const persistConfig = {
   key: 'root',

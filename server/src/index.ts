@@ -39,7 +39,7 @@ AppDataSource.initialize()
   .then(() => {
     logger.log({
       level: LOG_LEVEL.INFO,
-      scope: 'db:initialize',
+      scope: 'db:initialize:app',
       message: '📦 Database connected successfully',
     });
     app.listen(PORT, () => serverListenerLogger(PORT));
@@ -47,7 +47,7 @@ AppDataSource.initialize()
   .catch((error: unknown) => {
     logger.log({
       level: LOG_LEVEL.ERROR,
-      scope: 'db:initialize',
+      scope: 'db:initialize:app',
       message: '❌ Database connection failed',
       error,
     });

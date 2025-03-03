@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
+import { LOG_LEVEL, logger } from '../utils/logger';
 import { Order, Product, User } from './entities';
 
 export const AppDataSource = new DataSource({
@@ -13,3 +14,27 @@ export const AppDataSource = new DataSource({
   logging: process.env.NODE_ENV === 'testing',
   entities: [User, Order, Product],
 });
+
+const initializeWithRetry = async (retries = 5, delay = 1000) => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await AppDataSource.initialize();
+      logger.log({
+        level: LOG_LEVEL.INFO,
+        scope: 'db:initialize:retry',
+        message: `📦 Database connected successfully in ${i + 1} attempt`,
+      });
+      return;
+    } catch (error: any) {
+      logger.log({
+        level: LOG_LEVEL.ERROR,
+        scope: 'db:initialize:retry',
+        message: `❌ Database connection attempt ${i + 1} failed:`,
+      });
+      if (i === retries - 1) throw error;
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+  }
+};
+
+export { initializeWithRetry };

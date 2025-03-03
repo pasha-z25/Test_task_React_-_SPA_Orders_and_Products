@@ -41,7 +41,7 @@ export default function AllUsers() {
 
     return (
       <>
-        <div className="grid grid-cols-[auto_1fr] grid-rows-2 gap-4">
+        <div className="grid grid-cols-[auto_1fr] grid-rows-2 gap-4 flex-1">
           <Image
             src={user.avatar}
             alt={user.name}
@@ -51,20 +51,33 @@ export default function AllUsers() {
             className="row-span-2"
           />
           <div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mb-2">
               <h2 className="text-xl font-bold">{user.name}</h2>{' '}
-              <span>gender: {user.gender}</span>
+              <span className="text-xs">Gender: {user.gender}</span>
             </div>
-            <p>
-              Registered: {getFormattedDateAndTime(lang, USER_CARD_DATE_FORMAT)}
+            <p className="text-xs">
+              <span>Registered:</span>{' '}
+              {getFormattedDateAndTime(
+                lang,
+                USER_CARD_DATE_FORMAT,
+                user.registered
+              )}
             </p>
           </div>
           <div>
             <div className="flex items-center gap-4">
-              <p>email: {user.email}</p>
-              {!!user.phone && <p>phone: {user.phone}</p>}
+              <p>Email: {user.email}</p>
+              {!!user.phone && (
+                <p>
+                  <span>Phone:</span> {user.phone}
+                </p>
+              )}
             </div>
-            {!!user.address && <p>phone: {user.address}</p>}
+            {!!user.address && (
+              <p>
+                <span>Address:</span> {user.address}
+              </p>
+            )}
           </div>
         </div>
         {!isActiveUser && (
@@ -95,6 +108,7 @@ export default function AllUsers() {
                     <Card
                       className="flex items-center justify-between"
                       disabled={!user.active}
+                      hasHover={true}
                     >
                       {renderUserCard(user)}
                     </Card>

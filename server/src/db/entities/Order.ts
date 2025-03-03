@@ -25,9 +25,6 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders)
   user!: User;
 
-  @OneToMany(() => Product, (product) => product.order, {
-    cascade: true,
-    eager: true,
-  })
+  @OneToMany(() => Product, (product) => product.order, { cascade: true })
   products!: Product[];
 }

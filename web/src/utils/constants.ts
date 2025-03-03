@@ -13,12 +13,12 @@ export const authRoutes = ['login', 'register'];
 
 export const apiEndpoints: ApiEndpoints = {
   authLogin: '/auth/login',
-  allUsers: '/users',
-  oneUser: (id: string | number) => `/users/${id}`,
   allOrders: '/orders',
   oneOrder: (id: string | number) => `/orders/${id}`,
   allProducts: '/products',
   oneProduct: (id: string | number) => `/products/${id}`,
+  allUsers: '/users',
+  oneUser: (id: string | number) => `/users/${id}`,
 };
 
 export const HEADER_DATE_FORMAT = 'DD MMM, YYYY 🕒 HH:mm';

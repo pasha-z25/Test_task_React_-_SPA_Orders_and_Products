@@ -1,11 +1,15 @@
 import { User } from '@/utils/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  isRejected,
+  isPending,
+} from '@reduxjs/toolkit';
+import { BasicApiState } from '@/store/types';
 
-export interface UsersState {
+export interface UsersState extends BasicApiState {
   allUsers: User[] | null;
   selectedUser: User | null;
-  error: string | undefined | null;
-  loading: boolean;
 }
 
 const initialState: UsersState = {
@@ -61,29 +65,38 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(getUsers.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(getUsers.fulfilled, (state, action) => {
-      state.allUsers = action.payload;
-      state.error = null;
-      state.loading = false;
-    });
-    builder.addCase(getUsers.rejected, (state, action) => {
-      state.error = action.error.message;
-      state.loading = false;
-    });
-
-    builder.addCase(getUser.fulfilled, (state, action) => {
-      state.selectedUser = action.payload;
-      state.error = null;
-      state.loading = false;
-    });
+    builder
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.allUsers = action.payload;
+        state.error = null;
+        state.loading = false;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.selectedUser = action.payload;
+        state.error = null;
+        state.loading = false;
+      })
+      .addCase(addUser.fulfilled, (state, action) => {
+        console.log('!!! Action addUser', action);
+        state.error = null;
+        state.loading = false;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        console.log('!!! Action updateUser', action);
+        // state.selectedUser = action.payload;
+        state.error = null;
+        state.loading = false;
+      })
+      .addMatcher(isPending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addMatcher(isRejected, (state, action) => {
+        state.error = action.error.message;
+        state.loading = false;
+      });
   },
 });
-
-export const {} = usersSlice.actions;
 
 export default usersSlice.reducer;
 

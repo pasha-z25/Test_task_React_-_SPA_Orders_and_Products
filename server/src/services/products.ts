@@ -6,11 +6,14 @@ const productRepository: Repository<Product> =
   AppDataSource.getRepository(Product);
 
 export const getProducts = async () => {
-  return await productRepository.find();
+  return await productRepository.find({ relations: ['order'] });
 };
 
 export const getProduct = async (productId: number) => {
-  return await productRepository.findOne({ where: { id: productId } });
+  return await productRepository.findOne({
+    where: { id: productId },
+    relations: ['order'],
+  });
 };
 
 export const addProduct = async (product: Partial<Product>) => {
