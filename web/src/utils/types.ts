@@ -11,6 +11,11 @@ export interface IPageProps {
   searchParams: Promise<AnyObj>;
 }
 
+export interface IViewProps {
+  lang: Lang;
+  id?: string | number;
+}
+
 export enum Lang {
   EN = 'en',
   UA = 'ua',
@@ -68,6 +73,7 @@ export interface Product {
   };
   price: { value: number; symbol: string; isDefault: boolean }[];
   date: string;
+  order: Order;
 }
 
 export interface Order {
@@ -75,7 +81,7 @@ export interface Order {
   title: string;
   date: string;
   description: string;
-  products: number[];
+  products: Product[];
   user: User;
 }
 

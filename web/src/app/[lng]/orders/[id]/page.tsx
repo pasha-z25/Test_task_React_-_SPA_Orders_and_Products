@@ -1,14 +1,10 @@
-import { client } from '@/utils/helpers';
+import { fallbackLng } from '@/i18n/utils';
 import type { IPageProps, Order } from '@/utils/types';
 
-export default async function Order({ params }: IPageProps) {
-  const { id } = await params;
-  const order: Order = await client.get(`/orders/${id}`);
+import { OneOrder } from '@/views';
 
-  return (
-    <section>
-      Order page
-      <p>{order.title}</p>
-    </section>
-  );
+export default async function Order({ params }: IPageProps) {
+  const { id, lng = fallbackLng } = await params;
+
+  return <OneOrder id={id} lang={lng} />;
 }

@@ -130,7 +130,7 @@ const seedDatabase = async () => {
       },
       price: [
         { value: getRandomInt(100, 1000), symbol: 'USD', isDefault: true },
-        { value: getRandomInt(100, 1000), symbol: 'UAH', isDefault: false },
+        { value: getRandomInt(100, 10000), symbol: 'UAH', isDefault: false },
       ],
       date: dayjs(new Date(getRandomInt(startTime, currentTime))).format(
         CUSTOM_DATE_TIME_FORMAT

@@ -2,15 +2,13 @@
 
 import { Card, Error, Loader } from '@/components/UIElements';
 import { useTranslation } from '@/i18n/client';
-import { fallbackLng } from '@/i18n/utils';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { getLang } from '@/store/slices/langSlice';
 import {
   getAllUsers,
   getUsers,
   getUsersStatus,
 } from '@/store/slices/usersSlice';
-import { User } from '@/utils/types';
+import type { IViewProps, User } from '@/utils/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaUsers } from 'react-icons/fa';
@@ -20,9 +18,8 @@ import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
 import { getFormattedDateAndTime } from '@/utils/helpers';
 import { useEffect } from 'react';
 
-export default function AllUsers() {
+export default function AllUsers({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
-  const lang = useAppSelector(getLang) || fallbackLng;
   const { loading, error } = useAppSelector(getUsersStatus);
   const users = useAppSelector(getAllUsers);
 

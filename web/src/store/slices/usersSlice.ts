@@ -29,9 +29,9 @@ export const getUsers = createAsyncThunk(
 
 export const getUser = createAsyncThunk(
   'users/getUser',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (
     payload: string | number,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
     return await client.get(apiEndpoints.oneUser(payload));
@@ -40,9 +40,9 @@ export const getUser = createAsyncThunk(
 
 export const addUser = createAsyncThunk(
   'users/addUser',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (
     payload: BodyInit,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
     return await client.post(apiEndpoints.allUsers, payload);
@@ -51,9 +51,9 @@ export const addUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'users/updateUser',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (
     payload: BodyInit,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
     return await client.patch(apiEndpoints.allUsers, payload);

@@ -25,10 +25,10 @@ export default function Navigation() {
       title: t('menu.orders'),
       path: `/${lang}`,
     },
-    {
-      title: t('menu.groups'),
-      path: `/${lang}/groups`,
-    },
+    // {
+    //   title: t('menu.groups'),
+    //   path: `/${lang}/groups`,
+    // },
     {
       title: t('menu.products'),
       path: `/${lang}/products`,
@@ -37,10 +37,10 @@ export default function Navigation() {
       title: t('menu.users'),
       path: `/${lang}/users`,
     },
-    {
-      title: t('menu.settings'),
-      path: `/${lang}/settings`,
-    },
+    // {
+    //   title: t('menu.settings'),
+    //   path: `/${lang}/settings`,
+    // },
   ];
 
   const renderNavItem = (item: NavItem, index: number) => {

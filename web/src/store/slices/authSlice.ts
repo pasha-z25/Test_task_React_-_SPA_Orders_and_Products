@@ -9,9 +9,9 @@ interface LoginPayload {
 
 export const login = createAsyncThunk(
   'auth/login',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (
     payload: LoginPayload,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
     return await client.post(apiEndpoints.authLogin, JSON.stringify(payload));

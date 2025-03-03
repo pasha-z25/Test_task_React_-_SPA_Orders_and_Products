@@ -5,7 +5,7 @@ import ru from 'dayjs/locale/ru';
 import ua from 'dayjs/locale/uk';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { BROWSER_API_URL, DOCKER_API_URL } from './constants';
-import { ApiClient, ApiOptionsType, Lang } from './types';
+import { ApiClient, ApiOptionsType, Lang, Product } from './types';
 
 dayjs.extend(customParseFormat);
 
@@ -26,6 +26,25 @@ export const getFormattedDateAndTime = (
         .locale(currentLanguage[lang] || currentLanguage[fallbackLng])
         .format(format)
     : dayjs(date ? date : new Date()).toISOString();
+};
+
+export const calculateTotalByCurrency = (
+  products: Product[]
+): Record<string, number> => {
+  if (!products?.length) {
+    return {};
+  }
+
+  const totals: Record<string, number> = {};
+
+  products.forEach((product) => {
+    if (!product.price?.length) return;
+    product.price.forEach((price) => {
+      totals[price.symbol] = (totals[price.symbol] || 0) + price.value;
+    });
+  });
+
+  return totals;
 };
 
 export const capitalizeFirstLetter = (string: string) =>

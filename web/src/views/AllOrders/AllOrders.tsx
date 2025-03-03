@@ -2,22 +2,22 @@
 
 import { Card, Loader, Error } from '@/components/UIElements';
 import { useTranslation } from '@/i18n/client';
-import { fallbackLng } from '@/i18n/utils';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { getLang } from '@/store/slices/langSlice';
 import {
   getAllOrders,
   getOrders,
   getOrdersStatus,
 } from '@/store/slices/ordersSlice';
-import { Order } from '@/utils/types';
+import { calculateTotalByCurrency } from '@/utils/helpers';
+import type { IViewProps, Order } from '@/utils/types';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
+import { FaListUl } from 'react-icons/fa';
+import { RiDeleteBinLine } from 'react-icons/ri';
 
-export default function AllOrders() {
+export default function AllOrders({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
-  const lang = useAppSelector(getLang) || fallbackLng;
   const { loading, error } = useAppSelector(getOrdersStatus);
   const orders = useAppSelector(getAllOrders);
 
@@ -31,7 +31,39 @@ export default function AllOrders() {
 
   if (error) return <Error message={error} />;
 
-  const renderOrderCard = (order: Order) => {};
+  const renderOrderCard = (order: Order) => {
+    const total = calculateTotalByCurrency(order.products);
+    const values = Object.entries(total);
+
+    return (
+      <div className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-10">
+        <h2 className="text-xl font-bold crop-text">{order.title}</h2>
+        <div className="flex items-center gap-4">
+          <FaListUl size={30} />
+          <p>
+            <span className="block text-2xl">{order.products.length}</span>
+            <span className="block">Products</span>
+          </p>
+        </div>
+        <p>{order.date}</p>
+        <div>
+          {values.map(([currency, number]) => (
+            <p key={currency}>
+              {new Intl.NumberFormat(lang, {
+                style: 'currency',
+                currency,
+              }).format(number)}
+            </p>
+          ))}
+        </div>
+        <div>
+          <button>
+            <RiDeleteBinLine />
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section className="orders-section py-12">
@@ -48,10 +80,7 @@ export default function AllOrders() {
               orders.map((order: Order) => (
                 <li key={order.id}>
                   <Link href={`/${lang}/orders/${order.id}`}>
-                    <Card hasHover={true}>
-                      <h3>{order.title}</h3>
-                      <p>{order.description}</p>
-                    </Card>
+                    <Card hasHover={true}>{renderOrderCard(order)}</Card>
                   </Link>
                 </li>
               ))}

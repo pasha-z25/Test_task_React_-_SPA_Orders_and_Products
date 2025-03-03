@@ -29,12 +29,34 @@ export const getOrders = createAsyncThunk(
 
 export const getOrder = createAsyncThunk(
   'orders/getOrder',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (
     payload: string | number,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
     return await client.get(apiEndpoints.oneOrder(payload));
+  }
+);
+
+export const deleteOrder = createAsyncThunk(
+  'orders/deleteOrder',
+  async (
+    payload: string | number,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { extra: { client, apiEndpoints } }: { extra: any }
+  ) => {
+    return await client.delete(apiEndpoints.oneOrder(payload));
+  }
+);
+
+export const updateOrder = createAsyncThunk(
+  'orders/updateOrder',
+  async (
+    payload: Partial<Order>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { extra: { client, apiEndpoints } }: { extra: any }
+  ) => {
+    return await client.patch(apiEndpoints.oneOrder(payload));
   }
 );
 
@@ -59,12 +81,17 @@ const ordersSlice = createSlice({
       //   state.error = null;
       //   state.loading = false;
       // })
-      // .addCase(updateOrder.fulfilled, (state, action) => {
-      //   console.log('!!! Action updateOrder', action);
-      //   // state.selectedOrder = action.payload;
-      //   state.error = null;
-      //   state.loading = false;
-      // })
+      .addCase(deleteOrder.fulfilled, (state, action) => {
+        console.log('!!! Action deleteOrder', action);
+        state.error = null;
+        state.loading = false;
+      })
+      .addCase(updateOrder.fulfilled, (state, action) => {
+        console.log('!!! Action updateOrder', action);
+        // state.selectedOrder = action.payload;
+        state.error = null;
+        state.loading = false;
+      })
       .addMatcher(isPending, (state) => {
         state.loading = true;
         state.error = null;
