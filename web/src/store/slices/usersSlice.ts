@@ -77,13 +77,12 @@ const usersSlice = createSlice({
         state.loading = false;
       })
       .addCase(addUser.fulfilled, (state, action) => {
-        console.log('!!! Action addUser', action);
+        state.selectedUser = action.payload;
         state.error = null;
         state.loading = false;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        console.log('!!! Action updateUser', action);
-        // state.selectedUser = action.payload;
+        state.selectedUser = action.payload;
         state.error = null;
         state.loading = false;
       })
