@@ -62,6 +62,16 @@ export const addUser = async ({
   address = '',
 }: User) => {
   try {
+    const user = await userRepository.findOne({
+      where: { email },
+    });
+
+    if (user) {
+      return await Promise.reject({
+        message: 'The user with such an email already exists',
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
 
     const newUser = new User();

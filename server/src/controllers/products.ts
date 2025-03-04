@@ -47,7 +47,7 @@ export const getProducts = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -88,7 +88,7 @@ export const getProductById = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -130,7 +130,7 @@ export const addProduct = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -175,7 +175,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -217,6 +217,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };

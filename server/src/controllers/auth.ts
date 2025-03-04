@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -100,6 +100,6 @@ export const register = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };

@@ -1,6 +1,8 @@
 'use client';
 
-import { Card, Error, Loader } from '@/components/UIElements';
+import { Error, Loader } from '@/components/UIElements';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import { useTranslation } from '@/i18n/client';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getAuthorizedUser, logout } from '@/store/slices/authSlice';
@@ -18,6 +20,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaSave, FaUser, FaUserEdit } from 'react-icons/fa';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 export default function OneUser({ lang, id: userId }: IViewProps) {
   const dispatch = useAppDispatch();
@@ -106,7 +110,9 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
       <div className="container mx-auto px-4">
         <div className="mb-10 flex items-center gap-4">
           <FaUser size={30} color="green" />
-          <h1 className="text-xl font-bold">{selectedUser?.name}</h1>
+          <Typography variant="h4" component="h1">
+            {selectedUser?.name}
+          </Typography>
         </div>
         {isCurrentUser && (
           <div className="editing-block flex items-center justify-between gap-4 mb-4">
@@ -127,7 +133,8 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
                 <FaUserEdit size={20} color="green" />
               </button>
             )}
-            <button
+            <Button
+              variant="contained"
               type="button"
               onClick={() => {
                 dispatch(logout());
@@ -136,11 +143,13 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
               title={t('button.logout')}
             >
               {t('button.logout')}
-            </button>
+            </Button>
           </div>
         )}
         <div className="user-info">
-          <Card>{renderUserCard(selectedUser, editMode)}</Card>
+          <Card>
+            <CardContent>{renderUserCard(selectedUser, editMode)}</CardContent>
+          </Card>
         </div>
       </div>
     </section>
