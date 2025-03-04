@@ -1,14 +1,11 @@
-import { client } from '@/utils/helpers';
+import { fallbackLng } from '@/i18n/utils';
 import type { IPageProps, Product } from '@/utils/types';
+import { OneProduct } from '@/views';
 
 export default async function Product({ params }: IPageProps) {
-  const { id } = await params;
-  const product: Product = await client.get(`/products/${id}`);
+  const { id, lng = fallbackLng } = await params;
 
-  return (
-    <section>
-      Product page
-      <p>{product.title}</p>
-    </section>
-  );
+  if (!id) return null;
+
+  return <OneProduct id={id} lang={lng} />;
 }

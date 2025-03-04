@@ -1,18 +1,9 @@
-import { Login as LoginForm } from '@/components/Forms';
-import { useTranslation } from '@/i18n/server';
 import { fallbackLng } from '@/i18n/utils';
 import type { IPageProps } from '@/utils/types';
+import { Login as LoginView } from '@/views';
 
 export default async function Login({ params }: IPageProps) {
   const { lng = fallbackLng } = await params;
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(lng);
 
-  return (
-    <div>
-      <p>Login Page</p>
-      <p>{t('button.readMore')}</p>
-      <LoginForm />
-    </div>
-  );
+  return <LoginView lang={lng} />;
 }

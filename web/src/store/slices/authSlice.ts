@@ -1,4 +1,4 @@
-import { User } from '@/utils/types';
+import type { User } from '@/utils/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
