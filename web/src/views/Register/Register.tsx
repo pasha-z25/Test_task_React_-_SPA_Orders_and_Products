@@ -9,14 +9,15 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useAppSelector } from '@/store';
-import { getSelectedUser, getUsersStatus } from '@/store/slices/usersSlice';
 import { Loader } from '@/components/UIElements';
 import Alert from '@mui/material/Alert';
+import { getAuthorizedUser, getAuthState } from '@/store/slices/authSlice';
+import { fallbackLng } from '@/i18n/utils';
 
-export default function Register({ lang }: IViewProps) {
+export default function Register({ lang = fallbackLng }: IViewProps) {
   const { t } = useTranslation(lang);
-  const { loading, error } = useAppSelector(getUsersStatus);
-  const selectedUser = useAppSelector(getSelectedUser);
+  const { loading, error } = useAppSelector(getAuthState);
+  const authorizedUser = useAppSelector(getAuthorizedUser);
 
   return (
     <section className="login-section py-12">
@@ -37,7 +38,7 @@ export default function Register({ lang }: IViewProps) {
                 {error}
               </Alert>
             )}
-            {selectedUser ? (
+            {authorizedUser ? (
               <>
                 <Alert
                   severity="success"

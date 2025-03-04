@@ -14,7 +14,7 @@ import {
 } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField, ControlledSelect } from '../components';
-import { addUser } from '@/store/slices/usersSlice';
+import { addNewUser } from '@/store/slices/authSlice';
 
 export default function Register() {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ export default function Register() {
     address,
   }: RegisterFormType) => {
     dispatch(
-      addUser(
+      addNewUser(
         JSON.stringify({
           email,
           password,

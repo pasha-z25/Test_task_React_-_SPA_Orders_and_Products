@@ -1,5 +1,10 @@
 import { User } from '@/utils/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  isPending,
+  isRejected,
+} from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
 interface LoginPayload {
@@ -15,6 +20,17 @@ export const login = createAsyncThunk(
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
     return await client.post(apiEndpoints.authLogin, JSON.stringify(payload));
+  }
+);
+
+export const addNewUser = createAsyncThunk(
+  'auth/addNewUser',
+  async (
+    payload: BodyInit,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { extra: { client, apiEndpoints } }: { extra: any }
+  ) => {
+    return await client.post(apiEndpoints.allUsers, payload);
   }
 );
 
@@ -39,28 +55,45 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
+      state.error = null;
+      state.loading = false;
       Cookies.remove('token');
     },
   },
   extraReducers(builder) {
-    builder.addCase(login.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.user = action.payload.user;
-      state.token = action.payload.accessToken;
-      state.loading = false;
-      state.error = null;
-      Cookies.set('token', action.payload.accessToken);
-    });
-    builder.addCase(login.rejected, (state, action) => {
-      state.error = action.error.message;
-      state.user = null;
-      state.token = null;
-      state.loading = false;
-      Cookies.remove('token');
-    });
+    builder
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.accessToken;
+        state.loading = false;
+        state.error = null;
+        Cookies.set('token', action.payload.accessToken);
+      })
+      .addCase(addNewUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addMatcher(isPending, (state, action) => {
+        console.log('!!! Auth Pending', { state, action });
+        state.loading = true;
+        state.error = null;
+      })
+      .addMatcher(
+        (type) => {
+          console.log(type);
+          return false;
+        },
+        (state, action) => {
+          console.log('!!! Auth Rejected', { state, action });
+
+          // state.authError = action.error.message;
+          state.user = null;
+          state.token = null;
+          state.loading = false;
+          Cookies.remove('token');
+        }
+      );
   },
 });
 
