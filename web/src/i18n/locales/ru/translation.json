@@ -1,12 +1,18 @@
 {
   "common": {
     "search": "Поиск",
+    "disabled": "Отключеный",
     "email": "E-mail"
   },
   "menu": {
-    "main": "Главная"
+    "orders": "Заказы",
+    "groups": "Групы",
+    "products": "Продукты",
+    "users": "Пользователи",
+    "settings": "Настройки"
   },
   "button": {
+    "logout": "Выйти",
     "readMore": "Читать больше",
     "more": "Детальнее",
     "view": "Смотреть"

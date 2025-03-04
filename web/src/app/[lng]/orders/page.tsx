@@ -1,20 +1,9 @@
-import { client } from '@/utils/helpers';
-import type { Order } from '@/utils/types';
-import Link from 'next/link';
+import { fallbackLng } from '@/i18n/utils';
+import { IPageProps } from '@/utils/types';
+import { redirect } from 'next/navigation';
 
-export default async function Orders() {
-  const orders: Order[] = await client('/orders');
+export default async function Orders({ params }: IPageProps) {
+  const { lng = fallbackLng } = await params;
 
-  return (
-    <section>
-      <ul>
-        {!!orders.length &&
-          orders.map((order: Order) => (
-            <li key={order.id}>
-              <Link href={`/orders/${order.id}`}>{order.title}</Link>
-            </li>
-          ))}
-      </ul>
-    </section>
-  );
+  redirect(`/${lng}`);
 }

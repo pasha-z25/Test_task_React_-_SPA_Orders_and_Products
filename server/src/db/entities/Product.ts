@@ -36,6 +36,6 @@ export class Product {
   @Column({ type: 'timestamp' })
   date!: string;
 
-  @ManyToOne(() => Order, (order) => order.products, { nullable: true })
-  order?: Order;
+  @ManyToOne(() => Order, (order) => order.products)
+  order!: Order;
 }

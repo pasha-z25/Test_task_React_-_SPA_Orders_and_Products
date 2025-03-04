@@ -1,10 +1,13 @@
 'use client';
 
 import { languages } from '@/i18n/utils';
+import { useAppDispatch } from '@/store';
+import { setLang } from '@/store/slices/langSlice';
 import type { Lang } from '@/utils/types';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export interface ILanguageProps {
   lang: Lang;
@@ -13,6 +16,11 @@ export interface ILanguageProps {
 export default function Language({ lang }: ILanguageProps) {
   const pathname = usePathname();
   const path = pathname.split(lang);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setLang(lang));
+  }, []);
 
   return (
     <div className="language-block">
@@ -26,12 +34,15 @@ export default function Language({ lang }: ILanguageProps) {
               })}
             >
               <Link
-                className="language-block__list__item__link"
+                className="language-block__list__item__link uppercase"
                 href={`/${language}/${path[1] ? path[1] : ''}`}
+                onClick={() => dispatch(setLang(language))}
               >
                 {language}
               </Link>
-              {index < self.length - 1 && <span className="delimiter">/</span>}
+              {index < self.length - 1 && (
+                <span className="delimiter mx-2 inline-block">/</span>
+              )}
             </li>
           );
         })}

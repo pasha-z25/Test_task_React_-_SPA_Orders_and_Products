@@ -6,10 +6,11 @@ import {
   getUsers as getUsersHelper,
   updateUser as updateUserHelper,
 } from '../services';
+import { getRequestInfo } from '../utils/helpers';
 import { LOG_LEVEL, logger } from '../utils/logger';
 import { ResponseStatus } from '../utils/types';
 
-export const getUsers = async (_req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await getUsersHelper();
 
@@ -18,9 +19,13 @@ export const getUsers = async (_req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:auth',
         message: '⚠️ Users not found',
+        requestInfo: getRequestInfo(req),
       });
 
-      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'Users not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'Users not found' },
+      });
       return;
     }
 
@@ -28,7 +33,7 @@ export const getUsers = async (_req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:auth',
       message: 'ℹ️ Users found successfully',
-      users,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: users });
@@ -37,6 +42,7 @@ export const getUsers = async (_req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:auth',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 
@@ -55,9 +61,13 @@ export const getUserById = async (req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:users',
         message: '⚠️ User not found',
+        requestInfo: getRequestInfo(req),
       });
 
-      res.status(404).send({ status: ResponseStatus.ERROR, error: { message: 'User not found' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'User not found' },
+      });
       return;
     }
 
@@ -65,7 +75,7 @@ export const getUserById = async (req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:users',
       message: 'ℹ️ User found successfully',
-      user,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: user });
@@ -74,6 +84,7 @@ export const getUserById = async (req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:users',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 
@@ -92,11 +103,13 @@ export const addUser = async (req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:users',
         message: '⚠️ New user was not created',
+        requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'New user was not created' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'New user was not created' },
+      });
       return;
     }
 
@@ -104,7 +117,7 @@ export const addUser = async (req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:users',
       message: 'ℹ️ New user was created',
-      user: newUser,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: newUser });
@@ -113,6 +126,7 @@ export const addUser = async (req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:users',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 
@@ -132,11 +146,13 @@ export const updateUser = async (req: Request, res: Response) => {
         level: LOG_LEVEL.WARN,
         scope: 'controller:users',
         message: '⚠️ User was not updated',
+        requestInfo: getRequestInfo(req),
       });
 
-      res
-        .status(404)
-        .send({ status: ResponseStatus.ERROR, error: { message: 'User was not updated' } });
+      res.status(404).send({
+        status: ResponseStatus.ERROR,
+        error: { message: 'User was not updated' },
+      });
       return;
     }
 
@@ -144,7 +160,7 @@ export const updateUser = async (req: Request, res: Response) => {
       level: LOG_LEVEL.INFO,
       scope: 'controller:users',
       message: 'ℹ️ User was updated',
-      user: updatedUser,
+      requestInfo: getRequestInfo(req),
     });
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: updatedUser });
@@ -153,6 +169,7 @@ export const updateUser = async (req: Request, res: Response) => {
       level: LOG_LEVEL.ERROR,
       scope: 'controller:users',
       message: '❌ Something went wrong!',
+      requestInfo: getRequestInfo(req),
       error,
     });
 

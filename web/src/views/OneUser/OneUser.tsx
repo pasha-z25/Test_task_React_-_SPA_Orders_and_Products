@@ -1,0 +1,148 @@
+'use client';
+
+import { Card, Error, Loader } from '@/components/UIElements';
+import { useTranslation } from '@/i18n/client';
+import { fallbackLng } from '@/i18n/utils';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { getAuthorizedUser, logout } from '@/store/slices/authSlice';
+import { getLang } from '@/store/slices/langSlice';
+import {
+  getSelectedUser,
+  getUser,
+  getUsersStatus,
+} from '@/store/slices/usersSlice';
+import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
+import { getFormattedDateAndTime } from '@/utils/helpers';
+import { User } from '@/utils/types';
+import classNames from 'classnames';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FaSave, FaUser, FaUserEdit } from 'react-icons/fa';
+
+export default function OneUser({ userId }: { userId: string }) {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const lang = useAppSelector(getLang) || fallbackLng;
+  const authorizedUser = useAppSelector(getAuthorizedUser);
+  const selectedUser = useAppSelector(getSelectedUser);
+  const { loading, error } = useAppSelector(getUsersStatus);
+
+  const isCurrentUser = authorizedUser?.id === selectedUser?.id;
+
+  const [editMode, setEditMode] = useState<boolean>(false);
+
+  const { t } = useTranslation(lang);
+
+  useEffect(() => {
+    dispatch(getUser(userId));
+  }, []);
+
+  if (loading) return <Loader />;
+
+  if (error) return <Error message={error} />;
+
+  if (!selectedUser) return null;
+
+  const renderUserCard = (user: User, editMode?: boolean) => {
+    const isActiveUser = user.active;
+
+    return (
+      <div className="grid grid-cols-[auto_1fr]">
+        <div>
+          <Image
+            src={user.avatar}
+            alt={user.name}
+            width="250"
+            height="250"
+            unoptimized={true}
+            className={classNames({ grayscale: !isActiveUser })}
+          />
+          <p className="text-xs my-2">Gender: {user.gender}</p>
+        </div>
+        <div>
+          <h2 className="text-xl font-bold">
+            {user.name}{' '}
+            {!isActiveUser && (
+              <span className="inline-block bg-slate-100 p-2 text-xs">
+                {t('common.disabled')}
+              </span>
+            )}
+          </h2>
+          <h3 className="text-lg">Contacts:</h3>
+          <p>
+            <span>Email:</span>{' '}
+            <Link href={`mailto:${user.email}`}>{user.email}</Link>
+          </p>
+          <p>
+            <span>Phone:</span>{' '}
+            {!!user.phone ? (
+              <Link href={`tel:${user.phone}`}>{user.phone}</Link>
+            ) : (
+              'empty'
+            )}
+          </p>
+          <p>
+            <span>Address:</span> {!!user.address ? user.address : 'empty'}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs">
+            <span>Registered:</span>{' '}
+            {getFormattedDateAndTime(
+              lang,
+              USER_CARD_DATE_FORMAT,
+              user.registered
+            )}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <section className="users-section py-12">
+      <div className="container mx-auto px-4">
+        <div className="mb-10 flex items-center gap-4">
+          <FaUser size={30} color="green" />
+          <h1 className="text-xl font-bold">{selectedUser?.name}</h1>
+        </div>
+        {isCurrentUser && (
+          <div className="editing-block flex items-center justify-between gap-4 mb-4">
+            {editMode ? (
+              <button
+                type="button"
+                onClick={() => setEditMode(false)}
+                title={'Save'}
+              >
+                <FaSave size={20} color="green" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setEditMode(true)}
+                title={'Edit'}
+              >
+                <FaUserEdit size={20} color="green" />
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                dispatch(logout());
+                router.push(`/${lang}/login`);
+              }}
+              title={t('button.logout')}
+            >
+              {t('button.logout')}
+            </button>
+          </div>
+        )}
+        <div className="user-info">
+          <Card>{renderUserCard(selectedUser, editMode)}</Card>
+        </div>
+      </div>
+    </section>
+  );
+}
