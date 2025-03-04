@@ -15,17 +15,6 @@ services:
     command: npm run dev
     environment:
       - NODE_ENV=development
-      - WATCHPACK_POLLING=true
-    # develop:
-    #   watch:
-    #     - action: sync
-    #       path: ./web
-    #       target: /app
-    #       ignore:
-    #         - node_modules/
-    #     - action: rebuild
-    #       path: package.json
-    #       target: /app/package.json
 
   server:
     build: ./server
@@ -43,7 +32,7 @@ services:
         condition: service_healthy
     environment:
       - NODE_ENV=development
-      - DB_HOST=db
+      - DB_HOST=postgres_db_server
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=admin
@@ -53,17 +42,6 @@ services:
     volumes:
       - ./server:/app
     command: npm run docker
-    # working_dir: /app
-    # develop:
-    #   watch:
-    #     - action: sync
-    #       path: ./server
-    #       target: /app
-    #       ignore:
-    #         - node_modules/
-    #     - action: rebuild
-    #       path: package.json
-    #       target: /app/package.json
 
   db:
     image: postgres:15
@@ -89,6 +67,7 @@ services:
 networks:
   app_network:
     driver: bridge
+    name: local_docker_app_network
 
 volumes:
   pg_data:
