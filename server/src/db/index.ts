@@ -25,6 +25,7 @@ const initializeWithRetry = async (retries = 5, delay = 1000) => {
         message: `📦 Database connected successfully in ${i + 1} attempt`,
       });
       return;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       logger.log({
         level: LOG_LEVEL.ERROR,
