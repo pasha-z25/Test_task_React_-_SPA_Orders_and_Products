@@ -1,6 +1,8 @@
 'use client';
 
-import { Card, Loader, Error } from '@/components/UIElements';
+import { Loader, Error } from '@/components/UIElements';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import { useTranslation } from '@/i18n/client';
 import { useAppDispatch, useAppSelector } from '@/store';
 import {
@@ -18,8 +20,8 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 
 export default function AllOrders({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector(getOrdersStatus);
   const orders = useAppSelector(getAllOrders);
+  const { loading, error } = useAppSelector(getOrdersStatus);
 
   const { t } = useTranslation(lang);
 
@@ -80,7 +82,9 @@ export default function AllOrders({ lang }: IViewProps) {
               orders.map((order: Order) => (
                 <li key={order.id}>
                   <Link href={`/${lang}/orders/${order.id}`}>
-                    <Card hasHover={true}>{renderOrderCard(order)}</Card>
+                    <Card>
+                      <CardContent>{renderOrderCard(order)}</CardContent>
+                    </Card>
                   </Link>
                 </li>
               ))}

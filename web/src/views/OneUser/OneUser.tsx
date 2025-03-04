@@ -1,11 +1,11 @@
 'use client';
 
-import { Card, Error, Loader } from '@/components/UIElements';
+import { Error, Loader } from '@/components/UIElements';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import { useTranslation } from '@/i18n/client';
-import { fallbackLng } from '@/i18n/utils';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getAuthorizedUser, logout } from '@/store/slices/authSlice';
-import { getLang } from '@/store/slices/langSlice';
 import {
   getSelectedUser,
   getUser,
@@ -13,18 +13,19 @@ import {
 } from '@/store/slices/usersSlice';
 import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
 import { getFormattedDateAndTime } from '@/utils/helpers';
-import { User } from '@/utils/types';
+import { IViewProps, User } from '@/utils/types';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaSave, FaUser, FaUserEdit } from 'react-icons/fa';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
-export default function OneUser({ userId }: { userId: string }) {
+export default function OneUser({ lang, id: userId }: IViewProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const lang = useAppSelector(getLang) || fallbackLng;
   const authorizedUser = useAppSelector(getAuthorizedUser);
   const selectedUser = useAppSelector(getSelectedUser);
   const { loading, error } = useAppSelector(getUsersStatus);
@@ -36,7 +37,9 @@ export default function OneUser({ userId }: { userId: string }) {
   const { t } = useTranslation(lang);
 
   useEffect(() => {
-    dispatch(getUser(userId));
+    if (userId) {
+      dispatch(getUser(userId));
+    }
   }, []);
 
   if (loading) return <Loader />;
@@ -106,7 +109,9 @@ export default function OneUser({ userId }: { userId: string }) {
       <div className="container mx-auto px-4">
         <div className="mb-10 flex items-center gap-4">
           <FaUser size={30} color="green" />
-          <h1 className="text-xl font-bold">{selectedUser?.name}</h1>
+          <Typography variant="h4" component="h1">
+            {selectedUser?.name}
+          </Typography>
         </div>
         {isCurrentUser && (
           <div className="editing-block flex items-center justify-between gap-4 mb-4">
@@ -127,8 +132,8 @@ export default function OneUser({ userId }: { userId: string }) {
                 <FaUserEdit size={20} color="green" />
               </button>
             )}
-            <button
-              type="button"
+            <Button
+              variant="contained"
               onClick={() => {
                 dispatch(logout());
                 router.push(`/${lang}/login`);
@@ -136,11 +141,13 @@ export default function OneUser({ userId }: { userId: string }) {
               title={t('button.logout')}
             >
               {t('button.logout')}
-            </button>
+            </Button>
           </div>
         )}
         <div className="user-info">
-          <Card>{renderUserCard(selectedUser, editMode)}</Card>
+          <Card>
+            <CardContent>{renderUserCard(selectedUser, editMode)}</CardContent>
+          </Card>
         </div>
       </div>
     </section>

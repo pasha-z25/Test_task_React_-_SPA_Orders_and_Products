@@ -7,6 +7,7 @@ import { User } from '../db/entities';
 import {
   BCRYPT_SALT_ROUNDS,
   CUSTOM_DATE_TIME_FORMAT,
+  USER_AVATAR_SOURCE,
 } from '../utils/constants';
 
 dayjs.extend(customParseFormat);
@@ -35,7 +36,6 @@ export const addUser = async ({
   password = '',
   name = '',
   gender,
-  avatar = '',
   phone = '',
   address = '',
 }: User) => {
@@ -47,7 +47,7 @@ export const addUser = async ({
   newUser.name = name;
   newUser.orders = [];
   newUser.gender = gender || '';
-  newUser.avatar = avatar;
+  newUser.avatar = `${USER_AVATAR_SOURCE}&seed=${name.replace(/ /g, '')}`;
   newUser.phone = phone;
   newUser.address = address;
   newUser.registered = dayjs(new Date()).format(CUSTOM_DATE_TIME_FORMAT);

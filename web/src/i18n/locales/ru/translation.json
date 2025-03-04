@@ -1,21 +1,60 @@
 {
   "common": {
-    "search": "Поиск",
-    "disabled": "Отключеный",
-    "email": "E-mail"
+    "login": "Авторизация",
+    "register": "Регистрация",
+
+    "orders": "Заказы",
+    "order": "Заказ",
+    "products": "Продукты",
+    "product": "Продукт",
+    "users": "Пользователи",
+    "user": "Пользователь",
+
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Повторите пароль",
+    "fullName": "ФИО",
+    "gender": "Пол",
+    "genderMale": "Мужской",
+    "genderFemale": "Женский",
+    "phone": "Телефон",
+    "address": "Адрес",
+    "disabled": "Отключеный"
   },
-  "menu": {
+  "button": {
+    "login": "Авторизироваться",
+    "logout": "Выйти",
+    "register": "Зарегистрироватья"
+  },
+  "sections": {
+    "loginPageHeader": "Авторизируйтесь, чтобы получить доступ к основному функционалу",
+    "loginPageFooter": "Всё еще нет аккаунта?",
+    "registerPageHeader": "Заполните поля для регистрации нового аккаунта",
+    "registerPageFooter": "Уже есть аккаунт?",
+    "registerSuccessMessage": "Вы успешно зарегистрировались",
+    "registerMoveToLogin": "Перейдите на страницу авторизации что-бы войти в свой профиль"
+  },
+  "zodErrors": {
+    "fieldHasToBeFilled": "Это поле должно быть заполнено",
+    "notValidEmail": "Это недействительный адрес электронной почты",
+    "notValidPhone": "Это недействительный номер телефона",
+    "tooShortPassword": "Пароль должен быть не менее 6 символов",
+    "passwordsDontMatch": "Пароли не совпадают",
+    "tooShortName": "Имя должно быть не менее 2 символов"
+  },
+  "SEO": {
+    "footerCopy": "Все права защищены"
+  },
+
+  "old": {
+    "search": "Поиск",
     "orders": "Заказы",
     "groups": "Групы",
     "products": "Продукты",
     "users": "Пользователи",
-    "settings": "Настройки"
-  },
-  "button": {
-    "logout": "Выйти",
+    "settings": "Настройки",
     "readMore": "Читать больше",
     "more": "Детальнее",
     "view": "Смотреть"
-  },
-  "SEO": {}
+  }
 }

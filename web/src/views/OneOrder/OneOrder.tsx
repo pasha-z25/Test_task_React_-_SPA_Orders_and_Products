@@ -1,6 +1,8 @@
 'use client';
 
-import { Card, Loader, Error } from '@/components/UIElements';
+import { Loader, Error } from '@/components/UIElements';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import { useTranslation } from '@/i18n/client';
 import { useAppDispatch, useAppSelector } from '@/store';
 import {
@@ -15,7 +17,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
-export default function OneOrder({ lang, id }: IViewProps) {
+export default function OneOrder({ lang, id: orderId }: IViewProps) {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector(getOrdersStatus);
   const orders = useAppSelector(getAllOrders);
@@ -27,8 +29,8 @@ export default function OneOrder({ lang, id }: IViewProps) {
     if (!orders?.length) {
       dispatch(getOrders());
     }
-    if (id) {
-      dispatch(getOrder(id));
+    if (orderId) {
+      dispatch(getOrder(orderId));
     }
   }, []);
 
@@ -70,7 +72,9 @@ export default function OneOrder({ lang, id }: IViewProps) {
               orders.map((order: Order) => (
                 <li key={order.id}>
                   <Link href={`/${lang}/orders/${order.id}`}>
-                    <Card hasHover={true}>{renderOrderCard(order)}</Card>
+                    <Card>
+                      <CardContent>{renderOrderCard(order)}</CardContent>
+                    </Card>
                   </Link>
                 </li>
               ))}

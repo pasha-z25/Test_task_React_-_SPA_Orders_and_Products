@@ -1,46 +1,116 @@
 'use client';
 
-import { useAppDispatch } from '@/store';
-import { login } from '@/store/slices/authSlice';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { useTranslation } from '@/i18n/client';
+import { getLang } from '@/store/slices/langSlice';
+import { fallbackLng } from '@/i18n/utils';
+import Button from '@mui/material/Button';
+import { UserGender } from '@/utils/types';
+import { useForm } from 'react-hook-form';
+import {
+  RegisterFormDefaultValues,
+  RegisterFormSchema,
+  RegisterFormType,
+} from '../schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ControlledTextField, ControlledSelect } from '../components';
+import { addUser } from '@/store/slices/usersSlice';
 
 export default function Register() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const dispatch = useAppDispatch();
-  // const state = useAppSelector((state) => state.auth);
+  const lang = useAppSelector(getLang) || fallbackLng;
+  const { t } = useTranslation(lang);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const submitHandler = (event: any) => {
-    event.preventDefault();
-    dispatch(login({ email, password }));
+  const { control, handleSubmit } = useForm<RegisterFormType>({
+    resolver: zodResolver(RegisterFormSchema),
+    defaultValues: RegisterFormDefaultValues,
+  });
+
+  const submitHandler = ({
+    email,
+    password,
+    fullName,
+    gender,
+    phone,
+    address,
+  }: RegisterFormType) => {
+    dispatch(
+      addUser(
+        JSON.stringify({
+          email,
+          password,
+          name: fullName,
+          gender,
+          phone,
+          address,
+        })
+      )
+    );
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <p>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </p>
-      <br />
-      <p>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </p>
-      <br />
-      <button>Login</button>
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="grid gap-4 justify-center grid-cols-2 max-w-[616px] mx-auto"
+    >
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.email')}
+        name="email"
+        type="email"
+        required
+      />
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.phone')}
+        name="phone"
+        type="tel"
+      />
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.password')}
+        name="password"
+        type="password"
+        required
+      />
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.confirmPassword')}
+        name="confirmPassword"
+        type="password"
+        required
+      />
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.fullName')}
+        name="fullName"
+        required
+      />
+      <ControlledSelect
+        control={control}
+        name="gender"
+        label={t('common.gender')}
+        required={true}
+        options={[
+          { value: UserGender.MALE, label: t('common.genderMale') },
+          { value: UserGender.FEMALE, label: t('common.genderFemale') },
+        ]}
+      />
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.address')}
+        name="address"
+        className="col-span-2"
+      />
+      <Button type="submit" variant="outlined" className="col-span-2">
+        {t('button.register')}
+      </Button>
     </form>
   );
 }

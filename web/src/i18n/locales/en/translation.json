@@ -1,21 +1,57 @@
 {
   "common": {
-    "search": "Search",
-    "disabled": "Disabled",
-    "email": "E-mail"
-  },
-  "menu": {
+    "login": "Login",
+    "register": "Register",
+
     "orders": "Orders",
-    "groups": "Groups",
+    "order": "Order",
     "products": "Products",
+    "product": "Product",
     "users": "Users",
-    "settings": "Settings"
+    "user": "User",
+
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "gender": "Gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "phone": "Phone",
+    "address": "Address",
+    "disabled": "Disabled"
   },
   "button": {
+    "login": "Login",
     "logout": "Logout",
+    "register": "Register"
+  },
+  "sections": {
+    "loginPageHeader": "Log in to access the main functionality",
+    "loginPageFooter": "Don't have an account yet?",
+    "registerPageHeader": "Fill in the fields to register a new account",
+    "registerPageFooter": "Already have an account?",
+    "registerSuccessMessage": "You have successfully registered",
+    "registerMoveToLogin": "Go to the authorization page to enter your profile"
+  },
+  "zodErrors": {
+    "fieldHasToBeFilled": "This field has to be filled",
+    "notValidEmail": "This is not a valid email",
+    "notValidPhone": "This is not a valid phone",
+    "tooShortPassword": "Password must be at least 6 characters long",
+    "passwordsDontMatch": "Passwords don't match",
+    "tooShortName": "Name must be at least 2 characters long"
+  },
+  "SEO": {
+    "footerCopy": "All right are reserved"
+  },
+
+  "old": {
+    "groups": "Groups",
+
+    "settings": "Settings",
     "readMore": "Read more",
     "more": "More",
     "view": "View"
-  },
-  "SEO": {}
+  }
 }

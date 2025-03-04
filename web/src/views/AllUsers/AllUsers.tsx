@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Error, Loader } from '@/components/UIElements';
+import { Error, Loader } from '@/components/UIElements';
 import { useTranslation } from '@/i18n/client';
 import { useAppDispatch, useAppSelector } from '@/store';
 import {
@@ -13,7 +13,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaUsers } from 'react-icons/fa';
 import { SlUserUnfollow } from 'react-icons/sl';
-
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
 import { getFormattedDateAndTime } from '@/utils/helpers';
 import { useEffect } from 'react';
@@ -102,12 +103,10 @@ export default function AllUsers({ lang }: IViewProps) {
               users.map((user: User) => (
                 <li key={user.id}>
                   <Link href={`/${lang}/users/${user.id}`}>
-                    <Card
-                      className="flex items-center justify-between"
-                      disabled={!user.active}
-                      hasHover={true}
-                    >
-                      {renderUserCard(user)}
+                    <Card>
+                      <CardContent className="flex items-center justify-between">
+                        {renderUserCard(user)}
+                      </CardContent>
                     </Card>
                   </Link>
                 </li>
