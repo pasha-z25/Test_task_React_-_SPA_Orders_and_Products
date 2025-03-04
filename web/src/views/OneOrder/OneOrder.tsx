@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
-export default function OneOrder({ lang, id }: IViewProps) {
+export default function OneOrder({ lang, id: orderId }: IViewProps) {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector(getOrdersStatus);
   const orders = useAppSelector(getAllOrders);
@@ -27,8 +27,8 @@ export default function OneOrder({ lang, id }: IViewProps) {
     if (!orders?.length) {
       dispatch(getOrders());
     }
-    if (id) {
-      dispatch(getOrder(id));
+    if (orderId) {
+      dispatch(getOrder(orderId));
     }
   }, []);
 

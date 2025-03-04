@@ -2,10 +2,8 @@
 
 import { Card, Error, Loader } from '@/components/UIElements';
 import { useTranslation } from '@/i18n/client';
-import { fallbackLng } from '@/i18n/utils';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getAuthorizedUser, logout } from '@/store/slices/authSlice';
-import { getLang } from '@/store/slices/langSlice';
 import {
   getSelectedUser,
   getUser,
@@ -13,7 +11,7 @@ import {
 } from '@/store/slices/usersSlice';
 import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
 import { getFormattedDateAndTime } from '@/utils/helpers';
-import { User } from '@/utils/types';
+import type { IViewProps, User } from '@/utils/types';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,10 +19,9 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaSave, FaUser, FaUserEdit } from 'react-icons/fa';
 
-export default function OneUser({ userId }: { userId: string }) {
+export default function OneUser({ lang, id: userId }: IViewProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const lang = useAppSelector(getLang) || fallbackLng;
   const authorizedUser = useAppSelector(getAuthorizedUser);
   const selectedUser = useAppSelector(getSelectedUser);
   const { loading, error } = useAppSelector(getUsersStatus);
@@ -36,7 +33,9 @@ export default function OneUser({ userId }: { userId: string }) {
   const { t } = useTranslation(lang);
 
   useEffect(() => {
-    dispatch(getUser(userId));
+    if (userId) {
+      dispatch(getUser(userId));
+    }
   }, []);
 
   if (loading) return <Loader />;
@@ -45,6 +44,7 @@ export default function OneUser({ userId }: { userId: string }) {
 
   if (!selectedUser) return null;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderUserCard = (user: User, editMode?: boolean) => {
     const isActiveUser = user.active;
 

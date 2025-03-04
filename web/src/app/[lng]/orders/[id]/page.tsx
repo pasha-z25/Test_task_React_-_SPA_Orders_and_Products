@@ -6,5 +6,7 @@ import { OneOrder } from '@/views';
 export default async function Order({ params }: IPageProps) {
   const { id, lng = fallbackLng } = await params;
 
+  if (!id) return null;
+
   return <OneOrder id={id} lang={lng} />;
 }
