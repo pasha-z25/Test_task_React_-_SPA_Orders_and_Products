@@ -1,5 +1,5 @@
 import { fallbackLng } from '@/i18n/utils';
-import { Lang } from '@/utils/types';
+import type { Lang } from '@/utils/types';
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface LangState {

@@ -1,4 +1,4 @@
-import { User } from '@/utils/types';
+import type { User } from '@/utils/types';
 import {
   createAsyncThunk,
   createSlice,

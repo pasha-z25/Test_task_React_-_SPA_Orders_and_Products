@@ -8,7 +8,7 @@ import {
   getProductsStatus,
   getSelectedProduct,
 } from '@/store/slices/productsSlice';
-import { IViewProps } from '@/utils/types';
+import type { IViewProps } from '@/utils/types';
 import { useEffect } from 'react';
 
 export default function OneProduct({ lang, id: productId }: IViewProps) {

@@ -13,7 +13,7 @@ import {
 } from '@/store/slices/usersSlice';
 import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
 import { getFormattedDateAndTime } from '@/utils/helpers';
-import { IViewProps, User } from '@/utils/types';
+import type { IViewProps, User } from '@/utils/types';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -48,6 +48,7 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
 
   if (!selectedUser) return null;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderUserCard = (user: User, editMode?: boolean) => {
     const isActiveUser = user.active;
 
