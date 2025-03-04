@@ -74,26 +74,17 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = null;
       })
-      .addMatcher(isPending, (state, action) => {
-        console.log('!!! Auth Pending', { state, action });
+      .addMatcher(isPending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addMatcher(
-        (type) => {
-          console.log(type);
-          return false;
-        },
-        (state, action) => {
-          console.log('!!! Auth Rejected', { state, action });
-
-          // state.authError = action.error.message;
-          state.user = null;
-          state.token = null;
-          state.loading = false;
-          Cookies.remove('token');
-        }
-      );
+      .addMatcher(isRejected, (state, action) => {
+        state.error = action.error.message;
+        state.user = null;
+        state.token = null;
+        state.loading = false;
+        Cookies.remove('token');
+      });
   },
 });
 

@@ -9,6 +9,7 @@ export interface IFooterProps {
 }
 
 export default async function Footer({ lang = fallbackLng }: IFooterProps) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(lang);
 
   return (
