@@ -5,15 +5,24 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { getAuthState, login } from '@/store/slices/authSlice';
 import { getLang } from '@/store/slices/langSlice';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import Button from '@mui/material/Button';
+import { useTranslation } from '@/i18n/client';
+import {
+  LoginFormDefaultValues,
+  LoginFormSchema,
+  LoginFormType,
+} from '../schemas';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ControlledTextField } from '../components';
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const dispatch = useAppDispatch();
   const lang = useAppSelector(getLang) || fallbackLng;
   const { user, token } = useAppSelector(getAuthState);
   const router = useRouter();
+  const { t } = useTranslation(lang);
 
   useEffect(() => {
     if (!!user && !!token) {
@@ -21,37 +30,41 @@ export default function Login() {
     }
   }, [user, token]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const submitHandler = (event: any) => {
-    event.preventDefault();
+  const { control, handleSubmit } = useForm<LoginFormType>({
+    resolver: zodResolver(LoginFormSchema),
+    defaultValues: LoginFormDefaultValues,
+  });
+
+  const submitHandler = ({ email, password }: LoginFormType) => {
     dispatch(login({ email, password }));
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <p>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </p>
-      <br />
-      <p>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </p>
-      <br />
-      <button>Login</button>
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="grid gap-4 justify-center"
+    >
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.email')}
+        name="email"
+        type="email"
+        required
+        className="!min-w-[300px]"
+      />
+      <ControlledTextField
+        t={t}
+        control={control}
+        label={t('common.password')}
+        name="password"
+        type="password"
+        required
+        className="!min-w-[300px]"
+      />
+      <Button type="submit" variant="outlined">
+        {t('button.login')}
+      </Button>
     </form>
   );
 }

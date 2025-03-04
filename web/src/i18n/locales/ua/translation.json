@@ -1,21 +1,48 @@
 {
   "common": {
-    "search": "Пошук",
-    "disabled": "Відключений",
-    "email": "E-mail"
-  },
-  "menu": {
-    "orders": "Замовлення",
-    "groups": "Групи",
-    "products": "Продукти",
-    "users": "Користувачі",
-    "settings": "Налаштування"
+    "login": "Авторизация",
+    "register": "Регистрация",
+
+    "orders": "Заказы",
+    "order": "Заказ",
+    "products": "Продукты",
+    "product": "Продукт",
+    "users": "Пользователи",
+    "user": "Пользователь",
+
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Повторите пароль",
+    "fullName": "ФИО",
+    "gender": "Пол",
+    "genderMale": "Мужской",
+    "genderFemale": "Женский",
+    "phone": "Телефон",
+    "address": "Адрес",
+    "disabled": "Отключеный"
   },
   "button": {
-    "logout": "Вийти",
-    "readMore": "Читати більше",
-    "more": "Детальніше",
-    "view": "Дивитись"
+    "login": "Авторизироваться",
+    "logout": "Выйти",
+    "register": "Зарегистрироватья"
   },
-  "SEO": {}
+  "sections": {
+    "loginPageHeader": "Авторизуйтесь щоб отримати доступ до основного функціоналу",
+    "loginPageFooter": "Все ще не маєте аккаунту?",
+    "registerPageHeader": "Заповніть поля для реєстрациї нового акаунту",
+    "registerPageFooter": "Вже маєте аккаунт?",
+    "registerSuccessMessage": "Ви успішно зареєструвались",
+    "registerMoveToLogin": "Перейдите на страницу авторизации что-бы войти в свой профиль"
+  },
+  "zodErrors": {
+    "fieldHasToBeFilled": "Это поле должно быть заполнено",
+    "notValidEmail": "Это недействительный адрес электронной почты",
+    "notValidPhone": "Это недействительный номер телефона",
+    "tooShortPassword": "Пароль має бути не менше ніж 6 символів",
+    "passwordsDontMatch": "Пароли не совпадают",
+    "tooShortName": "Имя должно быть не менее 2 символов"
+  },
+  "SEO": {
+    "footerCopy": "Все права защищены"
+  }
 }
