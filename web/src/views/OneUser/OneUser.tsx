@@ -1,8 +1,6 @@
 'use client';
 
 import { Error, Loader } from '@/components/UIElements';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import { useTranslation } from '@/i18n/client';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getAuthorizedUser, logout } from '@/store/slices/authSlice';
@@ -20,7 +18,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaSave, FaUser, FaUserEdit } from 'react-icons/fa';
+
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
 export default function OneUser({ lang, id: userId }: IViewProps) {
@@ -63,7 +64,9 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
             unoptimized={true}
             className={classNames({ grayscale: !isActiveUser })}
           />
-          <p className="text-xs my-2">Gender: {user.gender}</p>
+          <Typography className="text-xs my-2">
+            Gender: {user.gender}
+          </Typography>
         </div>
         <div>
           <h2 className="text-xl font-bold">
@@ -75,31 +78,31 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
             )}
           </h2>
           <h3 className="text-lg">Contacts:</h3>
-          <p>
+          <Typography>
             <span>Email:</span>{' '}
             <Link href={`mailto:${user.email}`}>{user.email}</Link>
-          </p>
-          <p>
+          </Typography>
+          <Typography>
             <span>Phone:</span>{' '}
             {!!user.phone ? (
               <Link href={`tel:${user.phone}`}>{user.phone}</Link>
             ) : (
               'empty'
             )}
-          </p>
-          <p>
+          </Typography>
+          <Typography>
             <span>Address:</span> {!!user.address ? user.address : 'empty'}
-          </p>
+          </Typography>
         </div>
         <div>
-          <p className="text-xs">
+          <Typography className="text-xs">
             <span>Registered:</span>{' '}
             {getFormattedDateAndTime(
               lang,
               USER_CARD_DATE_FORMAT,
               user.registered
             )}
-          </p>
+          </Typography>
         </div>
       </div>
     );

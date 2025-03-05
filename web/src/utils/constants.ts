@@ -1,5 +1,7 @@
 import { ApiEndpoints } from './types';
 
+export const HEADER_SITE_NAME = 'Inventory';
+
 export const DOCKER_API_URL =
   process.env.API_URL || 'http://backend_server:8888/api';
 
@@ -21,6 +23,10 @@ export const apiEndpoints: ApiEndpoints = {
   oneUser: (id: string | number) => `/users/${id}`,
 };
 
+export const NUMBER_OF_MONTHS_IN_YEAR = 12;
+
 export const HEADER_DATE_FORMAT = 'DD MMM, YYYY 🕒 HH:mm';
 
 export const USER_CARD_DATE_FORMAT = 'DD MMMM YYYY';
+
+export const ORDER_CARD_DATE_FORMAT = 'DD/MMM/YYYY';

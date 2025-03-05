@@ -11,6 +11,8 @@ import {
 import type { IViewProps } from '@/utils/types';
 import { useEffect } from 'react';
 
+import Typography from '@mui/material/Typography';
+
 export default function OneProduct({ lang, id: productId }: IViewProps) {
   const dispatch = useAppDispatch();
   const product = useAppSelector(getSelectedProduct);
@@ -35,9 +37,9 @@ export default function OneProduct({ lang, id: productId }: IViewProps) {
       <div className="container mx-auto px-4">
         <div className="wrapper">
           <div className="mb-10 flex items-center gap-4">
-            <h1 className="text-xl font-bold">{t('menu.products')}</h1>
+            <h1 className="text-xl font-bold">{t('common.products')}</h1>
           </div>
-          <p>{product.title}</p>
+          <Typography>{product.title}</Typography>
         </div>
       </div>
     </section>
