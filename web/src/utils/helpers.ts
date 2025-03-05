@@ -72,12 +72,16 @@ export const client: ApiClient = async (path, options) => {
 
   try {
     const response = await fetch(REQUEST_URL, config);
+    const result = await response.json();
 
+    if (result.status === 'error') {
+      throw new Error(
+        result.error?.message ? result.error.message : 'Something went wrong!'
+      );
+    }
     if (!response.ok) throw new Error('Something went wrong!');
 
-    const { data } = await response.json();
-
-    return data;
+    return result.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return Promise.reject(error.message);

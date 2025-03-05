@@ -46,7 +46,7 @@ export const getUsers = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -88,7 +88,7 @@ export const getUserById = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -130,7 +130,7 @@ export const addUser = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -173,6 +173,6 @@ export const updateUser = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };

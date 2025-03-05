@@ -47,7 +47,7 @@ export const getOrders = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -89,7 +89,7 @@ export const getOrderById = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -131,7 +131,7 @@ export const addOrder = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -176,7 +176,7 @@ export const updateOrder = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };
 
@@ -218,6 +218,6 @@ export const deleteOrder = async (req: Request, res: Response) => {
       error,
     });
 
-    res.status(204).send({ status: ResponseStatus.ERROR, error });
+    res.status(400).send({ status: ResponseStatus.ERROR, error });
   }
 };

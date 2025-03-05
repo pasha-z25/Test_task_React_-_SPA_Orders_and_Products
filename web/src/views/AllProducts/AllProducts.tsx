@@ -1,6 +1,6 @@
 'use client';
 
-import { Loader, Error, Card } from '@/components/UIElements';
+import { Loader, Error } from '@/components/UIElements';
 import { useTranslation } from '@/i18n/client';
 import { useAppDispatch, useAppSelector } from '@/store';
 import {
@@ -12,6 +12,8 @@ import type { IViewProps, Product } from '@/utils/types';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 export default function AllProducts({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
@@ -55,7 +57,9 @@ export default function AllProducts({ lang }: IViewProps) {
               products.map((product: Product) => (
                 <li key={product.id}>
                   <Link href={`/${lang}/products/${product.id}`}>
-                    <Card hasHover={true}>{renderProductCard(product)}</Card>
+                    <Card>
+                      <CardContent>{renderProductCard(product)}</CardContent>
+                    </Card>
                   </Link>
                 </li>
               ))}
