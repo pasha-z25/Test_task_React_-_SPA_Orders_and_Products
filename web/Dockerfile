@@ -1,13 +1,11 @@
 FROM node:20
 
-WORKDIR /web
-
-COPY package*.json ./
-
-RUN rm -rf node_modules
-
-RUN npm install
+WORKDIR /app
 
 COPY . .
+
+RUN rm -rf node_modules package-lock.json
+
+RUN npm install
 
 EXPOSE 3000
