@@ -4,14 +4,15 @@ import { useTranslation } from '@/i18n/client';
 import type { IViewProps } from '@/utils/types';
 import { Login as LoginForm } from '@/components/Forms';
 import { IoIosLogIn } from 'react-icons/io';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Alert from '@mui/material/Alert';
 import Link from 'next/link';
 import { useAppSelector } from '@/store';
 import { getAuthState } from '@/store/slices/authSlice';
 import { Loader } from '@/components/UIElements';
+
+import Alert from '@mui/material/Alert';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 export default function Login({ lang }: IViewProps) {
   const { t } = useTranslation(lang);

@@ -4,15 +4,16 @@ import { useTranslation } from '@/i18n/client';
 import type { IViewProps } from '@/utils/types';
 import { Register as RegisterForm } from '@/components/Forms';
 import { IoMdPersonAdd } from 'react-icons/io';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useAppSelector } from '@/store';
 import { Loader } from '@/components/UIElements';
-import Alert from '@mui/material/Alert';
 import { getAuthorizedUser, getAuthState } from '@/store/slices/authSlice';
 import { fallbackLng } from '@/i18n/utils';
+
+import Alert from '@mui/material/Alert';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 export default function Register({ lang = fallbackLng }: IViewProps) {
   const { t } = useTranslation(lang);

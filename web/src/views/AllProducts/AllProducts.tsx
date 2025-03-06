@@ -12,8 +12,10 @@ import type { IViewProps, Product } from '@/utils/types';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 export default function AllProducts({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
@@ -40,7 +42,7 @@ export default function AllProducts({ lang }: IViewProps) {
           height="250"
           unoptimized={true}
         />
-        <p>{product.title}</p>
+        <Typography>{product.title}</Typography>
       </div>
     );
   };
@@ -50,7 +52,7 @@ export default function AllProducts({ lang }: IViewProps) {
       <div className="container mx-auto px-4">
         <div className="wrapper">
           <div className="mb-10 flex items-center gap-4">
-            <h1 className="text-xl font-bold">{t('menu.products')}</h1>
+            <h1 className="text-xl font-bold">{t('common.products')}</h1>
           </div>
           <ul className="grid gap-4">
             {!!products?.length &&

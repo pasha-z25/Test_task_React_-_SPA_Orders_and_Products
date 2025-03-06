@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import { useTranslation } from '@/i18n/client';
 import { getLang } from '@/store/slices/langSlice';
 import { fallbackLng } from '@/i18n/utils';
-import Button from '@mui/material/Button';
 import { UserGender } from '@/utils/types';
 import { useForm } from 'react-hook-form';
 import {
@@ -15,6 +14,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField, ControlledSelect } from '../components';
 import { addNewUser } from '@/store/slices/authSlice';
+
+import Button from '@mui/material/Button';
 
 export default function Register() {
   const dispatch = useAppDispatch();

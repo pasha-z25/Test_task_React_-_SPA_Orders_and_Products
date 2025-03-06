@@ -1,9 +1,10 @@
 'use client';
 
 import { Controller, Control } from 'react-hook-form';
+import { TFunction } from 'i18next';
+
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import { TFunction } from 'i18next';
 
 interface ControlledTextFieldProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -3,13 +3,15 @@
 import { fallbackLng } from '@/i18n/utils';
 import { useAppSelector } from '@/store';
 import { getLang } from '@/store/slices/langSlice';
-import { HEADER_DATE_FORMAT } from '@/utils/constants';
+import { HEADER_DATE_FORMAT, HEADER_SITE_NAME } from '@/utils/constants';
 import {
   capitalizeFirstLetter,
   getFormattedDateAndTime,
 } from '@/utils/helpers';
 import { useEffect, useState } from 'react';
 import { RiShieldUserFill } from 'react-icons/ri';
+
+import Typography from '@mui/material/Typography';
 
 export default function Header() {
   const lang = useAppSelector(getLang) || fallbackLng;
@@ -31,15 +33,18 @@ export default function Header() {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <RiShieldUserFill size={70} color="green" />
-            <span className="text-xl font-bold uppercase text-green-700">
-              Inventory
-            </span>
+            <Typography
+              component="span"
+              className="!text-xl !font-bold uppercase text-green-700"
+            >
+              {HEADER_SITE_NAME}
+            </Typography>
           </div>
           <div className="font-medium">
-            <p>
+            <Typography>
               {capitalizeFirstLetter(getFormattedDateAndTime(lang, 'dddd'))}
-            </p>
-            <p>{currentTime}</p>
+            </Typography>
+            <Typography>{currentTime}</Typography>
           </div>
         </div>
       </div>

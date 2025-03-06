@@ -22,23 +22,23 @@ export default function Navigation() {
 
   const navList: NavItem[] = [
     {
-      title: t('menu.orders'),
+      title: t('common.orders'),
       path: `/${lang}`,
     },
     // {
-    //   title: t('menu.groups'),
+    //   title: t('common.groups'),
     //   path: `/${lang}/groups`,
     // },
     {
-      title: t('menu.products'),
+      title: t('common.products'),
       path: `/${lang}/products`,
     },
     {
-      title: t('menu.users'),
+      title: t('common.users'),
       path: `/${lang}/users`,
     },
     // {
-    //   title: t('menu.settings'),
+    //   title: t('common.settings'),
     //   path: `/${lang}/settings`,
     // },
   ];

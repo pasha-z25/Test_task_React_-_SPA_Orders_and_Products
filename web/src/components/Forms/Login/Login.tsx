@@ -6,7 +6,6 @@ import { getAuthState, login } from '@/store/slices/authSlice';
 import { getLang } from '@/store/slices/langSlice';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import Button from '@mui/material/Button';
 import { useTranslation } from '@/i18n/client';
 import {
   LoginFormDefaultValues,
@@ -16,6 +15,8 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ControlledTextField } from '../components';
+
+import Button from '@mui/material/Button';
 
 export default function Login() {
   const dispatch = useAppDispatch();

@@ -13,11 +13,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaUsers } from 'react-icons/fa';
 import { SlUserUnfollow } from 'react-icons/sl';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
 import { getFormattedDateAndTime } from '@/utils/helpers';
 import { useEffect } from 'react';
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 export default function AllUsers({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
@@ -53,38 +55,38 @@ export default function AllUsers({ lang }: IViewProps) {
               <h2 className="text-xl font-bold">{user.name}</h2>{' '}
               <span className="text-xs">Gender: {user.gender}</span>
             </div>
-            <p className="text-xs">
+            <Typography className="text-xs">
               <span>Registered:</span>{' '}
               {getFormattedDateAndTime(
                 lang,
                 USER_CARD_DATE_FORMAT,
                 user.registered
               )}
-            </p>
+            </Typography>
           </div>
           <div>
             <div className="flex items-center gap-4">
-              <p>Email: {user.email}</p>
+              <Typography>Email: {user.email}</Typography>
               {!!user.phone && (
-                <p>
+                <Typography>
                   <span>Phone:</span> {user.phone}
-                </p>
+                </Typography>
               )}
             </div>
             {!!user.address && (
-              <p>
+              <Typography>
                 <span>Address:</span> {user.address}
-              </p>
+              </Typography>
             )}
           </div>
         </div>
         {!isActiveUser && (
-          <p className="text-center">
+          <Typography className="text-center">
             <SlUserUnfollow size={20} color="gray" className="mx-auto mb-2" />
             <span className="inline-block bg-slate-100 p-2">
               {t('common.disabled')}
             </span>
-          </p>
+          </Typography>
         )}
       </>
     );
@@ -95,7 +97,7 @@ export default function AllUsers({ lang }: IViewProps) {
       <div className="container mx-auto px-4">
         <div className="mb-10 flex items-center gap-4">
           <FaUsers size={30} color="green" />
-          <h1 className="text-xl font-bold">{t('menu.users')}</h1>
+          <h1 className="text-xl font-bold">{t('common.users')}</h1>
         </div>
         <div className="wrapper">
           <ul className="grid gap-4">
