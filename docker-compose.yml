@@ -10,11 +10,12 @@ services:
         condition: service_started
     networks:
       - app_network
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
     volumes:
       - ./web:/app
     command: npm run dev
-    environment:
-      - NODE_ENV=development
 
   server:
     build: ./server
