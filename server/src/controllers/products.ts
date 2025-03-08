@@ -1,15 +1,15 @@
-import { Request, Response } from 'express';
-import { Product } from '../db/entities';
+import { Product } from '@/db/entities';
 import {
   addProduct as addProductHelper,
   deleteProduct as deleteProductHelper,
   getProduct as getProductHelper,
   getProducts as getProductsHelper,
   updateProduct as updateProductHelper,
-} from '../services';
-import { getRequestInfo } from '../utils/helpers';
-import { LOG_LEVEL, logger } from '../utils/logger';
-import { ResponseStatus } from '../utils/types';
+} from '@/services';
+import { getRequestInfo } from '@/utils/helpers';
+import { LOG_LEVEL, logger } from '@/utils/logger';
+import { ResponseStatus } from '@/utils/types';
+import { Request, Response } from 'express';
 
 export const getProducts = async (req: Request, res: Response) => {
   try {

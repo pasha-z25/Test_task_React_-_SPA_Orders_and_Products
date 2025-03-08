@@ -1,3 +1,7 @@
+import { AppDataSource } from '@/db';
+import { User } from '@/db/entities';
+import { JWT_SECRET_KEY } from '@/utils/constants';
+import { LOG_LEVEL, logger } from '@/utils/logger';
 import bcrypt from 'bcryptjs';
 import bodyParser from 'body-parser';
 import dayjs from 'dayjs';
@@ -5,10 +9,6 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { Repository } from 'typeorm';
-import { AppDataSource } from '../db';
-import { User } from '../db/entities';
-import { JWT_SECRET_KEY } from '../utils/constants';
-import { LOG_LEVEL, logger } from '../utils/logger';
 
 dayjs.extend(customParseFormat);
 

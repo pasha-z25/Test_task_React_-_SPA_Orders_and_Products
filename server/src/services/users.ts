@@ -1,16 +1,16 @@
-import bcrypt from 'bcryptjs';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Repository } from 'typeorm';
-import { AppDataSource } from '../db';
-import { User } from '../db/entities';
+import { AppDataSource } from '@/db';
+import { User } from '@/db/entities';
 import {
   BCRYPT_SALT_ROUNDS,
   CUSTOM_DATE_TIME_FORMAT,
   USER_AVATAR_SOURCE,
-} from '../utils/constants';
-import { LOG_LEVEL, logger } from '../utils/logger';
-import { UserGender } from '../utils/types';
+} from '@/utils/constants';
+import { LOG_LEVEL, logger } from '@/utils/logger';
+import { UserGender } from '@/utils/types';
+import bcrypt from 'bcryptjs';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { Repository } from 'typeorm';
 
 dayjs.extend(customParseFormat);
 

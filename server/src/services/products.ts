@@ -1,7 +1,7 @@
+import { AppDataSource } from '@/db';
+import { Product } from '@/db/entities';
+import { LOG_LEVEL, logger } from '@/utils/logger';
 import { Repository } from 'typeorm';
-import { AppDataSource } from '../db';
-import { Product } from '../db/entities';
-import { LOG_LEVEL, logger } from '../utils/logger';
 
 const productRepository: Repository<Product> =
   AppDataSource.getRepository(Product);
