@@ -12,7 +12,7 @@ import {
   calculateTotalByCurrency,
   getFormattedDateAndTime,
 } from '@/utils/helpers';
-import type { IViewProps, Order } from '@/utils/types';
+import { WebSocketEvents, type IViewProps, type Order } from '@/utils/types';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
@@ -29,6 +29,7 @@ import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import { useSocket } from '@/utils/hooks/useSocket';
 
 export default function AllOrders({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
@@ -36,10 +37,21 @@ export default function AllOrders({ lang }: IViewProps) {
   const orders = useAppSelector(getAllOrders);
 
   const { t } = useTranslation(lang);
+  const { socket } = useSocket();
 
   useEffect(() => {
     dispatch(getOrders());
   }, []);
+
+  useEffect(() => {
+    socket?.on(WebSocketEvents.WEB_TRIGGER_READ_ALL_ORDERS, () => {
+      console.log('!!! AllOrders useSocket getOrderInfo 1');
+    });
+
+    return () => {
+      socket?.off(WebSocketEvents.WEB_TRIGGER_READ_ALL_ORDERS);
+    };
+  }, [socket]);
 
   if (loading) return <Loader />;
 

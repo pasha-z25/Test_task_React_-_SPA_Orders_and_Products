@@ -8,6 +8,12 @@ export const DOCKER_API_URL =
 export const BROWSER_API_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8888/api';
 
+export const DOCKER_SOCKET_URL =
+  process.env.SOCKET_URL || 'http://websocket:5000';
+
+export const BROWSER_SOCKET_URL =
+  process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000';
+
 export const API_URL =
   typeof window === 'undefined' ? DOCKER_API_URL : BROWSER_API_URL;
 

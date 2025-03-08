@@ -43,6 +43,8 @@ services:
     volumes:
       - ./server:/app
     command: npm run docker
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
 
   db:
     image: postgres:15
@@ -62,6 +64,23 @@ services:
       - '5432:5432'
     volumes:
       - pg_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  websocket:
+    build: ./websocket
+    container_name: websocket
+    image: websocket
+    volumes:
+      - ./websocket:/app
+    ports:
+      - '5000:5000'
+    depends_on:
+      server:
+        condition: service_started
+    environment:
+      - API_URL=http://backend_server:8888
+    command: npm run dev
     networks:
       - app_network
 

@@ -8,6 +8,7 @@ import {
   capitalizeFirstLetter,
   getFormattedDateAndTime,
 } from '@/utils/helpers';
+import { useSocket } from '@/utils/hooks/useSocket';
 import { useEffect, useState } from 'react';
 import { RiShieldUserFill } from 'react-icons/ri';
 
@@ -19,6 +20,8 @@ export default function Header() {
     getFormattedDateAndTime(lang, HEADER_DATE_FORMAT)
   );
 
+  const { sessionCount } = useSocket();
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTime(getFormattedDateAndTime(lang, HEADER_DATE_FORMAT));
@@ -26,6 +29,10 @@ export default function Header() {
 
     return () => clearInterval(intervalId);
   }, [lang]);
+
+  useEffect(() => {
+    console.log('!!! sessionCount', sessionCount);
+  }, [sessionCount]);
 
   return (
     <header className="py-4 shadow-lg">

@@ -1,6 +1,6 @@
+import { LOG_LEVEL, logger } from '@/utils/logger';
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { LOG_LEVEL, logger } from '../utils/logger';
 import { Order, Product, User } from './entities';
 
 export const AppDataSource = new DataSource({

@@ -1,14 +1,14 @@
-import { Request, Response } from 'express';
-import { User } from '../db/entities';
+import { User } from '@/db/entities';
 import {
   addUser as addUserHelper,
   getUser as getUserHelper,
   getUsers as getUsersHelper,
   updateUser as updateUserHelper,
-} from '../services';
-import { getRequestInfo } from '../utils/helpers';
-import { LOG_LEVEL, logger } from '../utils/logger';
-import { ResponseStatus } from '../utils/types';
+} from '@/services';
+import { getRequestInfo } from '@/utils/helpers';
+import { LOG_LEVEL, logger } from '@/utils/logger';
+import { ResponseStatus } from '@/utils/types';
+import { Request, Response } from 'express';
 
 export const getUsers = async (req: Request, res: Response) => {
   try {

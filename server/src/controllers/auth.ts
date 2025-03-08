@@ -1,9 +1,9 @@
+import { User } from '@/db/entities';
+import { addUser, login as loginHelper } from '@/services';
+import { getRequestInfo } from '@/utils/helpers';
+import { LOG_LEVEL, logger } from '@/utils/logger';
+import { ResponseStatus } from '@/utils/types';
 import { Request, Response } from 'express';
-import { User } from '../db/entities';
-import { addUser, login as loginHelper } from '../services';
-import { getRequestInfo } from '../utils/helpers';
-import { LOG_LEVEL, logger } from '../utils/logger';
-import { ResponseStatus } from '../utils/types';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;

@@ -4,7 +4,12 @@ import en from 'dayjs/locale/en';
 import ru from 'dayjs/locale/ru';
 import ua from 'dayjs/locale/uk';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { BROWSER_API_URL, DOCKER_API_URL } from './constants';
+import {
+  BROWSER_API_URL,
+  BROWSER_SOCKET_URL,
+  DOCKER_API_URL,
+  DOCKER_SOCKET_URL,
+} from './constants';
 import { ApiClient, ApiOptionsType, Lang, Product } from './types';
 
 dayjs.extend(customParseFormat);
@@ -52,6 +57,10 @@ export const capitalizeFirstLetter = (string: string) =>
 
 export const getApiUrl = () => {
   return typeof window === 'undefined' ? DOCKER_API_URL : BROWSER_API_URL;
+};
+
+export const getWebSocketUrl = () => {
+  return typeof window === 'undefined' ? DOCKER_SOCKET_URL : BROWSER_SOCKET_URL;
 };
 
 export const client: ApiClient = async (path, options) => {

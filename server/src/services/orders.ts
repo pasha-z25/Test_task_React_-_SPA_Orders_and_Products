@@ -1,7 +1,9 @@
+import { AppDataSource } from '@/db';
+import { Order } from '@/db/entities';
+import { LOG_LEVEL, logger } from '@/utils/logger';
+import socket from '@/utils/socket';
+import { WebSocketEvents } from '@/utils/types';
 import { Repository } from 'typeorm';
-import { AppDataSource } from '../db';
-import { Order } from '../db/entities';
-import { LOG_LEVEL, logger } from '../utils/logger';
 
 const orderRepository: Repository<Order> = AppDataSource.getRepository(Order);
 
@@ -24,6 +26,7 @@ export const getOrder = async (orderId: number) => {
 
 export const getOrders = async () => {
   try {
+    socket.emit(WebSocketEvents.BACKEND_ALL_ORDERS_READ);
     return await orderRepository.find({ relations: ['user', 'products'] });
   } catch (error) {
     logger.log({
@@ -57,6 +60,7 @@ export const updateOrder = async (
 ) => {
   try {
     await orderRepository.update(orderId, orderData);
+    socket.emit(WebSocketEvents.BACKEND_ONE_ORDER_UPDATED, { id: orderId });
     return await getOrder(orderId);
   } catch (error) {
     logger.log({
