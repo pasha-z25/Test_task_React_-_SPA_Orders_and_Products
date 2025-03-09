@@ -40,8 +40,10 @@ export default function AllOrders({ lang }: IViewProps) {
   const { socket } = useSocket();
 
   useEffect(() => {
-    dispatch(getOrders());
-  }, []);
+    if (!loading && !orders?.length) {
+      dispatch(getOrders());
+    }
+  }, [orders?.length, dispatch, loading]);
 
   useEffect(() => {
     socket?.on(WebSocketEvents.WEB_TRIGGER_READ_ALL_ORDERS, () => {

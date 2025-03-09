@@ -25,8 +25,10 @@ export default function AllProducts({ lang }: IViewProps) {
   const { t } = useTranslation(lang);
 
   useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+    if (!loading && !products?.length) {
+      dispatch(getProducts());
+    }
+  }, [products?.length, dispatch, loading]);
 
   if (loading) return <Loader />;
 
@@ -40,6 +42,7 @@ export default function AllProducts({ lang }: IViewProps) {
           alt={product.title}
           width="250"
           height="250"
+          loading="lazy"
           unoptimized={true}
         />
         <Typography>{product.title}</Typography>

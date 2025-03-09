@@ -6,6 +6,7 @@ import {
   isRejected,
 } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
+import type { BasicApiState } from '../types';
 
 interface LoginPayload {
   email: string;
@@ -34,11 +35,9 @@ export const addNewUser = createAsyncThunk(
   }
 );
 
-export interface AuthState {
+export interface AuthState extends BasicApiState {
   user: User | null;
   token: string | null;
-  error: string | undefined | null;
-  loading: boolean;
 }
 
 const initialState: AuthState = {
@@ -74,17 +73,27 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = null;
       })
-      .addMatcher(isPending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addMatcher(isRejected, (state, action) => {
-        state.error = action.error.message;
-        state.user = null;
-        state.token = null;
-        state.loading = false;
-        Cookies.remove('token');
-      });
+      .addMatcher(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (action): action is any =>
+          isPending(action) && action.type.startsWith('auth/'),
+        (state) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (action): action is any =>
+          isRejected(action) && action.type.startsWith('auth/'),
+        (state, action) => {
+          state.error = action.error.message;
+          state.user = null;
+          state.token = null;
+          state.loading = false;
+          Cookies.remove('token');
+        }
+      );
   },
 });
 

@@ -22,6 +22,7 @@ export default function User() {
         width="150"
         height="150"
         className="rounded-full"
+        loading="lazy"
         unoptimized={true}
       />
       <Link
