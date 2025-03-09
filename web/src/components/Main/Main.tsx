@@ -2,9 +2,10 @@
 
 import { authRoutes } from '@/utils/constants';
 import { usePathname } from 'next/navigation';
+import classNames from 'classnames';
 
 import Aside from '@/components/Aside';
-import classNames from 'classnames';
+import AnimatedLayout from '@/components/AnimatedLayout';
 
 export default function Main({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -17,7 +18,9 @@ export default function Main({ children }: { children: React.ReactNode }) {
       })}
     >
       {!isAuthRoute && <Aside />}
-      <main className="bg-slate-100">{children}</main>
+      <main className="bg-slate-100">
+        <AnimatedLayout>{children}</AnimatedLayout>
+      </main>
     </div>
   );
 }

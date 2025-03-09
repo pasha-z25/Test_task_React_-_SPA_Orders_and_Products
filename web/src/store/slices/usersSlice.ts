@@ -5,7 +5,7 @@ import {
   isRejected,
   isPending,
 } from '@reduxjs/toolkit';
-import { BasicApiState } from '@/store/types';
+import type { BasicApiState } from '../types';
 
 export interface UsersState extends BasicApiState {
   allUsers: User[] | null;
@@ -86,14 +86,24 @@ const usersSlice = createSlice({
         state.error = null;
         state.loading = false;
       })
-      .addMatcher(isPending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addMatcher(isRejected, (state, action) => {
-        state.error = action.error.message;
-        state.loading = false;
-      });
+      .addMatcher(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (action): action is any =>
+          isPending(action) && action.type.startsWith('users/'),
+        (state) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (action): action is any =>
+          isRejected(action) && action.type.startsWith('users/'),
+        (state, action) => {
+          state.error = action.error.message;
+          state.loading = false;
+        }
+      );
   },
 });
 

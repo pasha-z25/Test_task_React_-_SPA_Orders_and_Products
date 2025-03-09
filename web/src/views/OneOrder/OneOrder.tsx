@@ -35,8 +35,8 @@ import Button from '@mui/material/Button';
 
 export default function OneOrder({ lang, id: orderId }: IViewProps) {
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector(getOrdersStatus);
   const orders = useAppSelector(getAllOrders);
+  const { loading, error } = useAppSelector(getOrdersStatus);
   const selectedOrder = useAppSelector(getSelectedOrder);
 
   const { t } = useTranslation(lang);
@@ -48,7 +48,7 @@ export default function OneOrder({ lang, id: orderId }: IViewProps) {
     if (orderId) {
       dispatch(getOrder(orderId));
     }
-  }, []);
+  }, [dispatch, orderId, orders?.length]);
 
   if (loading) return <Loader />;
 
@@ -106,6 +106,7 @@ export default function OneOrder({ lang, id: orderId }: IViewProps) {
           alt={product.title}
           width="70"
           height="70"
+          loading="lazy"
           unoptimized={true}
         />
         <p className="underline">

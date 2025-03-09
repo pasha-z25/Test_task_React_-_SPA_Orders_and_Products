@@ -29,8 +29,10 @@ export default function AllUsers({ lang }: IViewProps) {
   const { t } = useTranslation(lang);
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, []);
+    if (!loading && !users?.length) {
+      dispatch(getUsers());
+    }
+  }, [users?.length, dispatch, loading]);
 
   if (loading) return <Loader />;
 
@@ -47,8 +49,9 @@ export default function AllUsers({ lang }: IViewProps) {
             alt={user.name}
             width="150"
             height="150"
-            unoptimized={true}
             className="row-span-2"
+            loading="lazy"
+            unoptimized={true}
           />
           <div>
             <div className="flex items-center gap-4 mb-2">

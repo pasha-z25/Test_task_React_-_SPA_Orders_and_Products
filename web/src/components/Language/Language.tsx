@@ -20,7 +20,7 @@ export default function Language({ lang }: ILanguageProps) {
 
   useEffect(() => {
     dispatch(setLang(lang));
-  }, []);
+  }, [dispatch, lang]);
 
   return (
     <div className="language-block">

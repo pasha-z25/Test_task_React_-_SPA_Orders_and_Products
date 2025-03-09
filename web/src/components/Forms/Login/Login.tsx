@@ -29,7 +29,7 @@ export default function Login() {
     if (!!user && !!token) {
       router.push(`/${lang}`);
     }
-  }, [user, token]);
+  }, [user, token, lang, router]);
 
   const { control, handleSubmit } = useForm<LoginFormType>({
     resolver: zodResolver(LoginFormSchema),

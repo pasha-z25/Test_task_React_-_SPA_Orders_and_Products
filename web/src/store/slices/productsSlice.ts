@@ -4,8 +4,8 @@ import {
   isPending,
   isRejected,
 } from '@reduxjs/toolkit';
-import { BasicApiState } from '../types';
 import type { Product } from '@/utils/types';
+import type { BasicApiState } from '../types';
 
 export interface ProductsState extends BasicApiState {
   allProducts: Product[] | null;
@@ -92,14 +92,24 @@ const productsSlice = createSlice({
         state.error = null;
         state.loading = false;
       })
-      .addMatcher(isPending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addMatcher(isRejected, (state, action) => {
-        state.error = action.error.message;
-        state.loading = false;
-      });
+      .addMatcher(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (action): action is any =>
+          isPending(action) && action.type.startsWith('products/'),
+        (state) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (action): action is any =>
+          isRejected(action) && action.type.startsWith('products/'),
+        (state, action) => {
+          state.error = action.error.message;
+          state.loading = false;
+        }
+      );
   },
 });
 

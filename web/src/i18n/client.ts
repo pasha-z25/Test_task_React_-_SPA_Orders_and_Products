@@ -61,7 +61,7 @@ export function useTranslation(
     if (!runsOnServerSide && cookies.i18next !== lng) {
       setCookie(cookieName, lng, { path: '/' });
     }
-  }, [lng]);
+  }, [lng, cookies.i18next, setCookie]);
 
   if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
     i18n.changeLanguage(lng);

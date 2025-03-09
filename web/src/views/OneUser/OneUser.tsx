@@ -41,7 +41,7 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
     if (userId) {
       dispatch(getUser(userId));
     }
-  }, []);
+  }, [dispatch, userId]);
 
   if (loading) return <Loader />;
 
@@ -61,8 +61,9 @@ export default function OneUser({ lang, id: userId }: IViewProps) {
             alt={user.name}
             width="250"
             height="250"
-            unoptimized={true}
             className={classNames({ grayscale: !isActiveUser })}
+            loading="lazy"
+            unoptimized={true}
           />
           <Typography className="text-xs my-2">
             Gender: {user.gender}

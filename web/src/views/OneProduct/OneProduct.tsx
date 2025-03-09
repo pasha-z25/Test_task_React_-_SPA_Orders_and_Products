@@ -24,7 +24,7 @@ export default function OneProduct({ lang, id: productId }: IViewProps) {
     if (productId) {
       dispatch(getProduct(productId));
     }
-  }, []);
+  }, [dispatch, productId]);
 
   if (loading) return <Loader />;
 

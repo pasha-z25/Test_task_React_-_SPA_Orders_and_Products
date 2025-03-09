@@ -1,9 +1,14 @@
 import { fallbackLng } from '@/i18n/utils';
 import type { IPageProps } from '@/utils/types';
-import { Register as RegisterView } from '@/views';
+import dynamic from 'next/dynamic';
+import { Loader } from '@/components/UIElements';
+
+const DynamicRegisterPage = dynamic(() => import('../../../views/Register'), {
+  loading: () => <Loader />,
+});
 
 export default async function Register({ params }: IPageProps) {
   const { lng = fallbackLng } = await params;
 
-  return <RegisterView lang={lng} />;
+  return <DynamicRegisterPage lang={lng} />;
 }
