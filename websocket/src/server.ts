@@ -1,5 +1,6 @@
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { WEB_CLIENT_ORIGINS } from './constants';
 import { WebSocketEvents } from './types';
 
 const PORT = process.env.PORT || 5000;
@@ -12,25 +13,43 @@ let activeSessions = 0;
 io.on('connection', (socket) => {
   console.log('🔌 New WebSocket connection');
 
-  activeSessions++;
-  io.emit(WebSocketEvents.SESSION_COUNT, activeSessions);
+  const headersOrigin = socket.handshake.headers.origin || '';
 
-  socket.on('disconnect', () => {
-    activeSessions--;
+  if (WEB_CLIENT_ORIGINS.includes(headersOrigin)) {
+    activeSessions++;
     io.emit(WebSocketEvents.SESSION_COUNT, activeSessions);
+  }
+
+  socket.on('connect_error', (socket) => {
+    activeSessions--;
+    console.log('🔌 WebSocket connect_error', socket);
   });
 
-  socket.on(WebSocketEvents.BACKEND_ALL_ORDERS_READ, (data) => {
-    console.log('Отримано запит на замовлення:', data);
-    io.emit(WebSocketEvents.WEB_TRIGGER_READ_ALL_ORDERS, { type: 'io.emit' });
+  socket.on('disconnect', (socket) => {
+    console.log('🔌 WebSocket disconnect', socket);
+    if (WEB_CLIENT_ORIGINS.includes(headersOrigin)) {
+      activeSessions--;
+      io.emit(WebSocketEvents.SESSION_COUNT, activeSessions);
+    }
   });
 
   socket.on(WebSocketEvents.BACKEND_ONE_ORDER_UPDATED, (data) => {
-    console.log('Order updated, need to refresh data', data);
-    io.emit(WebSocketEvents.WEB_TRIGGER_READ_ONE_ORDER, { type: 'io.emit' });
+    console.log('ℹ️ The order has been updated, need to refresh data', data);
+    io.emit(WebSocketEvents.WEB_TRIGGER_READ_ONE_ORDER, {
+      type: 'order:update',
+      data,
+    });
+  });
+
+  socket.on(WebSocketEvents.BACKEND_ONE_ORDER_DELETED, (data) => {
+    console.log('ℹ️ The order has been deleted, need to refresh data', data);
+    io.emit(WebSocketEvents.WEB_TRIGGER_READ_ALL_ORDERS, {
+      type: 'order:delete',
+      data,
+    });
   });
 });
 
 server.listen(PORT, () =>
-  console.log(`✅ WebSocket is working on port ${PORT}`)
+  console.log(`✅ WebSocket is working on port ${PORT} 🚀`)
 );

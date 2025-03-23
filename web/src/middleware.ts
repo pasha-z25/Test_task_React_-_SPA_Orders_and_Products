@@ -14,7 +14,10 @@ export function middleware(req: NextRequest) {
     pathname.endsWith('.jpg') ||
     pathname.endsWith('.png') ||
     pathname.endsWith('.css') ||
-    pathname.endsWith('.js')
+    pathname.endsWith('.js') ||
+    pathname === '/manifest.json' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml'
   ) {
     return NextResponse.next();
   }

@@ -20,7 +20,8 @@
     "genderFemale": "Female",
     "phone": "Phone",
     "address": "Address",
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "activeSessions": "Active sessions"
   },
   "button": {
     "login": "Login",

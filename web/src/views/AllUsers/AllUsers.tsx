@@ -11,11 +11,12 @@ import {
 import type { IViewProps, User } from '@/utils/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaUsers } from 'react-icons/fa';
-import { SlUserUnfollow } from 'react-icons/sl';
 import { USER_CARD_DATE_FORMAT } from '@/utils/constants';
 import { getFormattedDateAndTime } from '@/utils/helpers';
 import { useEffect } from 'react';
+
+import { FaUsers } from 'react-icons/fa';
+import { SlUserUnfollow } from 'react-icons/sl';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';

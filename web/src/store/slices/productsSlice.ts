@@ -56,7 +56,10 @@ export const updateProduct = createAsyncThunk(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
-    return await client.patch(apiEndpoints.oneProduct(payload));
+    return await client.patch(
+      apiEndpoints.oneProduct(payload.id),
+      JSON.stringify(payload)
+    );
   }
 );
 

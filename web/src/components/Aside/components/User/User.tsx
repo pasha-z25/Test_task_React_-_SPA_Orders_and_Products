@@ -6,6 +6,7 @@ import { getAuthorizedUser } from '@/store/slices/authSlice';
 import { getLang } from '@/store/slices/langSlice';
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { BsFillGearFill } from 'react-icons/bs';
 
 export default function User() {
