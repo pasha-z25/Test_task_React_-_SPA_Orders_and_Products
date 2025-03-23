@@ -52,11 +52,14 @@ export const addUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (
-    payload: BodyInit,
+    payload: Partial<User>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     { extra: { client, apiEndpoints } }: { extra: any }
   ) => {
-    return await client.patch(apiEndpoints.allUsers, payload);
+    return await client.patch(
+      apiEndpoints.oneUser(payload.id),
+      JSON.stringify(payload)
+    );
   }
 );
 

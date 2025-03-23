@@ -36,3 +36,5 @@ export const HEADER_DATE_FORMAT = 'DD MMM, YYYY 🕒 HH:mm';
 export const USER_CARD_DATE_FORMAT = 'DD MMMM YYYY';
 
 export const ORDER_CARD_DATE_FORMAT = 'DD/MMM/YYYY';
+
+export const PRODUCT_CARD_DATE_FORMAT = 'DD/MMM/YYYY';

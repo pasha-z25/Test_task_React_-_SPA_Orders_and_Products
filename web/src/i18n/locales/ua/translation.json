@@ -20,7 +20,8 @@
     "genderFemale": "Женский",
     "phone": "Телефон",
     "address": "Адрес",
-    "disabled": "Отключеный"
+    "disabled": "Отключеный",
+    "activeSessions": "Active sessions"
   },
   "button": {
     "login": "Авторизироваться",

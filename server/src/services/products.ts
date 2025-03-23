@@ -1,6 +1,5 @@
 import { AppDataSource } from '@/db';
 import { Product } from '@/db/entities';
-import { LOG_LEVEL, logger } from '@/utils/logger';
 import { Repository } from 'typeorm';
 
 const productRepository: Repository<Product> =
@@ -10,12 +9,6 @@ export const getProducts = async () => {
   try {
     return await productRepository.find({ relations: ['order'] });
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
     return Promise.reject(error);
   }
 };
@@ -27,12 +20,6 @@ export const getProduct = async (productId: number) => {
       relations: ['order'],
     });
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
     return Promise.reject(error);
   }
 };
@@ -42,12 +29,6 @@ export const addProduct = async (product: Partial<Product>) => {
     const newProduct = productRepository.create(product);
     return await productRepository.save(newProduct);
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
     return Promise.reject(error);
   }
 };
@@ -60,12 +41,6 @@ export const updateProduct = async (
     await productRepository.update(productId, updatedData);
     return await getProduct(productId);
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
     return Promise.reject(error);
   }
 };
@@ -80,12 +55,6 @@ export const deleteProduct = async (productId: number) => {
     await productRepository.remove(product);
     return { message: 'Product deleted successfully' };
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
     return Promise.reject(error);
   }
 };

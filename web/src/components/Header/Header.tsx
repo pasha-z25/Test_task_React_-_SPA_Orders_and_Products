@@ -10,6 +10,9 @@ import {
 } from '@/utils/helpers';
 import { useSocket } from '@/utils/hooks/useSocket';
 import { useEffect, useState } from 'react';
+import { useTranslation } from '@/i18n/client';
+import { WebSocketEvents } from '@/utils/types';
+
 import { RiShieldUserFill } from 'react-icons/ri';
 
 import Typography from '@mui/material/Typography';
@@ -19,8 +22,19 @@ export default function Header() {
   const [currentTime, setCurrentTime] = useState<string>(
     getFormattedDateAndTime(lang, HEADER_DATE_FORMAT)
   );
+  const [sessionCount, setSessionCount] = useState<number>(0);
+  const { t } = useTranslation(lang);
+  const { socket } = useSocket();
 
-  const { sessionCount } = useSocket();
+  useEffect(() => {
+    socket?.on(WebSocketEvents.SESSION_COUNT, (data) => {
+      setSessionCount(data);
+    });
+
+    return () => {
+      socket?.off(WebSocketEvents.SESSION_COUNT);
+    };
+  }, [socket]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -29,10 +43,6 @@ export default function Header() {
 
     return () => clearInterval(intervalId);
   }, [lang]);
-
-  useEffect(() => {
-    console.log('!!! sessionCount', sessionCount);
-  }, [sessionCount]);
 
   return (
     <header className="py-4 shadow-lg">
@@ -52,6 +62,9 @@ export default function Header() {
               {capitalizeFirstLetter(getFormattedDateAndTime(lang, 'dddd'))}
             </Typography>
             <Typography>{currentTime}</Typography>
+            <Typography>
+              {t('common.activeSessions')}: {sessionCount}
+            </Typography>
           </div>
         </div>
       </div>

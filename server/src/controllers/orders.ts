@@ -8,7 +8,8 @@ import {
 } from '@/services';
 import { getRequestInfo } from '@/utils/helpers';
 import { LOG_LEVEL, logger } from '@/utils/logger';
-import { ResponseStatus } from '@/utils/types';
+import socket from '@/utils/socket';
+import { ResponseStatus, WebSocketEvents } from '@/utils/types';
 import { Request, Response } from 'express';
 
 export const getOrders = async (req: Request, res: Response) => {
@@ -137,7 +138,7 @@ export const addOrder = async (req: Request, res: Response) => {
 
 export const updateOrder = async (req: Request, res: Response) => {
   const orderId: number = parseInt(req.params.id);
-  const order: Order = req.body;
+  const order: Order = JSON.parse(req.body);
 
   try {
     const updatedOrder = await updateOrderHelper(orderId, order);
@@ -163,6 +164,8 @@ export const updateOrder = async (req: Request, res: Response) => {
       message: 'ℹ️ Order was updated',
       requestInfo: getRequestInfo(req),
     });
+
+    socket.emit(WebSocketEvents.BACKEND_ONE_ORDER_UPDATED, { id: orderId });
 
     res
       .status(200)
@@ -207,6 +210,8 @@ export const deleteOrder = async (req: Request, res: Response) => {
       message: 'ℹ️ Order deleted successfully',
       requestInfo: getRequestInfo(req),
     });
+
+    socket.emit(WebSocketEvents.BACKEND_ONE_ORDER_DELETED);
 
     res.status(200).send({ status: ResponseStatus.SUCCESS, data: result });
   } catch (error) {

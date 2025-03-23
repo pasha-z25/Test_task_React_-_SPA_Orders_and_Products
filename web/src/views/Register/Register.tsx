@@ -3,12 +3,13 @@
 import { useTranslation } from '@/i18n/client';
 import type { IViewProps } from '@/utils/types';
 import { Register as RegisterForm } from '@/components/Forms';
-import { IoMdPersonAdd } from 'react-icons/io';
 import Link from 'next/link';
 import { useAppSelector } from '@/store';
 import { Loader } from '@/components/UIElements';
 import { getAuthorizedUser, getAuthState } from '@/store/slices/authSlice';
 import { fallbackLng } from '@/i18n/utils';
+
+import { IoMdPersonAdd } from 'react-icons/io';
 
 import Alert from '@mui/material/Alert';
 import Card from '@mui/material/Card';
