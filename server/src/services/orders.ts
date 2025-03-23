@@ -1,6 +1,5 @@
 import { Order } from '@/db/entities';
 import { getRepository } from '@/db/repository';
-import { Repository } from 'typeorm';
 
 export const getOrder = async (orderId: number) => {
   try {
