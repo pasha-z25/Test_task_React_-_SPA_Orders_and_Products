@@ -1,7 +1,6 @@
 import { User } from '@/db/entities';
 import { getRepository } from '@/db/repository';
 import { JWT_SECRET_KEY } from '@/utils/constants';
-import { handleError } from '@/utils/helpers';
 import bcrypt from 'bcryptjs';
 import bodyParser from 'body-parser';
 import dayjs from 'dayjs';
@@ -36,7 +35,6 @@ export const login = async (email: string, userPassword: string) => {
 
     return { user: safeUser, accessToken: token };
   } catch (error) {
-    handleError('services:auth', error);
     return Promise.reject(error);
   }
 };

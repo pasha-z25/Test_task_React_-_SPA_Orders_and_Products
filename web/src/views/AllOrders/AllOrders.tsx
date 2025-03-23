@@ -4,6 +4,7 @@ import { Loader, Error } from '@/components/UIElements';
 import { useTranslation } from '@/i18n/client';
 import { useAppDispatch, useAppSelector } from '@/store';
 import {
+  deleteOrder,
   getAllOrders,
   getOrders,
   getOrdersStatus,
@@ -15,13 +16,14 @@ import {
 import { WebSocketEvents, type IViewProps, type Order } from '@/utils/types';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { AiOutlinePlusCircle } from 'react-icons/ai';
-import { FaListUl } from 'react-icons/fa';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import {
   NUMBER_OF_MONTHS_IN_YEAR,
   ORDER_CARD_DATE_FORMAT,
 } from '@/utils/constants';
+
+import { AiOutlinePlusCircle } from 'react-icons/ai';
+import { FaListUl } from 'react-icons/fa';
+import { RiDeleteBinLine } from 'react-icons/ri';
 
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -47,7 +49,7 @@ export default function AllOrders({ lang }: IViewProps) {
 
   useEffect(() => {
     socket?.on(WebSocketEvents.WEB_TRIGGER_READ_ALL_ORDERS, () => {
-      console.log('!!! AllOrders useSocket getOrderInfo 1');
+      dispatch(getOrders());
     });
 
     return () => {
@@ -108,6 +110,7 @@ export default function AllOrders({ lang }: IViewProps) {
           <Button
             onClick={() => {
               console.log('Order Delete Action');
+              dispatch(deleteOrder(order.id));
             }}
           >
             <RiDeleteBinLine />

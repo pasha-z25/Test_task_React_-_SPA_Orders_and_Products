@@ -5,7 +5,6 @@ import {
   CUSTOM_DATE_TIME_FORMAT,
   USER_AVATAR_SOURCE,
 } from '@/utils/constants';
-import { handleError } from '@/utils/helpers';
 import { UserGender } from '@/utils/types';
 import bcrypt from 'bcryptjs';
 import dayjs from 'dayjs';
@@ -25,7 +24,6 @@ export const getUser = async (userId: number) => {
     const { password, ...safeUser } = user;
     return safeUser;
   } catch (error) {
-    handleError('services:users', error);
     return Promise.reject(error);
   }
 };
@@ -37,7 +35,6 @@ export const getUsers = async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return users.map(({ password, ...safeUser }) => safeUser);
   } catch (error) {
-    handleError('services:users', error);
     return Promise.reject(error);
   }
 };
@@ -79,7 +76,6 @@ export const addUser = async ({
 
     return await userRepository.save(newUser);
   } catch (error) {
-    handleError('services:users', error);
     return Promise.reject(error);
   }
 };
@@ -93,7 +89,6 @@ export const updateUser = async (
     await userRepository.update(userId, updatedData);
     return await getUser(userId);
   } catch (error) {
-    handleError('services:users', error);
     return Promise.reject(error);
   }
 };

@@ -9,6 +9,7 @@ import {
   getOrders,
   getOrdersStatus,
   getSelectedOrder,
+  updateOrder,
 } from '@/store/slices/ordersSlice';
 import type { IViewProps, Order, Product } from '@/utils/types';
 import Image from 'next/image';
@@ -19,6 +20,7 @@ import {
   ORDER_CARD_DATE_FORMAT,
 } from '@/utils/constants';
 import { useEffect } from 'react';
+
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { FaListUl } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
@@ -42,10 +44,10 @@ export default function OneOrder({ lang, id: orderId }: IViewProps) {
   const { t } = useTranslation(lang);
 
   useEffect(() => {
-    if (!orders?.length) {
+    if (!orders?.length && !loading) {
       dispatch(getOrders());
     }
-    if (orderId) {
+    if (orderId && !loading) {
       dispatch(getOrder(orderId));
     }
   }, [dispatch, orderId, orders?.length]);
@@ -55,6 +57,16 @@ export default function OneOrder({ lang, id: orderId }: IViewProps) {
   if (error) return <Error message={error} />;
 
   if (!selectedOrder) return null;
+
+  const deleteProductFromOrder = (
+    order: Order,
+    productId: string | number
+  ): Order => {
+    return {
+      ...order,
+      products: order.products.filter((product) => product.id !== productId),
+    };
+  };
 
   const renderOrderCard = (order: Order) => {
     return (
@@ -109,14 +121,18 @@ export default function OneOrder({ lang, id: orderId }: IViewProps) {
           loading="lazy"
           unoptimized={true}
         />
-        <p className="underline">
+        <Typography className="underline">
           <Link href={`/${lang}/products/${product.id}`}>{product.title}</Link>
-        </p>
-        <p>{product.isNew ? 'New' : 'Used'}</p>
+          <span>({product.serialNumber})</span>
+        </Typography>
+        <Typography>{product.isNew ? 'New' : 'Used'}</Typography>
         <div>
           <Button
             onClick={() => {
               console.log('Product Delete Action');
+              dispatch(
+                updateOrder(deleteProductFromOrder(selectedOrder, product.id))
+              );
             }}
           >
             <RiDeleteBinLine />
@@ -161,7 +177,7 @@ export default function OneOrder({ lang, id: orderId }: IViewProps) {
             {selectedOrder.id}
           </Typography>
         </div>
-        <div className="wrapper flex gap-6">
+        <div className="wrapper flex items-start gap-6">
           <List className="grid gap-4 !py-0">
             {!!orders?.length &&
               orders.map((order: Order) => (

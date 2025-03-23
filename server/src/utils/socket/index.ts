@@ -1,4 +1,3 @@
-import { WebSocketEvents } from '@/utils/types';
 import { io } from 'socket.io-client';
 
 const DEFAULT_SOCKET_URL = 'http://websocket:5000';
@@ -9,10 +8,6 @@ const socket = io(SOCKET_URL);
 
 socket.on('connect', () => {
   console.log('🔌 BACKEND: Connected to WebSocket server:', socket.id);
-});
-
-socket.on(WebSocketEvents.SESSION_COUNT, (count) => {
-  console.log('Active sessions:', count);
 });
 
 export default socket;
