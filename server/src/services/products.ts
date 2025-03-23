@@ -1,12 +1,10 @@
-import { AppDataSource } from '@/db';
 import { Product } from '@/db/entities';
+import { getRepository } from '@/db/repository';
 import { Repository } from 'typeorm';
-
-const productRepository: Repository<Product> =
-  AppDataSource.getRepository(Product);
 
 export const getProducts = async () => {
   try {
+    const productRepository = getRepository(Product);
     return await productRepository.find({ relations: ['order'] });
   } catch (error) {
     return Promise.reject(error);
@@ -15,6 +13,7 @@ export const getProducts = async () => {
 
 export const getProduct = async (productId: number) => {
   try {
+    const productRepository = getRepository(Product);
     return await productRepository.findOne({
       where: { id: productId },
       relations: ['order'],
@@ -26,6 +25,7 @@ export const getProduct = async (productId: number) => {
 
 export const addProduct = async (product: Partial<Product>) => {
   try {
+    const productRepository = getRepository(Product);
     const newProduct = productRepository.create(product);
     return await productRepository.save(newProduct);
   } catch (error) {
@@ -38,6 +38,7 @@ export const updateProduct = async (
   updatedData: Partial<Product>
 ) => {
   try {
+    const productRepository = getRepository(Product);
     await productRepository.update(productId, updatedData);
     return await getProduct(productId);
   } catch (error) {
@@ -47,6 +48,7 @@ export const updateProduct = async (
 
 export const deleteProduct = async (productId: number) => {
   try {
+    const productRepository = getRepository(Product);
     const product = await productRepository.findOne({
       where: { id: productId },
     });

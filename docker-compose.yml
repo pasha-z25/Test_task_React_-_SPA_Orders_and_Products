@@ -80,6 +80,16 @@ services:
     command: npm run dev
     networks:
       - app_network
+  e2e-tests:
+    build: ./playwright
+    depends_on:
+      - db
+      - backend
+      - socket-server
+      - frontend
+    environment:
+      - CI=true
+    # command: npx playwright test
 
 networks:
   app_network:
