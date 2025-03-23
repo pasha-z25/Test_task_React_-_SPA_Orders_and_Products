@@ -20,11 +20,6 @@ io.on('connection', (socket) => {
     io.emit(WebSocketEvents.SESSION_COUNT, activeSessions);
   });
 
-  socket.on(WebSocketEvents.BACKEND_ALL_ORDERS_READ, (data) => {
-    console.log('Отримано запит на замовлення:', data);
-    io.emit(WebSocketEvents.WEB_TRIGGER_READ_ALL_ORDERS, { type: 'io.emit' });
-  });
-
   socket.on(WebSocketEvents.BACKEND_ONE_ORDER_UPDATED, (data) => {
     console.log('Order updated, need to refresh data', data);
     io.emit(WebSocketEvents.WEB_TRIGGER_READ_ONE_ORDER, { type: 'io.emit' });

@@ -1,53 +1,37 @@
-import { AppDataSource } from '@/db';
 import { Product } from '@/db/entities';
-import { LOG_LEVEL, logger } from '@/utils/logger';
-import { Repository } from 'typeorm';
-
-const productRepository: Repository<Product> =
-  AppDataSource.getRepository(Product);
+import { getRepository } from '@/db/repository';
+import { handleError } from '@/utils/helpers';
 
 export const getProducts = async () => {
   try {
+    const productRepository = getRepository(Product);
     return await productRepository.find({ relations: ['order'] });
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:products', error);
     return Promise.reject(error);
   }
 };
 
 export const getProduct = async (productId: number) => {
   try {
+    const productRepository = getRepository(Product);
     return await productRepository.findOne({
       where: { id: productId },
       relations: ['order'],
     });
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:products', error);
     return Promise.reject(error);
   }
 };
 
 export const addProduct = async (product: Partial<Product>) => {
   try {
+    const productRepository = getRepository(Product);
     const newProduct = productRepository.create(product);
     return await productRepository.save(newProduct);
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:products', error);
     return Promise.reject(error);
   }
 };
@@ -57,21 +41,18 @@ export const updateProduct = async (
   updatedData: Partial<Product>
 ) => {
   try {
+    const productRepository = getRepository(Product);
     await productRepository.update(productId, updatedData);
     return await getProduct(productId);
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:products', error);
     return Promise.reject(error);
   }
 };
 
 export const deleteProduct = async (productId: number) => {
   try {
+    const productRepository = getRepository(Product);
     const product = await productRepository.findOne({
       where: { id: productId },
     });
@@ -80,12 +61,7 @@ export const deleteProduct = async (productId: number) => {
     await productRepository.remove(product);
     return { message: 'Product deleted successfully' };
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:products',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:products', error);
     return Promise.reject(error);
   }
 };

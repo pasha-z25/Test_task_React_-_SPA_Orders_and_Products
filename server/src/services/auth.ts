@@ -1,24 +1,22 @@
-import { AppDataSource } from '@/db';
 import { User } from '@/db/entities';
+import { getRepository } from '@/db/repository';
 import { JWT_SECRET_KEY } from '@/utils/constants';
-import { LOG_LEVEL, logger } from '@/utils/logger';
+import { handleError } from '@/utils/helpers';
 import bcrypt from 'bcryptjs';
 import bodyParser from 'body-parser';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { Repository } from 'typeorm';
 
 dayjs.extend(customParseFormat);
 
 const app = express();
 app.use(bodyParser.json());
 
-const userRepository: Repository<User> = AppDataSource.getRepository(User);
-
 export const login = async (email: string, userPassword: string) => {
   try {
+    const userRepository = getRepository(User);
     const user = await userRepository.findOneBy({ email });
     if (!user) return Promise.reject({ message: 'User not found' });
 
@@ -38,12 +36,7 @@ export const login = async (email: string, userPassword: string) => {
 
     return { user: safeUser, accessToken: token };
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:auth',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:auth', error);
     return Promise.reject(error);
   }
 };

@@ -1,23 +1,21 @@
-import { AppDataSource } from '@/db';
 import { User } from '@/db/entities';
+import { getRepository } from '@/db/repository';
 import {
   BCRYPT_SALT_ROUNDS,
   CUSTOM_DATE_TIME_FORMAT,
   USER_AVATAR_SOURCE,
 } from '@/utils/constants';
-import { LOG_LEVEL, logger } from '@/utils/logger';
+import { handleError } from '@/utils/helpers';
 import { UserGender } from '@/utils/types';
 import bcrypt from 'bcryptjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Repository } from 'typeorm';
 
-dayjs.extend(customParseFormat);
-
-const userRepository: Repository<User> = AppDataSource.getRepository(User);
+// dayjs.extend(customParseFormat);
 
 export const getUser = async (userId: number) => {
   try {
+    const userRepository = getRepository(User);
     const user = await userRepository.findOne({
       where: { id: userId },
       relations: ['orders'],
@@ -27,28 +25,19 @@ export const getUser = async (userId: number) => {
     const { password, ...safeUser } = user;
     return safeUser;
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:users',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:users', error);
     return Promise.reject(error);
   }
 };
 
 export const getUsers = async () => {
   try {
+    const userRepository = getRepository(User);
     const users = await userRepository.find({ relations: ['orders'] });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return users.map(({ password, ...safeUser }) => safeUser);
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:users',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:users', error);
     return Promise.reject(error);
   }
 };
@@ -62,6 +51,7 @@ export const addUser = async ({
   address = '',
 }: User) => {
   try {
+    const userRepository = getRepository(User);
     const user = await userRepository.findOne({
       where: { email },
     });
@@ -73,6 +63,7 @@ export const addUser = async ({
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
+    dayjs.extend(customParseFormat);
 
     const newUser = new User();
     newUser.email = email;
@@ -88,12 +79,7 @@ export const addUser = async ({
 
     return await userRepository.save(newUser);
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:users',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:users', error);
     return Promise.reject(error);
   }
 };
@@ -103,15 +89,11 @@ export const updateUser = async (
   updatedData: Partial<User>
 ) => {
   try {
+    const userRepository = getRepository(User);
     await userRepository.update(userId, updatedData);
     return await getUser(userId);
   } catch (error) {
-    logger.log({
-      level: LOG_LEVEL.ERROR,
-      scope: 'services:users',
-      message: '❌ Something went wrong!',
-      error,
-    });
+    handleError('services:users', error);
     return Promise.reject(error);
   }
 };

@@ -1,10 +1,11 @@
 import { Request } from 'express';
 import os from 'os';
+import { LOG_LEVEL, logger } from './logger';
 
 export function getRandomInt(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const minInt = Math.ceil(min);
+  const maxInt = Math.floor(max);
+  return Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt;
 }
 
 export const getRequestInfo = (req: Request) => ({
@@ -48,7 +49,19 @@ export function serverListenerLogger(PORT: string | number): void {
   console.log('   ');
 }
 
+export const handleError = (scope: string, error: unknown, params = {}) => {
+  logger.log({
+    level: LOG_LEVEL.ERROR,
+    scope,
+    message: '❌ Something went wrong!',
+    error,
+    ...params,
+  });
+};
+
 export default {
   getLocalIP,
+  getRandomInt,
+  getRequestInfo,
   serverListenerLogger,
 };
