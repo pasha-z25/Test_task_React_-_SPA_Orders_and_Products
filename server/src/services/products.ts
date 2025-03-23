@@ -1,6 +1,5 @@
 import { Product } from '@/db/entities';
 import { getRepository } from '@/db/repository';
-import { Repository } from 'typeorm';
 
 export const getProducts = async () => {
   try {
