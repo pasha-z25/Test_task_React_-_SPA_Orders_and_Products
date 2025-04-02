@@ -14,6 +14,7 @@ import type { IViewProps, Product } from '@/utils/types';
 import { useEffect } from 'react';
 import {
   calculateTotalByCurrency,
+  getCurrencyValue,
   getFormattedDateAndTime,
 } from '@/utils/helpers';
 import { PRODUCT_CARD_DATE_FORMAT } from '@/utils/constants';
@@ -123,10 +124,7 @@ export default function OneProduct({ lang, id: productId }: IViewProps) {
             key={currency}
             className={currency === 'UAH' ? '!text-lg' : '!text-xs'}
           >
-            {new Intl.NumberFormat(lang, {
-              style: 'currency',
-              currency,
-            }).format(number)}
+            {getCurrencyValue(number, currency, lang)}
           </Typography>
         ))}
         <Typography>

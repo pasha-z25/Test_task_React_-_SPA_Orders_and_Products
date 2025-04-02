@@ -12,7 +12,7 @@ import type { IViewProps, Product } from '@/utils/types';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { calculateTotalByCurrency } from '@/utils/helpers';
+import { calculateTotalByCurrency, getCurrencyValue } from '@/utils/helpers';
 
 import { RiDeleteBinLine } from 'react-icons/ri';
 
@@ -69,10 +69,7 @@ export default function AllProducts({ lang }: IViewProps) {
               key={currency}
               className={currency === 'UAH' ? '!text-lg' : '!text-xs'}
             >
-              {new Intl.NumberFormat(lang, {
-                style: 'currency',
-                currency,
-              }).format(number)}
+              {getCurrencyValue(number, currency, lang)}
             </Typography>
           ))}
         </div>

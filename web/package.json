@@ -1,7 +1,10 @@
 {
   "name": "web",
+  "description": "",
   "version": "0.1.0",
   "private": true,
+  "author": "Pavlo Zubal pashazubak@gmail.com",
+  "license": "ISC",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -52,6 +52,17 @@ export const calculateTotalByCurrency = (
   return totals;
 };
 
+export const getCurrencyValue = (
+  number: number,
+  currency: string = 'USD',
+  locale: string = 'en'
+) => {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency,
+  }).format(number);
+};
+
 export const capitalizeFirstLetter = (string: string) =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
