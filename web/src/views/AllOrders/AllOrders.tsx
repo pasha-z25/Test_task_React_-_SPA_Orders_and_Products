@@ -11,6 +11,7 @@ import {
 } from '@/store/slices/ordersSlice';
 import {
   calculateTotalByCurrency,
+  getCurrencyValue,
   getFormattedDateAndTime,
 } from '@/utils/helpers';
 import { WebSocketEvents, type IViewProps, type Order } from '@/utils/types';
@@ -20,6 +21,7 @@ import {
   NUMBER_OF_MONTHS_IN_YEAR,
   ORDER_CARD_DATE_FORMAT,
 } from '@/utils/constants';
+import { useSocket } from '@/utils/hooks/useSocket';
 
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { FaListUl } from 'react-icons/fa';
@@ -31,7 +33,6 @@ import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import { useSocket } from '@/utils/hooks/useSocket';
 
 export default function AllOrders({ lang }: IViewProps) {
   const dispatch = useAppDispatch();
@@ -99,10 +100,7 @@ export default function AllOrders({ lang }: IViewProps) {
               key={currency}
               className={currency === 'UAH' ? '!text-lg' : '!text-xs'}
             >
-              {new Intl.NumberFormat(lang, {
-                style: 'currency',
-                currency,
-              }).format(number)}
+              {getCurrencyValue(number, currency, lang)}
             </Typography>
           ))}
         </div>

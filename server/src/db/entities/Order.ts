@@ -8,7 +8,7 @@ import {
 import { Product } from './Product';
 import { User } from './User';
 
-@Entity()
+@Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn()
   id!: number;
